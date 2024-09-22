@@ -1,2 +1,3 @@
 django-admin startproject <name> - start a project
 python -m venv venv - start a virtual environment
+pip freeze > <name.txt> - save the dependencies and their versions
