@@ -1,0 +1,33 @@
+{% load static %}
+<nav
+  class="navbar fixed top-0 left-0 right-0 bg-black text-white shadow-md flex items-center px-5 py-3 z-20"
+>
+  <!-- Logo -->
+  <div class="logo-container w-2/5">
+    <a href="#">
+      <img src="{% static 'images/logo.png' %}" alt="logo" class="logo h-16" />
+    </a>
+  </div>
+
+  <!-- Links -->
+  <div class="links-container flex w-1/5 justify-evenly items-center">
+    <a href="/home" class="link hover:text-yellow-400 text-xl">Home</a>
+    <a href="/movies" class="link hover:text-yellow-400 text-xl">Movies</a>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions-container flex w-2/5 justify-end items-center">
+    {% if user.is_authenticated %}
+    <a href="{% url 'home' %}">Profile</a>
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <button
+      id="login-btn"
+      class="bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500"
+    >
+      Log In
+    </button>
+
+    {% endif %}
+  </div>
+</nav>
