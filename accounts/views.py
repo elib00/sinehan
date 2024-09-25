@@ -3,6 +3,7 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.http import JsonResponse
+from .models import CustomUser
 
 
 #login_view already handles by auth.urls
@@ -41,3 +42,25 @@ def login_view(request):
 def logout_view(request):
     logout(request)  
     return redirect('home')
+
+
+def profile_view(request, username):
+    try:
+        user = CustomUser.objects.get(username=username)
+        return render(request, 'profile.html', {'user_profile': user})
+    except CustomUser.DoesNotExist:
+        raise HttpResponse("CustomUser table not found")
+
+def tickets_view(request, username):
+    try:
+        user = CustomUser.objects.get(username=username)
+        return render(request, 'tickets.html', {'user_profile': user})
+    except CustomUser.DoesNotExist:
+        raise HttpResponse("CustomUser table not found")
+
+def history_view(request, username):
+    try:
+        user = CustomUser.objects.get(username=username)
+        return render(request, 'history.html', {'user_profile': user})
+    except CustomUser.DoesNotExist:
+        raise HttpResponse("CustomUser table not found")

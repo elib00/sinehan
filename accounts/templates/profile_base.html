@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Profile{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-gray-100"
+    style="
+      background: linear-gradient(
+        176deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgb(122, 1, 1) 20%,
+        rgba(0, 0, 0, 1) 57%,
+        rgba(0, 0, 0, 1) 100%
+      );
+    "
+  >
+    <br />
+    <br />
+
+    <a href="{% url 'home' %}" class="text-white"> back </a>
+    <div class="h-screen flex items-center justify-center">
+      <div class="flex flex-col w-1/3 bg-blue-500 text-center">
+        <h1 class="text-white py-4">ZHAZTED</h1>
+        <a href="{% url 'profile' request.user.username %}" class="text-white">
+          Profile
+        </a>
+        <a href="{% url 'tickets' request.user.username %}" class="text-white">
+          Tickets
+        </a>
+        <a href="{% url 'history' request.user.username %}" class="text-white">
+          History
+        </a>
+      </div>
+
+      <div class="flex-grow w-full flex justify-center items-center">
+        <div class="content w-2/3 bg-white p-6 shadow-md rounded-lg">
+          {% block content %} {% endblock %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
