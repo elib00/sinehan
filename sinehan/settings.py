@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     #project apps
     'accounts',
     'bookings',
+    'movies',
 ]
 
 MIDDLEWARE = [
