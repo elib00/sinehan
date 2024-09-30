@@ -47,7 +47,7 @@ def logout_view(request):
 def profile_view(request, id):
     try:
         user = CustomUser.objects.get(id = id)
-        return render(request, 'profile.html', {'user': user})
+        return render(request, 'read_profile.html', {'user': user})
     except CustomUser.DoesNotExist:
         raise HttpResponse("CustomUser table not found")
 

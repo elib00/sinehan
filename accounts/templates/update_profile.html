@@ -1,6 +1,6 @@
-{% extends 'accounts_base.html' %} {% block title %}Update Profile{% endblock %}
+{% extends 'profile.html' %} {% block title %}Update Profile{% endblock %}
 <br />
-{% block content%}
+{% block content1 %}
 
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
