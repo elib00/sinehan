@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.http import JsonResponse
+from .models import CustomUser
 
 
 #login_view already handles by auth.urls
@@ -41,3 +42,37 @@ def login_view(request):
 def logout_view(request):
     logout(request)  
     return redirect('home')
+
+
+def profile_view(request, id):
+    try:
+        user = CustomUser.objects.get(id = id)
+        return render(request, 'read_profile.html', {'user': user})
+    except CustomUser.DoesNotExist:
+        raise HttpResponse("CustomUser table not found")
+
+def tickets_view(request, id):
+    try:
+        user = CustomUser.objects.get(id = id)
+        return render(request, 'tickets.html', {'user': user})
+    except CustomUser.DoesNotExist:
+        raise HttpResponse("CustomUser table not found")
+
+def history_view(request, id):
+    try:
+        user = CustomUser.objects.get(id = id)
+        return render(request, 'history.html', {'user': user})
+    except CustomUser.DoesNotExist:
+        raise HttpResponse("CustomUser table not found")
+
+def update_profile(request, id):
+    if request.method == 'POST':
+        
+        form = CustomUserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', id=id)
+    else:
+        form = CustomUserUpdateForm(instance=request.user)
+    
+    return render(request, 'update_profile.html', {'form': form})
