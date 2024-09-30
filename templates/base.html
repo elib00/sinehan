@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Sinehan{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-gray-100"
+    style="
+      background: linear-gradient(
+        176deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgb(122, 1, 1) 20%,
+        rgba(0, 0, 0, 1) 57%,
+        rgba(0, 0, 0, 1) 100%
+      );
+    "
+  >
+    {% include 'components/navbar.html' %}
+    <br />
+    {% include 'components/register.html' %}
+
+    <!-- Placeholder for content that will change in each page -->
+    <div class="content">{% block content %}{% endblock %}</div>
+  </body>
+</html>

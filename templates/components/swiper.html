@@ -1,0 +1,102 @@
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<style>
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .slider-controler {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .slider-arrow {
+    cursor: pointer;
+  }
+</style>
+
+<section class="swiper-container">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <img
+        src="https://cdn.marvel.com/content/1x/dp3_1sht_digital_srgb_ka_swords_v5_resized.jpg"
+        alt="slide_image"
+      />
+    </div>
+    <div class="swiper-slide">
+      <img
+        src="https://www.indiewire.com/wp-content/uploads/2019/12/us-1.jpg?w=758"
+        alt="slide_image"
+      />
+    </div>
+    <div class="swiper-slide">
+      <img
+        src="https://i.ebayimg.com/images/g/rTUAAOSwFaRkfzZ8/s-l1200.jpg"
+        alt="slide_image"
+      />
+    </div>
+    <div class="swiper-slide">
+      <img
+        src="https://marketplace.canva.com/EAFTl0ixW_k/1/0/1131w/canva-black-white-minimal-alone-movie-poster-YZ-0GJ13Nc8.jpg"
+        alt="slide_image"
+      />
+    </div>
+    <div class="swiper-slide">
+      <img
+        src="https://i.ebayimg.com/00/s/MTYwMFgxMTA3/z/Cd0AAOSwocdkoDER/$_57.JPG?set_id=880000500F"
+        alt="slide_image"
+      />
+    </div>
+    <div class="swiper-slide">
+      <img
+        src="https://marketplace.canva.com/EAFVCFkAg3w/1/0/1131w/canva-red-and-black-horror-movie-poster-AOBSIAmLWOs.jpg"
+        alt="slide_image"
+      />
+    </div>
+    <div class="swiper-slide">
+      <img
+        src="https://gonewiththetwins.com/wp-content/uploads/2023/07/oppenheimer_tall.jpg"
+        alt="slide_image"
+      />
+    </div>
+  </div>
+  <div class="slider-controler">
+    <div class="swiper-button-prev slider-arrow">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </div>
+    <div class="swiper-button-next slider-arrow">
+      <ion-icon name="arrow-forward-outline"></ion-icon>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".swiper-container", {
+    effect: "coverflow",
+    grabCursor: true,
+    centeredSlides: true,
+    loop: true,
+    slidesPerView: "auto",
+    coverflowEffect: {
+      rotate: 0,
+      stretch: 0,
+      depth: 100,
+      modifier: 2.5,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+      clickable: true,
+    },
+  });
+</script>
