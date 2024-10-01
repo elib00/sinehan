@@ -54,6 +54,7 @@ def profile_view(request, id):
 def tickets_view(request, id):
     try:
         user = CustomUser.objects.get(id = id)
+        tickets = user.objects.tickets()
         return render(request, 'tickets.html', {'user': user})
     except CustomUser.DoesNotExist:
         raise HttpResponse("CustomUser table not found")
