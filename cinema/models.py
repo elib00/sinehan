@@ -14,7 +14,7 @@ class ScheduledMovie(models.Model):
     is_active = models.BooleanField(default=True)
     
 class Ticket(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="profile_tickets")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_tickets")
     scheduled_movie = models.ForeignKey(ScheduledMovie, on_delete=models.CASCADE, related_name="movie_tickets")
     seat_identifier = models.CharField(max_length=3, default="")
     is_active = models.BooleanField(default=True)
