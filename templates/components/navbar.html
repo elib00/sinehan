@@ -35,14 +35,14 @@
         class="absolute right-0 w-48 bg-white rounded-md shadow-lg hidden"
       >
         <a
-          href="{% url 'profile' request.user.id %}"
+          href="{% url 'profile' %}"
           class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
         >
           My Profile
         </a>
 
         <a
-          href="{% url 'tickets' request.user.id %}"
+          href="{% url 'tickets' %}"
           class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
         >
           My Tickets
