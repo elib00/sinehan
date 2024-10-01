@@ -3,13 +3,13 @@
 {% block content1 %}
 
 <h1>Name: {{ user.last_name }}, {{ user.first_name }}</h1>
-<h1>Username: {{ request.user.username }}</h1>
+<h1>Username: {{ user.username }}</h1>
 <h1>Email: {{ user.email }}</h1>
 <h1>Birthdate: {{ user.birth_date }}</h1>
 <h1>Address: {{ user.address }}</h1>
 
 <a
-  href="{% url 'update_profile' request.user.id %}"
+  href="{% url 'update_profile' user.id %}"
   class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
 >
   Edit Profile
