@@ -34,6 +34,7 @@ def login_view(request):
             login(request, user)
             return redirect('home')  
         else:
+            #TODO create 404 not found page
             return render(request, 'hello.html', {'error': 'Invalid credentials'})
         
     #TODO: Fix login required in movies_view
@@ -53,9 +54,9 @@ def profile_view(request, id):
 
 def tickets_view(request, id):
     try:
-        user = CustomUser.objects.get(id = id)
-        tickets = user.objects.tickets()
-        return render(request, 'tickets.html', {'user': user})
+        # user = CustomUser.objects.get(id = id)
+        tickets = user.user_tickets.all()
+        return render(request, 'tickets.html', {'user': request.user})
     except CustomUser.DoesNotExist:
         raise HttpResponse("CustomUser table not found")
 
@@ -67,8 +68,7 @@ def history_view(request, id):
         raise HttpResponse("CustomUser table not found")
 
 def update_profile(request, id):
-    if request.method == 'POST':
-        
+    if request.method == "POST":
         form = CustomUserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
