@@ -1,9 +1,10 @@
 from django import forms
+from movies.models import Movie
 from django.contrib.auth import get_user_model
 
 CustomUser = get_user_model()
 
-class LoginForm(forms.Form):
+class AdminLoginForm(forms.Form):
     email = forms.EmailField(
         label="Email",
         widget=forms.EmailInput(attrs={
@@ -43,3 +44,47 @@ class LoginForm(forms.Form):
             self.add_error("email", "User with this email does not exist.")
         
         return cleaned_data
+
+
+class AddMovieForm(forms.ModelForm):
+    class Meta:
+        model = Movie
+        fields = '__all__'
+        widgets = {
+            'movie_name': forms.TextInput(attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
+                'placeholder': 'Enter movie name'
+            }),
+            'director': forms.TextInput(attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
+                'placeholder': 'Enter director name'
+            }),
+            'producer': forms.TextInput(attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
+                'placeholder': 'Enter producer name'
+            }),
+            'synopsis': forms.Textarea(attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
+                'placeholder': 'Enter movie synopsis', 
+                'rows': 5
+            }),
+            'cast': forms.Textarea(attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
+                'placeholder': 'Enter cast members', 
+                'rows': 3
+            }),
+            'duration': forms.TimeInput(attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
+                'placeholder': 'Enter duration (e.g. HH:MM:SS)'
+            }),
+            'movie_format': forms.Select(attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none'
+            }),
+            'movie_rating': forms.Select(attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none'
+            }),
+            'genre': forms.TextInput(attrs={
+                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
+                'placeholder': 'Enter genre'
+            }),
+        }
