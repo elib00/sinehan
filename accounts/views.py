@@ -70,7 +70,7 @@ def history_view(request):
     except CustomUser.DoesNotExist:
         raise HttpResponse("CustomUser table not found")
 
-def update_profile(request, id):
+def update_profile(request):
     if request.method == "POST":
         form = CustomUserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
