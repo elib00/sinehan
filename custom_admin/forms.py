@@ -45,46 +45,75 @@ class AdminLoginForm(forms.Form):
         
         return cleaned_data
 
+from django import forms
+from movies.models import Movie
 
 class AddMovieForm(forms.ModelForm):
+    movie_name = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'placeholder': 'Enter movie name'
+        })
+    )
+    
+    director = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'placeholder': 'Enter director name'
+        })
+    )
+    
+    producer = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'placeholder': 'Enter producer name'
+        })
+    )
+    
+    synopsis = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'placeholder': 'Enter movie synopsis', 
+            'rows': 5
+        })
+    )
+    
+    cast = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'placeholder': 'Enter cast members', 
+            'rows': 3
+        })
+    )
+    
+    duration = forms.TimeField(
+        widget=forms.TimeInput(attrs={
+            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'placeholder': 'Enter duration (e.g. HH:MM:SS)'
+        })
+    )
+    
+    movie_format = forms.ChoiceField(
+        choices=[('format1', 'Format 1'), ('format2', 'Format 2')],  # Update with actual choices
+        widget=forms.Select(attrs={
+            'class': 'border border-gray-300 rounded-lg p-2 w-full'
+        })
+    )
+    
+    movie_rating = forms.ChoiceField(
+        choices=[('G', 'G'), ('PG', 'PG'), ('PG-13', 'PG-13'), ('R', 'R')],  # Update with actual choices
+        widget=forms.Select(attrs={
+            'class': 'border border-gray-300 rounded-lg p-2 w-full'
+        })
+    )
+    
+    genre = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'placeholder': 'Enter genre'
+        })
+    )
+
     class Meta:
         model = Movie
-        fields = '__all__'
-        widgets = {
-            'movie_name': forms.TextInput(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
-                'placeholder': 'Enter movie name'
-            }),
-            'director': forms.TextInput(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
-                'placeholder': 'Enter director name'
-            }),
-            'producer': forms.TextInput(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
-                'placeholder': 'Enter producer name'
-            }),
-            'synopsis': forms.Textarea(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
-                'placeholder': 'Enter movie synopsis', 
-                'rows': 5
-            }),
-            'cast': forms.Textarea(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
-                'placeholder': 'Enter cast members', 
-                'rows': 3
-            }),
-            'duration': forms.TimeInput(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
-                'placeholder': 'Enter duration (e.g. HH:MM:SS)'
-            }),
-            'movie_format': forms.Select(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none'
-            }),
-            'movie_rating': forms.Select(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none'
-            }),
-            'genre': forms.TextInput(attrs={
-                'class': 'w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-300 focus:outline-none', 
-                'placeholder': 'Enter genre'
-            }),
-        }
+        fields = '__all__'  # Still using this to include all fields from the Movie model

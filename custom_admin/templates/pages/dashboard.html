@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,9 +15,13 @@
         <aside class="w-64 bg-gray-800 text-white">
             {% include "components/sidebar.html" %} 
         </aside>
+
         <main class="flex-grow p-6 bg-white shadow-md">
-            {% block content %}{% endblock %}
+            {% block content %}
+            {% endblock %}
         </main>
+
+        {% include "components/add_movie.html" %}
     </div>
 </body>
 </html>
