@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     #project apps
     'accounts',
     'bookings',
-    'movies'
+    'movies',
+    'custom_admin'
 ]
 
 MIDDLEWARE = [
