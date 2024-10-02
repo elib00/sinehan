@@ -45,34 +45,38 @@ def logout_view(request):
     return redirect('home')
 
 
-def profile_view(request, id):
+def profile_view(request):
     try:
-        user = CustomUser.objects.get(id = id)
+        # user = CustomUser.objects.get(id = id)
+        user = request.user
         return render(request, 'read_profile.html', {'user': user})
     except CustomUser.DoesNotExist:
         raise HttpResponse("CustomUser table not found")
 
-def tickets_view(request, id):
+def tickets_view(request):
     try:
         # user = CustomUser.objects.get(id = id)
-        tickets = user.user_tickets.all()
-        return render(request, 'tickets.html', {'user': request.user})
+        user = request.user
+        # tickets = user.user_tickets.all()
+        return render(request, 'tickets.html', {'user': user})
     except CustomUser.DoesNotExist:
         raise HttpResponse("CustomUser table not found")
 
-def history_view(request, id):
+def history_view(request):
     try:
-        user = CustomUser.objects.get(id = id)
+        # user = CustomUser.objects.get(id = id)
+        user = request.user
         return render(request, 'history.html', {'user': user})
     except CustomUser.DoesNotExist:
         raise HttpResponse("CustomUser table not found")
 
-def update_profile(request, id):
+def update_profile(request):
     if request.method == "POST":
         form = CustomUserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('profile', id=id)
+            # return redirect('profile', id=id)
+            return redirect('profile')
     else:
         form = CustomUserUpdateForm(instance=request.user)
     
