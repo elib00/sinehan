@@ -1,37 +1,48 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content%}
-      <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 h-screen items-center justify-center">
+      <div class="grid grid-cols-4 sm:grid-cols-12  h-screen items-center justify-center">
           <!-- left box -->
           <div class="col-span-4 sm:col-span-3">
-              <div class="bg-white shadow rounded-lg p-6 h-[80vh] ml-5">
-                  <div class="flex flex-col items-center">
-                      <img src="https://randomuser.me/api/portraits/men/94.jpg" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
-
-                      </img>
-                      <h1 class="text-xl font-bold">{{ user.first_name }}, {{ user.last_name }}</h1>
-                      <p class="text-gray-700">{{ user.username }}</p>
-                      
-                  </div>
-                  <hr class="my-6 border-t border-gray-300">
-                  <div class="flex flex-col">
-                      
-                      <ul>
-                          <li class="mb-2"><a href="{% url 'profile' %}" class="text-black">
-                            Profile
-                          </a></li>
-                          <li class="mb-2"><a href="{% url 'tickets' %}" class="text-black">
-                            Tickets
-                          </a></li>
-                          <li class="mb-2"><a href="{% url 'history' %}" class="text-black">
-                            History
-                          </a></li> 
-                          
-                      </ul>
-                  </div>
-              </div>
-          </div>
+            <div class="bg-black shadow  p-6 h-[100vh] flex flex-col justify-between">
+                <!-- Upper Section -->
+                <div class="text-white mt-9 border-r border-yellow-400">
+                    <h1 class="text-3xl font-bold my-5">Settings</h1>
+                    <!-- <hr class="my-6 border-t border-gray-300"> -->
+                    <ul>
+                        <li class="mb-2">
+                            <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
+                                <a href="{% url 'profile' %}">Profile</a>
+                            </button>
+                        </li>
+                        <li class="mb-2">
+                            <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
+                                <a href="{% url 'profile' %}">Account Settings</a>
+                            </button>
+                        </li>
+                        <li class="mb-2">
+                            <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
+                                <a href="{% url 'tickets' %}">Tickets</a>
+                            </button>
+                        </li>
+                        <li class="mb-2">
+                            <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded">
+                                <a href="{% url 'history' %}">History</a>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                
+                
+                <div>
+                    <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded mb-9">
+                        <a href="{% url 'logout' %}">Log Out</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
           <!-- right box -->
           <div class="col-span-4 sm:col-span-9">
-              <div class="bg-white shadow rounded-lg p-6 h-[80vh] mr-5">
+              <div class="bg-black shadow p-6 h-[100vh] mt-9 text-white ">
                  {% block content1 %}
                  {% endblock %}
               </div>
