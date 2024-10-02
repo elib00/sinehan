@@ -38,12 +38,6 @@ class LoginForm(forms.Form):
         cleaned_data = super().clean()
         email = cleaned_data.get("email")
         password = cleaned_data.get("password")
-        
-        if not email:
-            self.add_error("email", "Email field must be provided")
-            
-        if not password:
-            self.add_error("password", "Password field must be provided")
 
         if not CustomUser.objects.filter(email=email).exists():
             self.add_error("email", "User with this email does not exist.")
