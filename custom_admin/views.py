@@ -25,8 +25,7 @@ class AdminLoginView(View):
                 else:
                     form.add_error(None, "User must be an admin to access this page")
             else:
-                print("walay user")
-                form.add_error(None, "Incorrect email or password")
+                form.add_error("password", "Incorrect password")
         else:
             print(form.errors)
             

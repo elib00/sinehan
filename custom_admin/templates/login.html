@@ -18,11 +18,29 @@
                 <div class="mb-4">
                     <label for="id_email" class="block text-gray-700 font-semibold">{{ form.email.label }}</label>
                     {{ form.email }}
+
+                    {% if form.email.errors %}
+                    <div class="text-red-500 text-base mt-2">
+                        {% for error in form.email.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
+
                 <div class="mb-4">
                     <label for="id_password" class="block text-gray-700 font-semibold">{{ form.password.label }}</label>
                     {{ form.password }}
+
+                    {% if form.password.errors %}
+                    <div class="text-red-500 text-base mt-2">
+                        {% for error in form.password.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
+                
                 {% if form.non_field_errors %}
                 <div class="text-red-500 text-base mt-2">
                     {% for error in form.non_field_errors %}

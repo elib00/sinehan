@@ -46,6 +46,6 @@ class LoginForm(forms.Form):
             self.add_error("password", "Password field must be provided")
 
         if not CustomUser.objects.filter(email=email).exists():
-                self.add_error("email", "User with this email does not exist.")
+            self.add_error("email", "User with this email does not exist.")
         
         return cleaned_data
