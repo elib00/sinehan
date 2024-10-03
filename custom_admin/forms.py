@@ -86,15 +86,15 @@ class AddMovieForm(forms.ModelForm):
         })
     )
     
-    duration = forms.TimeField(
-        widget=forms.TimeInput(attrs={
+    duration = forms.DurationField(
+        widget=forms.TextInput(attrs={
             'class': 'border border-gray-300 rounded-lg p-2 w-full', 
             'placeholder': 'Enter duration (e.g. HH:MM:SS)'
         })
     )
     
     movie_format = forms.ChoiceField(
-        choices=[('format1', 'Format 1'), ('format2', 'Format 2')],  # Update with actual choices
+        choices=[('3D', '3D'), ('2D', '2D')],  # Update with actual choices
         widget=forms.Select(attrs={
             'class': 'border border-gray-300 rounded-lg p-2 w-full'
         })

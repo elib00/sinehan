@@ -1,74 +1,64 @@
 {% load static %}
 
-<div id="movieModal" class="fixed inset-0 z-50 hidden flex justify-center items-center bg-black bg-opacity-50">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
+<div id="movieModal" class="fixed inset-0 z-50 hidden overflow-y-auto overflow-x-hidden flex justify-center items-start pt-2">
+    <div class="fixed inset-0 bg-black opacity-50" id="modalOverlay"></div>
+    <div class="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md m-4">
         <h2 class="text-xl font-semibold mb-4">Add Movie</h2>
         
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %} 
-            <div class="space-y-4">
-                <!-- Movie Name -->
-                <div>
-                    <label for="id_movie_name" class="block text-sm font-medium text-gray-700">Movie Name</label>
-                    {{ form.movie_name }}
-                    {{ form.movie_name.errors }}
-                </div>
+        <form method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_add_movie' %}" class="space-y-4">
+            {% csrf_token %}
+            <!-- Movie Name -->
+            <div>
+                <label for="movie_name" class="block text-sm font-medium text-gray-700">Movie Name</label>
+                <input type="text" id="movie_name" name="movie_name" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter movie name">
+            </div>
 
-                <!-- Director -->
-                <div>
-                    <label for="id_director" class="block text-sm font-medium text-gray-700">Director</label>
-                    {{ form.director }}
-                    {{ form.director.errors }}
-                </div>
+            <!-- Director -->
+            <div>
+                <label for="director" class="block text-sm font-medium text-gray-700">Director</label>
+                <input type="text" id="director" name="director" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter director's name">
+            </div>
 
-                <!-- Producer -->
-                <div>
-                    <label for="id_producer" class="block text-sm font-medium text-gray-700">Producer</label>
-                    {{ form.producer }}
-                    {{ form.producer.errors }}
-                </div>
+            <!-- Producer -->
+            <div>
+                <label for="producer" class="block text-sm font-medium text-gray-700">Producer</label>
+                <input type="text" id="producer" name="producer" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter producer's name">
+            </div>
 
-                <!-- Synopsis -->
-                <div>
-                    <label for="id_synopsis" class="block text-sm font-medium text-gray-700">Synopsis</label>
-                    {{ form.synopsis }}
-                    {{ form.synopsis.errors }}
-                </div>
+            <!-- Synopsis -->
+            <div>
+                <label for="synopsis" class="block text-sm font-medium text-gray-700">Synopsis</label>
+                <textarea id="synopsis" name="synopsis" rows="4" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Write a short synopsis..."></textarea>
+            </div>
 
-                <!-- Cast -->
-                <div>
-                    <label for="id_cast" class="block text-sm font-medium text-gray-700">Cast</label>
-                    {{ form.cast }}
-                    {{ form.cast.errors }}
-                </div>
+            <!-- Cast -->
+            <div>
+                <label for="cast" class="block text-sm font-medium text-gray-700">Cast</label>
+                <input type="text" id="cast" name="cast" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter main cast">
+            </div>
 
-                <!-- Duration -->
-                <div>
-                    <label for="id_duration" class="block text-sm font-medium text-gray-700">Duration</label>
-                    {{ form.duration }}
-                    {{ form.duration.errors }}
-                </div>
+            <!-- Duration -->
+            <div>
+                <label for="duration" class="block text-sm font-medium text-gray-700">Duration (HH:MM:SS)</label>
+                <input type="text" id="duration" name="duration" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter duration">
+            </div>
 
-                <!-- Movie Format -->
-                <div>
-                    <label for="id_movie_format" class="block text-sm font-medium text-gray-700">Movie Format</label>
-                    {{ form.movie_format }}
-                    {{ form.movie_format.errors }}
-                </div>
+            <!-- Movie Format -->
+            <div>
+                <label for="movie_format" class="block text-sm font-medium text-gray-700">Movie Format</label>
+                <input type="text" id="movie_format" name="movie_format" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter movie format (e.g., IMAX, 3D)">
+            </div>
 
-                <!-- Movie Rating -->
-                <div>
-                    <label for="id_movie_rating" class="block text-sm font-medium text-gray-700">Movie Rating</label>
-                    {{ form.movie_rating }}
-                    {{ form.movie_rating.errors }}
-                </div>
+            <!-- Movie Rating -->
+            <div>
+                <label for="movie_rating" class="block text-sm font-medium text-gray-700">Movie Rating</label>
+                <input type="text" id="movie_rating" name="movie_rating" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter movie rating (e.g., PG-13)">
+            </div>
 
-                <!-- Genre -->
-                <div>
-                    <label for="id_genre" class="block text-sm font-medium text-gray-700">Genre</label>
-                    {{ form.genre }}
-                    {{ form.genre.errors }}
-                </div>
+            <!-- Genre -->
+            <div>
+                <label for="genre" class="block text-sm font-medium text-gray-700">Genre</label>
+                <input type="text" id="genre" name="genre" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter movie genre">
             </div>
 
             <div class="mt-6">
@@ -78,7 +68,6 @@
             </div>
         </form>
         
-        <!-- Close button -->
         <button id="closeModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
             &times;
         </button>
@@ -86,23 +75,29 @@
 </div>
 
 <script>
-    // JavaScript to handle modal opening and closing
     const openModalButton = document.getElementById("btn-add-movie");
     const closeModalButton = document.getElementById('closeModal');
     const modal = document.getElementById('movieModal');
+    const modalOverlay = document.getElementById('modalOverlay');
 
-    openModalButton.addEventListener('click', () => {
-        modal.classList.remove('hidden'); // Show the modal
-    });
+    function openModal() {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
 
-    closeModalButton.addEventListener('click', () => {
-        modal.classList.add('hidden'); // Hide the modal
-    });
+    function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = ''; // Restore background scrolling
+    }
 
-    // Close the modal when clicking outside of it
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.classList.add('hidden');
-        }
+    openModalButton.addEventListener('click', openModal);
+    closeModalButton.addEventListener('click', closeModal);
+
+    // Close the modal when clicking on the overlay
+    modalOverlay.addEventListener('click', closeModal);
+
+    // Prevent clicks inside the modal from closing it
+    modal.querySelector('.bg-white').addEventListener('click', (event) => {
+        event.stopPropagation();
     });
-</script>
+</script>   

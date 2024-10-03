@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from .forms import AdminLoginForm, AddMovieForm
 from django.contrib.auth import authenticate, login
@@ -32,6 +32,8 @@ class AdminLoginView(View):
         return render(request, "pages/login.html", {"form": form})
 
 class AdminDashboardView(LoginRequiredMixin, View):
+    #TODO ig get sa dashboard kay mo generate sha sa mga forms na needed 
+    
     login_url = "/admin/login/"  # Specify the login URL here
     redirect_field_name = "next"  # This is the default field to redirect after login
 
@@ -39,15 +41,18 @@ class AdminDashboardView(LoginRequiredMixin, View):
         return render(request, "pages/dashboard.html")
 
 class AdminAddMovieView(View):
-    def get(self, request):
-        form = AddMovieForm()
-        return render(request, "sections/add_movie.html", {"form": form})
+    # def get(self, request):
+    #     form = AddMovieForm()
+    #     return render(request, "sections/add_movie.html", {"form": form})
     
     def post(self, request):
         form = AddMovieForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("admin_dashboard_add_movie")
+            print("na save ang movie")
+            return redirect("admin_dashboard")
+        else:
+            print(form.errors)
 
-        return render(request, "sections/add_movie.html", {"form": form})
+        return render(request, "pages/dashboard.html", {"form": form})
         

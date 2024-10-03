@@ -16,7 +16,7 @@ def signup_view(request):
         user_form = CustomUserCreationForm(request.POST)
     
         if user_form.is_valid():
-            user = user_form.save()
+            user = user_form.save() 
             login(request, user)
             return redirect('home')
     
