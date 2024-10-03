@@ -4,10 +4,10 @@
           <div class="col-span-4 sm:col-span-3">
             <div class="bg-black shadow  p-6 h-[100vh] flex flex-col justify-between">
                 <!-- Upper Section -->
-                <div class="text-white mt-9 border-r border-yellow-400">
+                <div class="text-white mt-9 ">
                     <h1 class="text-3xl font-bold my-5">Settings</h1>
                     <!-- <hr class="my-6 border-t border-gray-300"> -->
-                    <ul>
+                    <ul class="border-r border-yellow-400">
                         <li class="mb-2">
                             <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
                                 <a href="{% url 'profile' %}">Profile</a>
@@ -42,7 +42,7 @@
         
           <!-- right box -->
           <div class="col-span-4 sm:col-span-9">
-              <div class="bg-black shadow p-6 h-[100vh] mt-9 text-white ">
+              <div class=" shadow p-6 h-[100vh] mt-9 text-white overflow-x-auto" >
                  {% block content1 %}
                  {% endblock %}
               </div>
