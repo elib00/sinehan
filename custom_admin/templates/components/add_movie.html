@@ -5,61 +5,27 @@
     <div class="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md m-4">
         <h2 class="text-xl font-semibold mb-4">Add Movie</h2>
         
-        <form method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_add_movie' %}" class="space-y-4">
+        <form id="addMovieForm" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard' %}" class="space-y-4">
             {% csrf_token %}
-            <!-- Movie Name -->
-            <div>
-                <label for="movie_name" class="block text-sm font-medium text-gray-700">Movie Name</label>
-                <input type="text" id="movie_name" name="movie_name" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter movie name">
-            </div>
 
-            <!-- Director -->
-            <div>
-                <label for="director" class="block text-sm font-medium text-gray-700">Director</label>
-                <input type="text" id="director" name="director" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter director's name">
-            </div>
+            {% comment %} hidden input field para mabaw-an unsa na field gisubmit {% endcomment %}
+            <input type="hidden" name="form_type" value="add_movie">
 
-            <!-- Producer -->
-            <div>
-                <label for="producer" class="block text-sm font-medium text-gray-700">Producer</label>
-                <input type="text" id="producer" name="producer" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter producer's name">
-            </div>
+            {% for field in add_movie_form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <p class="text-red-500 text-xs italic">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
 
-            <!-- Synopsis -->
-            <div>
-                <label for="synopsis" class="block text-sm font-medium text-gray-700">Synopsis</label>
-                <textarea id="synopsis" name="synopsis" rows="4" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Write a short synopsis..."></textarea>
-            </div>
-
-            <!-- Cast -->
-            <div>
-                <label for="cast" class="block text-sm font-medium text-gray-700">Cast</label>
-                <input type="text" id="cast" name="cast" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter main cast">
-            </div>
-
-            <!-- Duration -->
-            <div>
-                <label for="duration" class="block text-sm font-medium text-gray-700">Duration (HH:MM:SS)</label>
-                <input type="text" id="duration" name="duration" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter duration">
-            </div>
-
-            <!-- Movie Format -->
-            <div>
-                <label for="movie_format" class="block text-sm font-medium text-gray-700">Movie Format</label>
-                <input type="text" id="movie_format" name="movie_format" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter movie format (e.g., IMAX, 3D)">
-            </div>
-
-            <!-- Movie Rating -->
-            <div>
-                <label for="movie_rating" class="block text-sm font-medium text-gray-700">Movie Rating</label>
-                <input type="text" id="movie_rating" name="movie_rating" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter movie rating (e.g., PG-13)">
-            </div>
-
-            <!-- Genre -->
-            <div>
-                <label for="genre" class="block text-sm font-medium text-gray-700">Genre</label>
-                <input type="text" id="genre" name="genre" class="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Enter movie genre">
-            </div>
+            {% if add_movie_form.non_field_errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    {{ add_movie_form.non_field_errors }}
+                </div>
+            {% endif %}
 
             <div class="mt-6">
                 <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -74,11 +40,13 @@
     </div>
 </div>
 
+
 <script>
     const openModalButton = document.getElementById("btn-add-movie");
     const closeModalButton = document.getElementById('closeModal');
     const modal = document.getElementById('movieModal');
     const modalOverlay = document.getElementById('modalOverlay');
+    const addMovieForm = document.getElementById('addMovieForm');
 
     function openModal() {
         modal.classList.remove('hidden');
@@ -100,4 +68,4 @@
     modal.querySelector('.bg-white').addEventListener('click', (event) => {
         event.stopPropagation();
     });
-</script>   
+</script>

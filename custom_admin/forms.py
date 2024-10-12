@@ -45,71 +45,78 @@ class AdminLoginForm(forms.Form):
         
         return cleaned_data
 
-from django import forms
-from movies.models import Movie
-
 class AddMovieForm(forms.ModelForm):
     movie_name = forms.CharField(
+        label="Movie Name",
         widget=forms.TextInput(attrs={
-            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
             'placeholder': 'Enter movie name'
         })
     )
     
     director = forms.CharField(
+        label="Director",
         widget=forms.TextInput(attrs={
-            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
             'placeholder': 'Enter director name'
         })
     )
     
     producer = forms.CharField(
+        label="Producer",
         widget=forms.TextInput(attrs={
-            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
             'placeholder': 'Enter producer name'
         })
     )
     
     synopsis = forms.CharField(
+        label="Synopsis",
+        max_length = 1000,
         widget=forms.Textarea(attrs={
-            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm resize-none',
             'placeholder': 'Enter movie synopsis', 
-            'rows': 5
+            'rows': 4
         })
     )
     
     cast = forms.CharField(
+        label="Cast",
         widget=forms.Textarea(attrs={
-            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm resize-none',
             'placeholder': 'Enter cast members', 
             'rows': 3
         })
     )
     
     duration = forms.DurationField(
+        label="Duration (HH:MM:SS)",
         widget=forms.TextInput(attrs={
-            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
             'placeholder': 'Enter duration (e.g. HH:MM:SS)'
         })
     )
     
     movie_format = forms.ChoiceField(
-        choices=[('3D', '3D'), ('2D', '2D')],  # Update with actual choices
+        label="Format",
+        choices=[('3D', '3D'), ('2D', '2D')],
         widget=forms.Select(attrs={
-            'class': 'border border-gray-300 rounded-lg p-2 w-full'
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
         })
     )
     
     movie_rating = forms.ChoiceField(
-        choices=[('G', 'G'), ('PG', 'PG'), ('PG-13', 'PG-13'), ('R', 'R')],  # Update with actual choices
+        label="Rating",
+        choices=[('G', 'G'), ('PG', 'PG'), ('PG-13', 'PG-13'), ('R', 'R')],
         widget=forms.Select(attrs={
-            'class': 'border border-gray-300 rounded-lg p-2 w-full'
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
         })
     )
     
     genre = forms.CharField(
+        label="Genre",
         widget=forms.TextInput(attrs={
-            'class': 'border border-gray-300 rounded-lg p-2 w-full', 
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
             'placeholder': 'Enter genre'
         })
     )

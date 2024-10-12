@@ -36,16 +36,22 @@ class AdminDashboardView(LoginRequiredMixin, View):
     
     login_url = "/admin/login/"  # Specify the login URL here
     redirect_field_name = "next"  # This is the default field to redirect after login
-
-    def get(self, request):
-        return render(request, "pages/dashboard.html")
-
-class AdminAddMovieView(View):
-    # def get(self, request):
-    #     form = AddMovieForm()
-    #     return render(request, "sections/add_movie.html", {"form": form})
     
+    def get(self, request): 
+        add_movie_form = AddMovieForm()
+        context = {
+            "add_movie_form": add_movie_form
+        }
+        
+        return render(request, "pages/dashboard.html", context)
+
     def post(self, request):
+        form_type = request.POST.get("form_type")
+    
+        if form_type == "add_movie":
+            return self.process_add_movie(request)
+        
+    def process_add_movie(self, request):
         form = AddMovieForm(request.POST)
         if form.is_valid():
             form.save()
@@ -54,5 +60,4 @@ class AdminAddMovieView(View):
         else:
             print(form.errors)
 
-        return render(request, "pages/dashboard.html", {"form": form})
-        
+        return render(request, "pages/dashboard.html", {"add_movie_form": form})
