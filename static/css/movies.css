@@ -1,0 +1,56 @@
+.heading {
+  max-width: 968px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-bottom: 1px solid black;
+}
+
+.movies-container {
+  max-width: 968px;
+  margin-right: auto;
+  margin-left: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, auto));
+  gap: 1rem;
+  margin-top: 2rem;
+  color: white;
+}
+
+.box .box-img {
+  width: 100%;
+  height: 270px;
+}
+
+.box .box-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.box-img {
+  position: relative; /* Create a positioning context for absolute children */
+  overflow: hidden; /* Hide any overflow from child elements */
+}
+
+.box .box-img img {
+  transition: transform 0.2s linear; /* Moved transition here for cleaner code */
+}
+
+.box .box-img img:hover {
+  transform: translateY(-15px);
+  z-index: 1;
+}
+
+.rating {
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  z-index: 2;
+}
+
+.rating img {
+  width: 30px;
+  height: auto;
+}
