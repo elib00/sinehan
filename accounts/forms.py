@@ -2,13 +2,15 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
         label="Username",
         widget=forms.TextInput(attrs={
             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-            'placeholder': 'Enter Username'
+            'placeholder': 'Enter Username',
+            'autocomplete': 'off'
         })
     )
     
@@ -16,23 +18,26 @@ class CustomUserCreationForm(UserCreationForm):
         label="Email",
         widget=forms.EmailInput(attrs={
             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-            'placeholder': 'Enter Email'
+            'placeholder': 'Enter Email',
+            'autocomplete': 'off'
         })
     )
     
-    firstname = forms.CharField(
+    first_name = forms.CharField(
         label="Firstname",
         widget=forms.TextInput(attrs={
             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-            'placeholder': 'Enter Firstname'
+            'placeholder': 'Enter Firstname',
+            'autocomplete': 'off'
         })
     )
     
-    lastname = forms.CharField(
+    last_name = forms.CharField(
         label="Lastname",
         widget=forms.TextInput(attrs={
             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-            'placeholder': 'Enter Lastname'
+            'placeholder': 'Enter Lastname',
+            'autocomplete': 'off'
         })
     )
     
@@ -49,7 +54,8 @@ class CustomUserCreationForm(UserCreationForm):
         label="Address",
         widget=forms.TextInput(attrs={
             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-            'placeholder': 'Enter Address'
+            'placeholder': 'Enter Address',
+            'autocomplete': 'off'
         })
     )
 
@@ -57,7 +63,8 @@ class CustomUserCreationForm(UserCreationForm):
         label="Password",
         widget=forms.PasswordInput(attrs={
             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-            'placeholder': 'Enter your password'
+            'placeholder': 'Enter your password',
+            'autocomplete': 'off'
         })
     )
     
@@ -65,7 +72,8 @@ class CustomUserCreationForm(UserCreationForm):
         label="Confirm Password",
         widget=forms.PasswordInput(attrs={
             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-            'placeholder': 'Enter your password again'
+            'placeholder': 'Enter your password again',
+            'autocomplete': 'off'
         })
     )
 

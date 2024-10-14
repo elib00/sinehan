@@ -7,7 +7,7 @@
     <div class="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg border">
         <div class="px-6 py-4">
             <h2 class="text-2xl font-bold mb-6 text-center">Create User</h2>
-            <form method="post" action="{% url 'admin_dashboard' %}" class="space-y-6">
+            <form method="post" action="{% url 'admin_dashboard_add_user' %}" class="space-y-6">
                 {% csrf_token %}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -25,16 +25,16 @@
                         {% endfor %}
                     </div>
                     <div>
-                        <label for="{{ add_user_form.firstname.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.firstname.label }}</label>
-                        {{ add_user_form.firstname }}
-                        {% for error in add_user_form.firstname.errors %}
+                        <label for="{{ add_user_form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.first_name.label }}</label>
+                        {{ add_user_form.first_name }}
+                        {% for error in add_user_form.first_name.errors %}
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div>
-                        <label for="{{ add_user_form.lastname.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.lastname.label }}</label>
-                        {{ add_user_form.lastname }}
-                        {% for error in add_user_form.lastname.errors %}
+                        <label for="{{ add_user_form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.last_name.label }}</label>
+                        {{ add_user_form.last_name }}
+                        {% for error in add_user_form.last_name.errors %}
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
@@ -52,8 +52,6 @@
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label for="{{ add_user_form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.password1.label }}</label>
                         {{ add_user_form.password1 }}
@@ -70,9 +68,9 @@
                     </div>
                 </div>
                 
-                {% if add_user_form.non_field_errors %}
+                {% if add_movie_form.non_field_errors %}
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        {{ add_user_form.non_field_errors }}
+                        {{ add_movie_form.non_field_errors }}
                     </div>
                 {% endif %}
 

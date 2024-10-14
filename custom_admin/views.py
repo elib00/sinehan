@@ -86,3 +86,6 @@ class AdminDashboardAddUserView(View):
             print(form.errors)
         
         return render(request, "sections/add_user.html", {"add_user_form": form})
+
+class AdminDashboardAllUsersView(View):
+    pass
