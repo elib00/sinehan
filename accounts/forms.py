@@ -77,6 +77,7 @@ class CustomUserCreationForm(UserCreationForm):
         })
     )
 
+    #TODO clean_password2 na method, need sha i override aron maka non-field error ta
     class Meta:
         model = CustomUser
         fields = ['username', 'email', 'first_name', 'last_name', 'birth_date', 'address', 'password1', 'password2']
