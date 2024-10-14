@@ -1,14 +1,18 @@
-
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/movies.css' %}">
 
-<section class="movies mt-5" id="movies">
-    <h2 class="heading"> Opening this Week</h2>
+<section class="movies mt-32" id="movies">
+    <h2 class="heading">Opening this Week</h2>
 
-    <div class="movies-container">
-        
+    <div class="movies-container relative">
         {% for movie in movies %}
+        <div class="box relative inline-block">
             {% include 'components/movie_card.html' with image_url="https://i5.walmartimages.com/asr/b2e2aaca-fdd6-453c-a683-b950250fefda.3e020d7aade1a31251798a24501009bc.jpeg" movie_title=movie.movie_name duration=movie.duration genre=movie.genre %}
+
+        
+        </div>
         {% endfor %}
     </div>
 </section>
+
+ 
