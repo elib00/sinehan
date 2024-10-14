@@ -6,18 +6,9 @@
     <title>{% block title %}Sinehan{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body
+ <body
     class="overflow-hidden"
-    style="
-      background: linear-gradient(
-        176deg,
-        rgba(0, 0, 0, 1) 0%,
-        rgb(122, 1, 1) 20%,
-        rgba(0, 0, 0, 1) 57%,
-        rgba(0, 0, 0, 1) 100%
-      );
-
-    "
+   
   >
     {% include 'components/navbar.html' %}
     <br />
@@ -25,5 +16,5 @@
 
     <!-- Placeholder for content that will change in each page -->
     <div class="content">{% block content %}{% endblock %}</div>
-  </body>
+  </body> 
 </html>
