@@ -124,3 +124,8 @@ class AddMovieForm(forms.ModelForm):
     class Meta:
         model = Movie
         fields = '__all__'  # Still using this to include all fields from the Movie model
+
+class AddUserForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = '__all__'  #

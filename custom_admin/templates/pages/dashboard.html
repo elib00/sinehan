@@ -5,23 +5,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Dashboard{% endblock %}</title>
+    <title>{% block title %} Dashboard {% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 flex flex-col min-h-screen">
     {% include "components/header.html" %} 
 
-    <div class="flex h-screen">
-        <aside class="w-64 bg-gray-800 text-white">
-            {% include "components/sidebar.html" %} 
-        </aside>
-
-        <main class="flex-grow p-6 bg-white shadow-md">
-            {% block content %}
-            {% endblock %}
+   <div class="flex flex-col min-h-screen">
+    <div class="flex flex-grow">
+        {% comment %} mo sayop ang layout basta naay aside {% endcomment %}
+        {% include "components/sidebar.html" %}
+        <main class="flex-1 p-6 bg-white shadow-md overflow-y-auto justify-center items-center">
+            {% block content %}{% endblock %}
         </main>
-
-        {% include "components/add_movie.html" %}
     </div>
+    {% include "components/add_movie.html" %}
+</div>
 </body>
 </html>

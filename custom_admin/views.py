@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import AdminLoginForm, AddMovieForm
+from accounts.forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -39,6 +40,7 @@ class AdminDashboardView(LoginRequiredMixin, View):
     
     def get(self, request): 
         add_movie_form = AddMovieForm()
+        
         context = {
             "add_movie_form": add_movie_form
         }
@@ -61,3 +63,26 @@ class AdminDashboardView(LoginRequiredMixin, View):
             print(form.errors)
 
         return render(request, "pages/dashboard.html", {"add_movie_form": form})
+
+class AdminDashboardAddUserView(View):
+    def get(self, request):
+        add_movie_form = AddMovieForm()
+        add_user_form = CustomUserCreationForm()
+        
+        context = {
+            "add_movie_form": add_movie_form,
+            "add_user_form": add_user_form
+        }
+        
+        return render(request, "sections/add_user.html", context)
+        
+    def post(self, request):
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print("na save na ang user")
+            return redirect("admin_dashboard")
+        else:
+            print(form.errors)
+        
+        return render(request, "sections/add_user.html", {"add_user_form": form})
