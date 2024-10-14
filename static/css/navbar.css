@@ -62,7 +62,7 @@ header {
   bottom: -4px;
   left: 0;
   transition: 0.4s all linear;
-  background: red;
+  background: #ffe400;
 }
 
 .navbar a:hover::after,
