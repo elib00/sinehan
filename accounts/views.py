@@ -1,10 +1,11 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import CustomUserCreationForm, CustomUserUpdateForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.http import JsonResponse
-from .models import CustomUser
+# from .models import CustomUser
 
+CustomUser = get_user_model()
 
 #login_view already handles by auth.urls
 

@@ -7,5 +7,10 @@
         <a href="#" class="block py-2 px-4 mb-2 hover:bg-gray-700 rounded">Tickets</a>
         <a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded">Movies</a>
         <button id="btn-add-movie" class="text-left w-full py-2 px-4 hover:bg-gray-700 rounded">Add Movie</button>
+        {% comment %} di pwede ang logout og get request sheeesh {% endcomment %}
+        <form method="post" action="{% url 'admin_logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="block py-2 px-4 hover:bg-gray-700 rounded">Logout</button>
+        </form>
     </nav>
 </div>

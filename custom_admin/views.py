@@ -2,8 +2,12 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .forms import AdminLoginForm, AddMovieForm
 from accounts.forms import CustomUserCreationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LogoutView
+from django.urls import reverse_lazy
+
+CustomUser = get_user_model()
 
 # Create your views here.
 class AdminLoginView(View):
@@ -88,4 +92,9 @@ class AdminDashboardAddUserView(View):
         return render(request, "sections/add_user.html", {"add_user_form": form})
 
 class AdminDashboardAllUsersView(View):
-    pass
+    def get(self, request):
+        users = CustomUser.objects.all()
+        return render(request, "sections/all_users.html", {"users": users})
+
+class AdminLogoutView(LogoutView):
+    next_page = reverse_lazy("admin_login")
