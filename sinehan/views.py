@@ -8,3 +8,6 @@ def movies_view(request):
 
 def home_view(request):
     return render(request, 'home.html')
+
+def coming_view(request):
+    return render(request, 'coming.html')

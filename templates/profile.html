@@ -1,8 +1,10 @@
-{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content%}
+{% extends 'base.html' %} 
+{% block title %}Home{% endblock %} 
+{% block content %}
 <div class="overflow-y-hidden">
-      <div class="grid grid-cols-4 sm:grid-cols-12  h-screen items-center justify-center ">
-           <!-- left box -->
-           <div class="col-span-4 sm:col-span-3">
+    <div class="flex h-screen items-center">
+        <!-- Left box -->    
+        <div class="basis-[20%]">
             <div class="bg-black shadow p-6 h-[100vh] flex flex-col justify-between">
                 <!-- Upper Section -->
                 <div class="text-white mt-20">
@@ -12,57 +14,56 @@
                              alt="Bordered avatar">
                         <p class="text-white text-xl mt-2">{{ user.username }}</p>
                     </div>
-                    <!-- <hr class="my-6 border-t border-gray-300"> -->
-                    <ul class="border-r border-yellow-400">
-                      <li class="mb-2">
-                          <a href="{% url 'profile' %}" class="w-full block">
-                              <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
-                                  Profile
-                              </button>
-                          </a>
-                      </li>
-                      <li class="mb-2">
-                          <a href="{% url 'profile' %}" class="w-full block">
-                              <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
-                                  Account Settings
-                              </button>
-                          </a>
-                      </li>
-                      <li class="mb-2">
-                          <a href="{% url 'tickets' %}" class="w-full block">
-                              <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
-                                  Tickets
-                              </button>
-                          </a>
-                      </li>
-                      <li class="mb-2">
-                          <a href="{% url 'history' %}" class="w-full block">
-                              <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
-                                  History
-                              </button>
-                          </a>
-                      </li>
-                  </ul>
-                  
+
+                    <!-- Links Section -->
+                    <ul class="border-r border-yellow-400 mt-10">
+                        <li class="mb-2">
+                            <a href="{% url 'profile' %}" class="w-full block">
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
+                                    Profile
+                                </button>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'profile' %}" class="w-full block">
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
+                                    Account Settings
+                                </button>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'tickets' %}" class="w-full block">
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
+                                    Tickets
+                                </button>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'history' %}" class="w-full block">
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
+                                    History
+                                </button>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
                 
-                
+                <!-- Log Out Button -->
                 <div>
                     <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded mb-9">
                         <a href="{% url 'logout' %}">Log Out</a>
                     </button>
                 </div>
             </div>
-         </div>
-        
-          <!-- right box -->
-          <div class="col-span-4 sm:col-span-9">
-              <div class=" shadow p-6 h-[100vh] mt-9 text-white overflow-x-auto" >
-                 {% block content1 %}
-                 {% endblock %}
-              </div>
-          </div>
-      </div>
-</div>
+        </div>
 
+        <!-- Right box -->
+        <div class="basis-[80%]">
+            <div class="shadow pt-16 h-[100vh] mt-auto text-white overflow-x-auto">
+                {% block content1 %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
