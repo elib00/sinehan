@@ -1,0 +1,65 @@
+{% extends 'movies.html' %}
+{% load static %}
+{% block content1 %}
+
+<!-- Background Video Section -->
+<div class="relative w-full h-screen overflow-hidden">
+    <!-- Background Video -->
+    <video class="absolute top-0 left-0 w-full h-full object-cover mt-12" autoplay loop muted>
+        <source src="{% static 'videos/venom_trailer.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+
+    <!-- Overlay Content -->
+    <section class="relative z-10 movies h-[100vh] text-white flex" id="movies">
+        <div class="container m-auto px-4 flex">
+           
+            <div class="flex-1">
+                <img src="https://i5.walmartimages.com/asr/b2e2aaca-fdd6-453c-a683-b950250fefda.3e020d7aade1a31251798a24501009bc.jpeg" alt="Image">
+            </div>
+        
+          
+            <div class="flex-[3.5] flex flex-col mx-20">
+                <div class="mb-4"> 
+                    <div class="flex mb-2">
+                        <h1 class="text-5xl">{{movie.movie_name}}</h1>
+                        <span>
+                            <img src="https://www.smcinema.com/CDN/media/entity/get/RatingIconGraphic/PG?referenceScheme=Global&allowPlaceHolder=true" width="30px">
+                        </span>
+                    </div>
+                    <p class="text-gray-400">{{movie.duration}}</p>
+                    <br>
+                    <div class="flex align-middle mb-2">
+                        <p class="text-black text-xl bg-yellow-400 px-1">{{movie.movie_format}}</p>
+                        <p class="text-yellow-400 text-xl ml-5">{{movie.genre}}</p>
+                    </div>
+                    <br>
+                    <p>{{movie.synopsis}}</p>
+                    <br>
+                    <div class="flex space-x-14">
+                        <div>
+                            <h2 class="font-bold">Director</h2>
+                            <p>{{movie.director}}</p>
+                        </div>
+                        <div>
+                            <h2 class="font-bold">Cast</h2>
+                            <p>{{movie.cast}}</p>
+                        </div>
+                        <div>
+                            <h2 class="font-bold">Producer</h2>
+                            <p>{{movie.producer}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-10" > 
+                    <button class="bg-yellow-400 text-black py-2 px-4 rounded">
+                        Buy Ticket
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
