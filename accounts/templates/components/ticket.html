@@ -1,0 +1,77 @@
+{% load static %}
+<div class="w-full max-w-4xl mx-auto p-4">
+    <div class="bg-zinc-900 text-white rounded-lg overflow-hidden flex">
+        <!-- Main Ticket Section -->
+        <div class="flex-grow pr-8 flex items-center">
+            <div class="flex-1">
+                <img src={% static "images/logo.png"%} width="200" style="transform: rotate(-90deg)">
+            </div>
+            
+
+            <!-- Ticket Info -->
+            <div class="flex-4">
+                <h1 class="text-4xl font-bold mb-6">
+                    <span class="text-white">CINEMA </span>
+                    <span class="text-yellow-400">TICKET</span>
+                </h1>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="border border-zinc-700 p-3">
+                        <div class="text-lg">27 May</div>
+                    </div>
+                    <div class="border border-zinc-700 p-3">
+                        <div class="text-lg">16.00 - 18.00</div>
+                    </div>
+                    <div class="border border-zinc-700 p-3">
+                        <div class="text-lg">Fauget Studio</div>
+                    </div>
+                    <div class="border border-zinc-700 p-3">
+                        <div class="text-lg">123 Anywhere St., Any City</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ticket Stub -->
+        <div class="w-48 bg-yellow-400 relative">
+            <!-- Perforation -->
+            <div class="absolute left-0 top-0 bottom-0 flex flex-col justify-between py-4">
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+            </div>
+            
+            <!-- Stub Content -->
+            <div class="h-full p-6 flex flex-col justify-between">
+                <div class="text-black font-bold text-2xl">
+                    ADMIT ONE
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="border border-black p-2">
+                        <div class="text-sm text-black">Gate</div>
+                        <div class="text-lg text-black font-bold">02</div>
+                    </div>
+                    <div class="border border-black p-2">
+                        <div class="text-sm text-black">Row</div>
+                        <div class="text-lg text-black font-bold">03</div>
+                    </div>
+                    <div class="border border-black p-2">
+                        <div class="text-sm text-black">Seat</div>
+                        <div class="text-lg text-black font-bold">04</div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <div class="text-black text-xs mb-1">Ticket No:</div>
+                    <div class="text-black font-mono">0123456789</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

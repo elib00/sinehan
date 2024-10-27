@@ -1,5 +1,6 @@
 {% extends 'movies.html' %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/movies.css' %}">
 {% block content1 %}
 
 <!-- Background Video Section -->
@@ -7,7 +8,6 @@
     <!-- Background Video -->
     <video class="absolute top-0 left-0 w-full h-full object-cover mt-12" autoplay loop muted>
         <source src="{% static 'videos/venom_trailer.mp4' %}" type="video/mp4">
-        Your browser does not support the video tag.
     </video>
 
 

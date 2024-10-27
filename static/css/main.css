@@ -1,137 +1,129 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 .banner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh; 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: url('../images/bgimageflipped.png') no-repeat center center;
-    background-size: cover; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: url("../images/bgimageflipped.png") no-repeat center center;
+  background-size: cover;
 }
 
 .content {
-    max-width: 40%;
-    padding: 20px;
-    color: rgb(255, 255, 255);
-    padding-left: 60px;
+  max-width: 40%;
+  padding: 20px;
+  color: rgb(255, 255, 255);
+  padding-left: 60px;
 }
 
 .movie-title {
-    max-width: 400px;
-    align-items:start;
-    padding: 0;
-    margin: 0;
+  max-width: 400px;
+  align-items: start;
+  padding: 0;
+  margin: 0;
 }
 
 .banner .content h4 {
-    padding: 0;
-    font-weight: 400;
-    font-size: 20px;
-    margin-bottom: 15px;
-    margin-top: 0;
-    padding-left: 50px;
-    
+  padding: 0;
+  font-weight: 400;
+  font-size: 20px;
+  margin-bottom: 15px;
+  margin-top: 0;
+  padding-left: 50px;
 }
 .banner .content p {
-    font-weight: 300;
-    font-size: 15px;
-    margin-bottom: 15px;
-    line-height: 1.5em;
-    padding-left: 50px;
+  font-weight: 300;
+  font-size: 15px;
+  margin-bottom: 15px;
+  line-height: 1.5em;
+  padding-left: 50px;
 }
-.banner .content .button{
-    
-    display: inline-block;
-    margin-right: 10px;
-    background: rgb(201, 174, 2);
-    color: rgb(0, 0, 0);
-    padding: 6px 20px;
-    text-shadow: 40px;
-    
-   
+.banner .content .button {
+  display: inline-block;
+  margin-right: 10px;
+  background: rgb(201, 174, 2);
+  color: rgb(0, 0, 0);
+  padding: 6px 20px;
+  text-shadow: 40px;
 }
-.button{
-    margin-left: 50px;
+.button {
+  margin-left: 50px;
 }
-.button a{
-    color: black;
+.button a {
+  color: black;
 }
-.banner .carousel-box{
-    position: relative;
-    min-width: 650px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background:transparent;
-    margin-top: 50px;
-    backdrop-filter: blur(10px);
-    right: 70px;
-    top: 80px;
-    border-radius: 20px;
+.banner .carousel-box {
+  position: relative;
+  min-width: 650px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  margin-top: 50px;
+  backdrop-filter: blur(10px);
+  right: 70px;
+  top: 80px;
+  border-radius: 20px;
 }
-.carousel{
-    position: relative;
-    height: 420px;
-    perspective: 1500;
-    padding-right: 50px;
-    
+.carousel {
+  position: relative;
+  height: 420px;
+  perspective: 1500;
+  padding-right: 50px;
 }
-.carousel .carousel-item{
-    width: 250px;
-    cursor: pointer;
+.carousel .carousel-item {
+  width: 250px;
+  cursor: pointer;
 }
-.carousel-item img{
-    
-    border-radius: 10px;
-    transform: translateX(8px)translateY(-100px);
-    object-fit: cover;
-    object-position: center;
+.carousel-item img {
+  border-radius: 10px;
+  transform: translateX(8px) translateY(-100px);
+  object-fit: cover;
+  object-position: center;
 }
 
-.play{
-    position:absolute ;
-    bottom: 50px;
-    left: 100;
-    display: inline-flex;
-    justify-content: flex-start;
-    align-items: center;
-    color: white;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 1px;
-    font-size: 1.2em;
-    cursor: pointer!important;
-    transition: 0.3s;
+.play {
+  position: absolute;
+  bottom: 50px;
+  left: 100;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 1.2em;
+  cursor: pointer !important;
+  transition: 0.3s;
 }
-.play i{
-    margin-right: 10px;
-    font-size: 40px;
-    cursor: pointer!important;
+.play i {
+  margin-right: 10px;
+  font-size: 40px;
+  cursor: pointer !important;
 }
-.play:hover{
-    color: rgb(0, 0, 0);
+.play:hover {
+  color: rgb(0, 0, 0);
 }
-.sci{
-    position: absolute;
-    bottom: 50px;
-    right: 30px;
-    display: inline-flex;
-    justify-content: center;
-    gap: 25px;
+.sci {
+  position: absolute;
+  bottom: 50px;
+  right: 30px;
+  display: inline-flex;
+  justify-content: center;
+  gap: 25px;
 }
-.sci a{
-    color: rgb(0, 0, 0);
-    text-decoration:none;
-    font-weight: 500;
-    letter-spacing: 1px;
-    font-size: 25px;
-    transition: 0.3s;
-    cursor: pointer;
-
+.sci a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 25px;
+  transition: 0.3s;
+  cursor: pointer;
 }
