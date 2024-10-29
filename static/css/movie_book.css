@@ -1,86 +1,31 @@
 .date-time-section {
-  margin: 20px 0;
+  margin: 20px 0 0 0;
 }
 
 .date-grid,
 .time-grid {
   display: flex;
   gap: 10px;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .date-btn,
 .time-btn {
-  background: #333;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
-  color: white;
+  background-color: #333;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  height: auto;
+  width: 60px;
+  margin: 3px;
+  border-radius: 15px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: transform 0.3s ease-in-out;
+  letter-spacing: 1.5px;
 }
 
-.date-btn:hover,
-.time-btn:hover {
-  background: #444;
-}
-
-.date-btn.selected,
-.time-btn.selected {
-  background: #dc1111;
-}
-
-.screen {
-  width: 80%;
-  height: 4px;
-  background: linear-gradient(to right, transparent, #fff, transparent);
-  margin: 40px auto;
-  position: relative;
-}
-
-.screen::after {
-  content: "SCREEN";
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  color: #666;
-}
-
-.seats-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.seat-row {
-  display: flex;
-  gap: 10px;
-}
-
-.seat {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: #333;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.seat:hover {
-  background: #dc1111;
-}
-
-.seat.selected {
-  background: #dc1111;
-}
-
-.seat.booked {
-  background: #666;
-  cursor: not-allowed;
+.time-btn {
+  width: 80px;
+  letter-spacing: 2.3px;
 }
 
 .row-label {
@@ -144,13 +89,6 @@
 .purchase-btn:disabled {
   background: #666;
   cursor: not-allowed;
-}
-
-.selected-seats-info {
-  margin: 20px 0;
-  padding: 15px;
-  background: #222;
-  border-radius: 5px;
 }
 
 .success-modal {
@@ -243,4 +181,141 @@
 
 .step.active .step-title {
   color: #ff0000;
+}
+
+.movie-container {
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  border: 0px;
+  width: 90%;
+  max-width: 800px;
+}
+
+.movie-select {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  border: 1px solid #ff1414;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.screen {
+  background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+  height: 50px;
+  width: 100%;
+  margin: 0;
+  transform: perspective(300px) rotateX(-5deg);
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+}
+
+.seat-container {
+  perspective: 1000px;
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.section {
+  margin: 0 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 10px;
+}
+
+.seat {
+  background-color: #333;
+  height: 24px;
+  width: 30px;
+  margin: 3px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  position: relative;
+}
+
+.seat:hover {
+  transform: scale(1.2);
+  background-color: #ff1414;
+}
+
+.seat.selected {
+  background-color: #ff1414;
+}
+
+.seat.occupied {
+  background-color: #707070;
+  cursor: not-allowed;
+}
+
+.seat::after {
+  content: attr(data-seat);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 8px;
+  color: #fff;
+}
+
+.legend {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 10px;
+
+  border-radius: 5px;
+  margin: 20px 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.summary {
+  text-align: center;
+  margin-top: 20px;
+  color: white;
+  font-size: 0.9em;
+}
+
+.title {
+  text-align: center;
+  color: #ff1414;
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.checkout-btn {
+  background-color: #ff1414;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 13px;
+  width: 100%;
+}
+
+.checkout-btn:hover {
+  background-color: #cc1111;
+}
+
+.checkout-btn:disabled {
+  background-color: #666;
+  cursor: not-allowed;
 }
