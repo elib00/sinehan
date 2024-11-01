@@ -8,18 +8,16 @@
     <title>{% block title %} Dashboard {% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex flex-col min-h-screen">
-    {% include "components/header.html" %} 
+<body class="bg-gray-100 flex flex-col h-screen">
+    {% include "components/header.html" %}
 
-   <div class="flex flex-col min-h-screen">
-    <div class="flex flex-grow">
+   <div class="flex flex-1 overflow-y-hidden">
         {% comment %} mo sayop ang layout basta naay aside {% endcomment %}
         {% include "components/sidebar.html" %}
-        <main class="flex-1 p-6 bg-white shadow-md overflow-y-auto justify-center items-center">
+        <main class="flex-1 p-6 bg-white shadow-md justify-center items-center overflow-y-scroll">
             {% block content %}{% endblock %}
         </main>
+        {% include "components/add_movie.html" %}
     </div>
-    {% include "components/add_movie.html" %}
-</div>
 </body>
 </html>

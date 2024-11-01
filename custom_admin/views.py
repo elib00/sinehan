@@ -5,7 +5,7 @@ from accounts.forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 CustomUser = get_user_model()
 
@@ -26,7 +26,7 @@ class AdminLoginView(View):
             if user is not None:
                 if user.is_superuser and user.is_staff:
                     login(request, user)
-                    return render(request, "pages/dashboard.html")
+                    return redirect(reverse('admin_dashboard'))
                 else:
                     form.add_error(None, "User must be an admin to access this page")
             else:
@@ -93,8 +93,9 @@ class AdminDashboardAddUserView(View):
 
 class AdminDashboardAllUsersView(View):
     def get(self, request):
+        form = AddMovieForm()
         users = CustomUser.objects.all()
-        return render(request, "sections/all_users.html", {"users": users})
+        return render(request, "sections/all_users.html", {"users": users, "add_movie_form": form})
 
 class AdminLogoutView(LogoutView):
     next_page = reverse_lazy("admin_login")

@@ -1,16 +1,28 @@
 {% load static %}
-<div class="h-screen w-64 bg-gray-800 text-white flex flex-col">
+{% load side_navigation_tags %}
+
+<div class="w-64 bg-gray-800 text-white flex flex-col">
     <div class="px-4 py-6 text-2xl font-semibold">Dashboard</div>
     <nav class="flex-grow px-4 py-2">
-        <a href="{% url 'admin_dashboard_add_user' %}" class="block py-2 px-4 mb-2 hover:bg-gray-700 rounded">Create User</a>
-        <a href="{% url 'admin_dashboard_all_users' %}" class="block py-2 px-4 mb-2 hover:bg-gray-700 rounded">All Users</a>
-        <a href="#" class="block py-2 px-4 mb-2 hover:bg-gray-700 rounded">Tickets</a>
-        <a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded">Movies</a>
-        <button id="btn-add-movie" class="text-left w-full py-2 px-4 hover:bg-gray-700 rounded">Add Movie</button>
+        <a href="{% url 'admin_dashboard_add_user' %}" 
+           class="block py-2 px-4 mb-2 rounded {% is_active request 'admin_dashboard_add_user' %} ">
+           Create User
+        </a>
+        <a href="{% url 'admin_dashboard_all_users' %}" 
+           class="block py-2 px-4 mb-2 rounded {% is_active request 'admin_dashboard_all_users' %}">
+           All Users
+        </a>
+        <a href="#" 
+           class="block py-2 px-4 mb-2 hover:bg-gray-900 rounded">Tickets</a>
+        <a href="#" 
+           class="block py-2 px-4 hover:bg-gray-900 rounded">Movies</a>
+        <button id="btn-add-movie" 
+                class="text-left w-full py-2 px-4 hover:bg-gray-700 rounded hover:bg-gray-900">Add Movie</button>
+
         {% comment %} di pwede ang logout og get request sheeesh {% endcomment %}
         <form method="post" action="{% url 'admin_logout' %}">
             {% csrf_token %}
-            <button type="submit" class="block py-2 px-4 hover:bg-gray-700 rounded">Logout</button>
+            <button type="submit" class="text-left py-2 w-full px-4 hover:bg-gray-900 rounded">Logout</button>
         </form>
     </nav>
 </div>
