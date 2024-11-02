@@ -2,21 +2,24 @@
 {% load side_navigation_tags %}
 
 <div class="w-64 bg-gray-800 text-white flex flex-col">
-    <div class="px-4 py-6 text-2xl font-semibold">Dashboard</div>
-    <nav class="flex-grow px-4 py-2">
-        <a href="{% url 'admin_dashboard_add_user' %}" 
-           class="block py-2 px-4 mb-2 rounded {% is_active request 'admin_dashboard_add_user' %} ">
+	<div class="px-4 py-6 text-2xl font-semibold">Dashboard</div>
+	<nav class="flex-grow px-4 py-2">
+		<a href="{% url 'admin_dashboard_add_user' %}" 
+           class="block py-2 px-4 mb-2 rounded {% is_active request 'admin_dashboard_add_user' %}">
            Create User
         </a>
         <a href="{% url 'admin_dashboard_all_users' %}" 
            class="block py-2 px-4 mb-2 rounded {% is_active request 'admin_dashboard_all_users' %}">
            All Users
         </a>
-        <a href="#" 
-           class="block py-2 px-4 mb-2 hover:bg-gray-900 rounded">Tickets</a>
-        <a href="#" 
-           class="block py-2 px-4 hover:bg-gray-900 rounded">Movies</a>
-        <button id="btn-add-movie" 
-                class="text-left w-full py-2 px-4 hover:bg-gray-700 rounded hover:bg-gray-900">Add Movie</button>
+        <a href="{% url 'admin_dashboard_tickets' %}" 
+		   class="block py-2 px-4 mb-2 rounded {% is_active request 'admin_dashboard_tickets' %}">
+		   Tickets
+		</a>
+        <a href="{% url 'admin_dashboard_movie_list' %}" 
+           class="block py-2 px-4 mb-2 rounded {% is_active request 'admin_dashboard_movie_list' %}">
+           Movies
+         </a>
+        <button id="btn-add-movie" class="text-left w-full py-2 px-4 hover:bg-gray-700 rounded hover:bg-gray-900">Add Movie</button>
     </nav>
 </div>

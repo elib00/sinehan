@@ -1,5 +1,5 @@
 from django.urls import path, reverse_lazy
-from .views import AdminLoginView, AdminDashboardView, AdminDashboardAddUserView, AdminDashboardAllUsersView, AdminLogoutView, AdminDashboardUpdateUserView
+from .views import AdminLoginView, AdminDashboardView, AdminDashboardAddUserView, AdminDashboardAllUsersView, AdminLogoutView, AdminDashboardUpdateUserView, AdminDashboardMovieList, AdminDashboardTickets
 from django.views.generic import RedirectView
 
 urlpatterns = [
@@ -10,4 +10,6 @@ urlpatterns = [
     path("dashboard/add_user/", AdminDashboardAddUserView.as_view(), name="admin_dashboard_add_user"),
     path("dashboard/all_users/", AdminDashboardAllUsersView.as_view(), name="admin_dashboard_all_users"),
     path("dashboard/update_user/<int:user_id>/", AdminDashboardUpdateUserView.as_view(), name="admin_dashboard_update_user"),
+    path("dashboard/movie_list/", AdminDashboardMovieList.as_view(), name="admin_dashboard_movie_list"),
+    path("dashboard/tickets/", AdminDashboardTickets.as_view(), name="admin_dashboard_tickets")
 ]

@@ -133,3 +133,11 @@ class AdminLogoutView(LogoutView):
         response = super().dispatch(request, *args, **kwargs)
         messages.success(request, "Logout successful!")
         return response
+
+class AdminDashboardMovieList(View):
+    def get(self, request):
+        return render(request, "sections/movie_list.html")
+    
+class AdminDashboardTickets(View):
+    def get(self, request):
+        return render(request, "sections/tickets.html")
