@@ -18,7 +18,7 @@ class AdminLoginForm(forms.Form):
     password = forms.CharField(
         label="Password",
         widget=forms.PasswordInput(attrs={
-            'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-base   ',   
+            'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-base',   
             'placeholder': 'Enter your password',
         }),
         error_messages={'required': 'Password field must be provided'},
@@ -167,5 +167,23 @@ class AddNowShowingMovieForm(forms.Form):
         cinema_choices = Cinema.objects.values_list("id", "cinema_name")
         self.fields["cinema"].choices = cinema_choices
     
-class AddCinema(forms.ModelForm):
-    pass
+class AddCinemaForm(forms.ModelForm):
+    cinema_name = forms.CharField(
+        label="Cinema Name",
+        widget=forms.TextInput(attrs={
+            'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-base',   
+            'placeholder': 'Enter cinema name',
+        })
+    )
+    
+    capacity = forms.CharField(
+        label="Capacity",
+        widget=forms.NumberInput(attrs={
+            'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-base',   
+            'placeholder': 'Enter cinema capacity',
+        })
+    )
+    
+    class Meta:
+        model = Cinema
+        fields = "__all__"

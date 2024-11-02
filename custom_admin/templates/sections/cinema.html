@@ -4,48 +4,23 @@
 {% block title %} Dashboard - Cinema {% endblock %}
 {% block content %}
 <div class="h-full flex flex-row items-center container mx-auto py-4">
-    <div class="h-full flex-col flex-1 p-4">
-        <div class="bg-white rounded-lg shadow-lg p-6 w-full mx-auto bg-white rounded-xl overflow-hidden shadow-2xl border-2">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Now Showing</h2>
-            <form id="addNowShowingForm" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_cinema' %}" class="space-y-4">
-                {% csrf_token %}
-    
-                {% for field in now_showing_form %}
-                    <div>
-                        <label for="{{ field.id_for_label }}"  class="block text-m font-medium text-gray-700">{{ field.label }}</label>
-                        {{ field }}
-                        {% for error in field.errors %}
-                            <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-     
-                         
-                {% for error in now_showing_form.non_field_errors %}
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        {{ error }}
-                    </div>  
-                {% endfor %}
-    
-                <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-m font-medium text-white bg-gradient-to-r from-black to-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                    Show Now!
-                </button>
-            </form>
-        </div>
-        <div class="bg-white rounded-lg shadow-lg p-6 w-full mx-auto bg-white rounded-xl overflow-hidden shadow-2xl border-2">
+    <div class="h-full flex flex-col flex-1 p-4 overflow-y-auto justify-center gap-6">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full mx-auto bg-white rounded-xl overflow-hidden shadow-2xl border-2 mb-2">
             <h2 class="text-xl font-bold text-gray-800 mb-4">Add Cinema</h2>
-            <form id="addNewCinemaForm" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_cinema' %}" class="space-y-4">
+            <form id="addNewCinemaForm" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_add_cinema' %}" class="space-y-4">
                 {% csrf_token %}
     
-                {% for field in add_cinema_form %}
-                    <div>
-                        <label for="{{ field.id_for_label }}"  class="block text-m font-medium text-gray-700">{{ field.label }}</label>
-                        {{ field }}
-                        {% for error in field.errors %}
-                            <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
+                <div class="w-full flex flex-row items-center gap-4">
+                    {% for field in add_cinema_form %}
+                        <div class="flex-1">
+                            <label for="{{ field.id_for_label }}"  class="block text-m font-medium text-gray-700">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
      
                          
                 {% for error in add_cinema_form.non_field_errors %}
@@ -59,7 +34,37 @@
                 </button>
             </form>
         </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full mx-auto bg-white rounded-xl overflow-hidden shadow-2xl border-2 mb-2">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Now Showing</h2>
+            <form id="addNowShowingForm" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_add_now_showing' %}" class="space-y-4 flex flex-wrap gap-4">
+                {% csrf_token %}
+            
+                {% for field in now_showing_form %}
+                    <div class="flex-1 min-w-[200px]">
+                        <label for="{{ field.id_for_label }}" class="block text-m font-medium text-gray-700">{{ field.label }}</label>
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+             
+                {% for error in now_showing_form.non_field_errors %}
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        {{ error }}
+                    </div>  
+                {% endfor %}
+            
+                <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-m font-medium text-white bg-gradient-to-r from-black to-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    Show Now!
+                </button>
+            </form>
+        </div>
+        
     </div>
     <div class="h-full flex-1 bg-gray-800"></div>
 </div>
+
+{% include "components/message_modal.html" %}
+
 {% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm
-from cinema.models import NowShowingMovie
+from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm, AddCinemaForm
+from cinema.models import NowShowingMovie, Cinema
 from movies.models import Movie
 from accounts.forms import CustomUserCreationForm, CustomUserUpdateForm
 from django.contrib.auth import authenticate, login, get_user_model
@@ -30,7 +30,7 @@ class AdminLoginView(View):
                 if user.is_superuser and user.is_staff:
                     login(request, user)
                     messages.success(request, "User logged in successfully!")
-                    return redirect(reverse('admin_dashboard'))
+                    return redirect('admin_dashboard')
                 else:
                     messages.error(request, "User lacks the necessary access permissions")
                     form.add_error(None, "User must be an admin to access this page")
@@ -148,16 +148,19 @@ class AdminDashboardTickets(View):
 class AdminDashboardCinema(View):
     def get(self, request):
         now_showing_form = AddNowShowingMovieForm()
+        add_cinema_form = AddCinemaForm()
         
         context = {
-            "now_showing_form": now_showing_form
+            "now_showing_form": now_showing_form, 
+            "add_cinema_form": add_cinema_form
         }
         
         return render(request, "sections/cinema.html", context)
 
-    def post(self, request):
+class AdminDashboardAddNowShowing(View):
+    def post(self, request):    
         now_showing_form = AddNowShowingMovieForm(request.POST)
-        if now_showing_form.is_valid():
+        if now_showing_form.is_valid(): 
             cinema_id = now_showing_form.cleaned_data['cinema']
             cinema_instance = get_object_or_404(Cinema, id=cinema_id)
             movie_id = now_showing_form.cleaned_data['movie']
@@ -183,16 +186,29 @@ class AdminDashboardCinema(View):
         }
         
         return render(request, "sections/cinema.html", context)
-            
-
-def post(self, request):
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "User created successfully!")
-            return redirect("admin_dashboard")
-        else:
-            messages.error(request, "User creation failed")
-            print(form.errors)
         
-        return render(request, "sections/add_user.html", {"add_user_form": form})
+class AdminDashboardAddCinema(View):
+    def post(self, request):
+        add_cinema_form = AddCinemaForm(request.POST)
+        if add_cinema_form.is_valid():
+            capacity = add_cinema_form.cleaned_data.get("capacity")
+            cinema_name = add_cinema_form.cleaned_data.get("cinema_name")
+             
+            new_cinema = Cinema(
+                capacity=capacity,
+                cinema_name=cinema_name
+            )
+            
+            new_cinema.save()
+            messages.success(request, "A new cinema has been created!")
+            return redirect("admin_dashboard_cinema")
+        else:
+            messages.error(request, "Failed to add a new movie in Now Showing")
+            print(now_showing_form.errors)  # Print form errors for debugging
+        
+          
+        context = {
+            "add_cinema_form": add_cinema_form
+        }
+        
+        return render(request, "sections/cinema.html", context)
