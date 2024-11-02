@@ -5,10 +5,49 @@
             {% comment %} <div class="px-4 text-2xl font-semibold">Sinehan</div> {% endcomment %}
             <img src="{% static 'images/logo.png' %}" alt="Sinehan Logo" class="h-14 w-auto" />
              {% comment %} di pwede ang logout og get request sheeesh {% endcomment %}
-            <form method="post" action="{% url 'admin_logout' %}">
-                {% csrf_token %}
-                <button class="bg-white font-semibold text-red-800 py-2 px-4 rounded hover:bg-gray-200">Log Out</button>    
-            </form>
+
+            <button id="logoutBtn" class="bg-white font-semibold text-red-800 py-2 px-4 rounded hover:bg-gray-200">Log Out</button>    
         </div>
     </div>  
 </header>
+
+<!-- Logout Confirmation Modal -->
+<div id="logoutConfirmationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    <!-- Modal Content -->
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Are you sure you want to log out?</h2>
+        <p class="text-gray-600 mb-6">You will be logged out of your account.</p>
+        
+        <div class="flex justify-end space-x-4">
+            <!-- Stay Button -->
+            <button id="stayBtn" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-md">
+                Stay
+            </button>
+            
+            <!-- Confirm Log Out Button -->
+            <form method="post" action="{% url 'admin_logout' %}">
+                {% csrf_token %}
+                <button class="px-4 py-2 bg-black text-white rounded-md">Leave</button>    
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const logoutBtn = document.getElementById('logoutBtn');
+        const modalContainer = document.getElementById('logoutConfirmationModal');
+        const stayBtn = document.getElementById('stayBtn');
+    
+        // Show the modal when clicking "Log Out" button
+        logoutBtn.addEventListener('click', () => {
+            modalContainer.classList.remove('hidden');
+        });
+    
+        // Close the modal when clicking "Stay" button
+        stayBtn.addEventListener('click', () => {
+            modalContainer.classList.add('hidden');
+        });
+    });
+</script>

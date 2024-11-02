@@ -8,7 +8,7 @@ class AdminLoginForm(forms.Form):
     email = forms.EmailField(
         label="Email",
         widget=forms.EmailInput(attrs={
-            'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-lg', 
+            'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-base', 
             'placeholder': 'Enter your email',
         }),
         error_messages={'required': 'Email field must be provided'},
@@ -17,7 +17,7 @@ class AdminLoginForm(forms.Form):
     password = forms.CharField(
         label="Password",
         widget=forms.PasswordInput(attrs={
-            'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-lg',   
+            'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-base   ',   
             'placeholder': 'Enter your password',
         }),
         error_messages={'required': 'Password field must be provided'},

@@ -27,13 +27,17 @@ class AdminLoginView(View):
             if user is not None:
                 if user.is_superuser and user.is_staff:
                     login(request, user)
+                    messages.success(request, "User logged in successfully!")
                     return redirect(reverse('admin_dashboard'))
                 else:
+                    messages.error(request, "User lacks the necessary access permissions")
                     form.add_error(None, "User must be an admin to access this page")
             else:
+                messages.error(request, "Incorrect password")
                 form.add_error("password", "Incorrect password")
         else:
             print(form.errors)
+            messages.error(request, "User authentication failed")
             
         return render(request, "pages/login.html", {"form": form})
 
@@ -101,3 +105,8 @@ class AdminDashboardAllUsersView(View):
 
 class AdminLogoutView(LogoutView):
     next_page = reverse_lazy("admin_login")
+    
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        messages.success(request, "Logout successful!")
+        return response

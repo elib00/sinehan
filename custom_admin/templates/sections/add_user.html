@@ -144,16 +144,16 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.classList.remove('hidden');
         
         // Close when clicking X
-        closeButton.onclick = () => {
+        closeButton.addEventListener("click", () => {
             modal.classList.add('hidden');
-        }
+        });
         
         // Close when clicking outside
-        modal.onclick = (event) => {
+        modal.addEventListener("click", (event) => {
             if (event.target === modal) {
                 modal.classList.add('hidden');
             }
-        }
+        });
         
         // Auto close after 3 seconds
         //setTimeout(function() {
