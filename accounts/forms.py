@@ -83,6 +83,60 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ['username', 'email', 'first_name', 'last_name', 'birth_date', 'address', 'password1', 'password2']
 
 class CustomUserUpdateForm(forms.ModelForm):
+    username = forms.CharField(
+        label="Username",
+        widget=forms.TextInput(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Enter Username',
+            'autocomplete': 'off'
+        })
+    )
+    
+    email = forms.EmailField(
+        label="Email",
+        widget=forms.EmailInput(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Enter Email',
+            'autocomplete': 'off'
+        })
+    )
+    
+    first_name = forms.CharField(
+        label="Firstname",
+        widget=forms.TextInput(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Enter Firstname',
+            'autocomplete': 'off'
+        })
+    )
+    
+    last_name = forms.CharField(
+        label="Lastname",
+        widget=forms.TextInput(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Enter Lastname',
+            'autocomplete': 'off'
+        })
+    )
+    
+    birth_date = forms.DateField(
+        label="Birth Date",
+        widget=forms.DateInput(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Enter Date of Birth',
+            'type': 'date'  # This ensures the input type is date for HTML5 date picker
+        })
+    )
+        
+    address = forms.CharField(
+        label="Address",
+        widget=forms.TextInput(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Enter Address',
+            'autocomplete': 'off'
+        })
+    )
+    
     class Meta:
         model = CustomUser
         fields = ['username', 'first_name', 'last_name', 'email', 'birth_date', 'address']

@@ -10,7 +10,18 @@
             <form method="post" action="{% url 'admin_dashboard_add_user' %}" class="space-y-6">
                 {% csrf_token %}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
+
+                    {% for field in add_user_form %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"  class="block text-m font-medium text-gray-700">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                    {% comment %} <div>
                         <label for="{{ add_user_form.username.id_for_label }}" class="block text-m font-medium text-gray-700">{{ add_user_form.username.label }}</label>
                         {{ add_user_form.username }}
                         {% for error in add_user_form.username.errors %}
@@ -66,13 +77,14 @@
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
-                </div>
+                    {% endcomment %}
+                </div> 
                 
-                {% if add_movie_form.non_field_errors %}
+                {% for error in add_user_form.non_field_errors %}
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        {{ add_movie_form.non_field_errors }}
+                        {{ add_user_forms.non_field_errors }}
                     </div>
-                {% endif %}
+                {% endfor %}
 
                 {% comment %} <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-m font-medium text-white bg-gradient-to-r from-black to-red-600 hover:from-black hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                     Create Account

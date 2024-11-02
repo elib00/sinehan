@@ -43,7 +43,7 @@ class AdminLoginForm(forms.Form):
         if not CustomUser.objects.filter(email=email).exists():
             self.add_error("email", "User with this email does not exist.")
         
-        return cleaned_data
+        return cleaned_data 
 
 class AddMovieForm(forms.ModelForm):
     movie_name = forms.CharField(

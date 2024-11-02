@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from .forms import AdminLoginForm, AddMovieForm
-from accounts.forms import CustomUserCreationForm
+from accounts.forms import CustomUserCreationForm, CustomUserUpdateForm
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
@@ -97,11 +97,34 @@ class AdminDashboardAddUserView(View):
         
         return render(request, "sections/add_user.html", {"add_user_form": form})
 
+class AdminDashboardUpdateUserView(View):
+    def post(self, request, user_id):
+        user = get_object_or_404(CustomUser, id=user_id)
+        form = CustomUserUpdateForm(request.POST, instance=user)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, "User updated successfully!")
+            return redirect("admin_dashboard_all_users")
+        else:
+            messages.error(request, "User update unsuccessful")
+            print(form.errors)
+        
+        return render(request, "sections/all_users.html", {"update_user_form": form})
+        
 class AdminDashboardAllUsersView(View):
     def get(self, request):
-        form = AddMovieForm()
+        add_movie_form = AddMovieForm()
+        update_user_form = CustomUserUpdateForm()
         users = CustomUser.objects.all()
-        return render(request, "sections/all_users.html", {"users": users, "add_movie_form": form})
+        
+        context = {
+            "users": users,
+            "add_movie_form": add_movie_form,
+            "update_user_form": update_user_form
+        }
+        
+        return render(request, "sections/all_users.html", context)
 
 class AdminLogoutView(LogoutView):
     next_page = reverse_lazy("admin_login")
