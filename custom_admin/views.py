@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .forms import AdminLoginForm, AddMovieForm
+from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm
+from cinema.models import NowShowingMovie
+from movies.models import Movie
 from accounts.forms import CustomUserCreationForm, CustomUserUpdateForm
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -73,6 +75,7 @@ class AdminDashboardView(LoginRequiredMixin, View):
 
         return render(request, "pages/dashboard.html", {"add_movie_form": form})
 
+# TODO handle ang pag add og movie logic
 class AdminDashboardAddUserView(View):
     def get(self, request):
         add_movie_form = AddMovieForm()
@@ -141,3 +144,55 @@ class AdminDashboardMovieList(View):
 class AdminDashboardTickets(View):
     def get(self, request):
         return render(request, "sections/tickets.html")
+    
+class AdminDashboardCinema(View):
+    def get(self, request):
+        now_showing_form = AddNowShowingMovieForm()
+        
+        context = {
+            "now_showing_form": now_showing_form
+        }
+        
+        return render(request, "sections/cinema.html", context)
+
+    def post(self, request):
+        now_showing_form = AddNowShowingMovieForm(request.POST)
+        if now_showing_form.is_valid():
+            cinema_id = now_showing_form.cleaned_data['cinema']
+            cinema_instance = get_object_or_404(Cinema, id=cinema_id)
+            movie_id = now_showing_form.cleaned_data['movie']
+            movie_instance = get_object_or_404(Cinema, id=movie_id)
+            end_date = now_showing_form.cleaned_data['end_date'] 
+            
+            now_showing_movie = NowShowingMovie(
+                cinema=cinema_instance,  # Set the foreign key using ID
+                movie=movie_instance,    # Set the foreign key using ID
+                end_date=end_date    # Use the provided end date
+            )
+            
+            now_showing_movie.save() 
+            
+            messages.success(request, "A new movie is now showing!")
+            return redirect("admin_dashboard_cinema")
+        else:
+            messages.error(request, "Failed to add a new movie in Now Showing")
+            print(now_showing_form.errors)  # Print form errors for debugging
+        
+        context = {
+            "now_showing_form": now_showing_form
+        }
+        
+        return render(request, "sections/cinema.html", context)
+            
+
+def post(self, request):
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "User created successfully!")
+            return redirect("admin_dashboard")
+        else:
+            messages.error(request, "User creation failed")
+            print(form.errors)
+        
+        return render(request, "sections/add_user.html", {"add_user_form": form})

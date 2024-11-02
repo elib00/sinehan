@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'accounts',
     'bookings',
     'movies',
-    'custom_admin'
+    'cinema',
+    'custom_admin',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'sinehan.urls'
+
+# celery config
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
 
 import os 
 

@@ -1,5 +1,6 @@
 from django import forms
 from movies.models import Movie
+from cinema.models import NowShowingMovie, Cinema
 from django.contrib.auth import get_user_model
 
 CustomUser = get_user_model()
@@ -125,15 +126,46 @@ class AddMovieForm(forms.ModelForm):
         model = Movie
         fields = '__all__'  # Still using this to include all fields from the Movie model
 
-# class AddUserForm(forms.ModelForm):
-#     username = forms.CharField(
-#         label="Genre",
-#         widget=forms.TextInput(attrs={
-#             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
-#             'placeholder': '1'
-#         })
-#     )
+class AddNowShowingMovieForm(forms.Form):
+    cinema = forms.ChoiceField(
+        label="Select Cinema",
+        widget=forms.Select(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'autocomplete': 'off'
+        })
+    )
     
-#     class Meta:
-#         model = CustomUser
-#         fields = '__all__'  #
+    movie = forms.ChoiceField(
+        label="Select Movie",
+        widget=forms.Select(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'autocomplete': 'off'
+        })
+    )
+    
+    end_date = forms.DateField(
+        label="Showing End Date",
+        widget=forms.DateTimeInput(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Enter Username',
+            'autocomplete': 'off',
+            'type': 'datetime-local'  
+        })
+    )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Query the Movie model to get the movies
+        self.set_movie_choices()
+        self.set_cinema_choices()
+    
+    def set_movie_choices(self):
+        movie_choices = Movie.objects.values_list("id", "movie_name")  # Adjust field names accordingly
+        self.fields["movie"].choices = movie_choices
+    
+    def set_cinema_choices(self):
+        cinema_choices = Cinema.objects.values_list("id", "cinema_name")
+        self.fields["cinema"].choices = cinema_choices
+    
+class AddCinema(forms.ModelForm):
+    pass
