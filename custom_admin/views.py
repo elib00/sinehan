@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy, reverse
+from django.contrib import messages
 
 CustomUser = get_user_model()
 
@@ -84,9 +85,10 @@ class AdminDashboardAddUserView(View):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            print("na save na ang user")
+            messages.success(request, "User created successfully!")
             return redirect("admin_dashboard")
         else:
+            messages.error(request, "User creation failed")
             print(form.errors)
         
         return render(request, "sections/add_user.html", {"add_user_form": form})

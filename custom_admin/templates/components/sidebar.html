@@ -18,11 +18,5 @@
            class="block py-2 px-4 hover:bg-gray-900 rounded">Movies</a>
         <button id="btn-add-movie" 
                 class="text-left w-full py-2 px-4 hover:bg-gray-700 rounded hover:bg-gray-900">Add Movie</button>
-
-        {% comment %} di pwede ang logout og get request sheeesh {% endcomment %}
-        <form method="post" action="{% url 'admin_logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="text-left py-2 w-full px-4 hover:bg-gray-900 rounded">Logout</button>
-        </form>
     </nav>
 </div>

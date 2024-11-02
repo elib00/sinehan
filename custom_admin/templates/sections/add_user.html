@@ -3,64 +3,64 @@
 {% load static %}
 {% block title %} Dashboard - Add User {% endblock %}
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg border">
+<div class="h-full flex items-center container mx-auto px-4 py-8">
+    <div class="w-full max-w-4xl mx-auto bg-white rounded-xl overflow-hidden shadow-2xl border">
         <div class="px-6 py-4">
-            <h2 class="text-2xl font-bold mb-6 text-center">Create User</h2>
+            <h2 class="text-3xl font-bold mb-6 text-center">Create User</h2>
             <form method="post" action="{% url 'admin_dashboard_add_user' %}" class="space-y-6">
                 {% csrf_token %}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label for="{{ add_user_form.username.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.username.label }}</label>
+                        <label for="{{ add_user_form.username.id_for_label }}" class="block text-m font-medium text-gray-700">{{ add_user_form.username.label }}</label>
                         {{ add_user_form.username }}
                         {% for error in add_user_form.username.errors %}
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div>
-                        <label for="{{ add_user_form.email.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.email.label }}</label>
+                        <label for="{{ add_user_form.email.id_for_label }}" class="block text-m font-medium text-gray-700">{{ add_user_form.email.label }}</label>
                         {{ add_user_form.email }}
                         {% for error in add_user_form.email.errors %}
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div>
-                        <label for="{{ add_user_form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.first_name.label }}</label>
+                        <label for="{{ add_user_form.first_name.id_for_label }}" class="block text-m font-medium text-gray-700">{{ add_user_form.first_name.label }}</label>
                         {{ add_user_form.first_name }}
                         {% for error in add_user_form.first_name.errors %}
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div>
-                        <label for="{{ add_user_form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.last_name.label }}</label>
+                        <label for="{{ add_user_form.last_name.id_for_label }}" class="block text-m font-medium text-gray-700">{{ add_user_form.last_name.label }}</label>
                         {{ add_user_form.last_name }}
                         {% for error in add_user_form.last_name.errors %}
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div>
-                        <label for="{{ add_user_form.birth_date.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.birth_date.label }}</label>
+                        <label for="{{ add_user_form.birth_date.id_for_label }}" class="block text-m font-medium text-gray-700">{{ add_user_form.birth_date.label }}</label>
                         {{ add_user_form.birth_date }}
                         {% for error in add_user_form.birth_date.errors %}
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div>
-                        <label for="{{ add_user_form.address.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.address.label }}</label>
+                        <label for="{{ add_user_form.address.id_for_label }}" class="block text-m font-medium text-gray-700">{{ add_user_form.address.label }}</label>
                         {{ add_user_form.address }}
                         {% for error in add_user_form.address.errors %}
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div>
-                        <label for="{{ add_user_form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.password1.label }}</label>
+                        <label for="{{ add_user_form.password1.id_for_label }}" class="block text-m font-medium text-gray-700">{{ add_user_form.password1.label }}</label>
                         {{ add_user_form.password1 }}
                         {% for error in add_user_form.password1.errors %}
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
                         {% endfor %}
                     </div>
                     <div>
-                        <label for="{{ add_user_form.password2.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ add_user_form.password2.label }}</label>
+                        <label for="{{ add_user_form.password2.id_for_label }}" class="block text-m font-medium text-gray-700">{{ add_user_form.password2.label }}</label>
                         {{ add_user_form.password2 }}
                         {% for error in add_user_form.password2.errors %}
                             <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
@@ -74,13 +74,114 @@
                     </div>
                 {% endif %}
 
-                <div>
-                    <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Create Account
-                    </button>
-                </div>
+                {% comment %} <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-m font-medium text-white bg-gradient-to-r from-black to-red-600 hover:from-black hover:to-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    Create Account
+                </button>
+                {% endcomment %}
+
+                <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-m font-medium text-white bg-gradient-to-r from-black to-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    Create Account
+                </button>
+                
+                
             </form>
         </div>
     </div>
 </div>
+
+<!-- Message Modal -->
+<div id="messageModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+    <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 transform transition-all">
+        <!-- Modal content -->
+        <div class="p-6">
+            <!-- Close button -->
+            <button id="closeModal" class="absolute top-0 right-0 text-gray-400 hover:text-gray-500 p-1 rounded-md transition ease-in-out duration-200">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <!-- Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        <div data-success-message class="flex items-center p-4 mb-4 mt-4 rounded-lg bg-green-50 dark:bg-gray-800">
+                            <div class="flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3 text-sm font-normal text-green-700">
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% elif message.tags == 'error' %}
+                        <div data-error-message class="flex items-center p-4 mb-4 mt-4 rounded-lg bg-red-50">
+                            <div class="flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3 text-sm font-normal text-red-700">
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    let successMessages = document.querySelectorAll("[data-success-message]")
+    if (successMessages.length > 0) {
+        let modal = document.getElementById('messageModal');
+        let closeButton = document.getElementById('closeModal');
+        
+        // Show modal
+        modal.classList.remove('hidden');
+        
+        // Close when clicking X
+        closeButton.onclick = () => {
+            modal.classList.add('hidden');
+        }
+        
+        // Close when clicking outside
+        modal.onclick = (event) => {
+            if (event.target === modal) {
+                modal.classList.add('hidden');
+            }
+        }
+        
+        // Auto close after 3 seconds
+        //setTimeout(function() {
+        //    modal.classList.add('hidden');
+        //}, 3000);
+    }
+
+    let errorMessages = document.querySelectorAll("[data-error-message]")
+    if (errorMessages.length > 0) {
+        let modal = document.getElementById('messageModal');
+        let closeButton = document.getElementById('closeModal');
+        
+        // Show modal
+        modal.classList.remove('hidden');
+        
+        // Close when clicking X
+        closeButton.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        })
+        
+        // Close when clicking outside
+        modal.addEventListener('click', () => {
+            if (event.target === modal) {
+                modal.classList.add('hidden');
+            }
+        })
+    }
+});
+
+</script>
 {% endblock %}

@@ -125,7 +125,15 @@ class AddMovieForm(forms.ModelForm):
         model = Movie
         fields = '__all__'  # Still using this to include all fields from the Movie model
 
-class AddUserForm(forms.ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = '__all__'  #
+# class AddUserForm(forms.ModelForm):
+#     username = forms.CharField(
+#         label="Genre",
+#         widget=forms.TextInput(attrs={
+#             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+#             'placeholder': '1'
+#         })
+#     )
+    
+#     class Meta:
+#         model = CustomUser
+#         fields = '__all__'  #

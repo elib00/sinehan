@@ -8,7 +8,7 @@ class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
         label="Username",
         widget=forms.TextInput(attrs={
-            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'Enter Username',
             'autocomplete': 'off'
         })
@@ -17,7 +17,7 @@ class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(
         label="Email",
         widget=forms.EmailInput(attrs={
-            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'Enter Email',
             'autocomplete': 'off'
         })
@@ -26,7 +26,7 @@ class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(
         label="Firstname",
         widget=forms.TextInput(attrs={
-            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'Enter Firstname',
             'autocomplete': 'off'
         })
@@ -35,7 +35,7 @@ class CustomUserCreationForm(UserCreationForm):
     last_name = forms.CharField(
         label="Lastname",
         widget=forms.TextInput(attrs={
-            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'Enter Lastname',
             'autocomplete': 'off'
         })
@@ -44,7 +44,7 @@ class CustomUserCreationForm(UserCreationForm):
     birth_date = forms.DateField(
         label="Birth Date",
         widget=forms.DateInput(attrs={
-            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'Enter Date of Birth',
             'type': 'date'  # This ensures the input type is date for HTML5 date picker
         })
@@ -53,7 +53,7 @@ class CustomUserCreationForm(UserCreationForm):
     address = forms.CharField(
         label="Address",
         widget=forms.TextInput(attrs={
-            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'Enter Address',
             'autocomplete': 'off'
         })
@@ -62,7 +62,7 @@ class CustomUserCreationForm(UserCreationForm):
     password1 = forms.CharField(
         label="Password",
         widget=forms.PasswordInput(attrs={
-            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'Enter your password',
             'autocomplete': 'off'
         })
@@ -71,7 +71,7 @@ class CustomUserCreationForm(UserCreationForm):
     password2 = forms.CharField(
         label="Confirm Password",
         widget=forms.PasswordInput(attrs={
-            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+            'class': 'mt-1 p-2 block w-full border border-gray-300 xrounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'Enter your password again',
             'autocomplete': 'off'
         })
