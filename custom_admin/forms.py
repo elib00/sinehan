@@ -2,6 +2,7 @@ from django import forms
 from movies.models import Movie
 from cinema.models import NowShowingMovie, Cinema
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 
 CustomUser = get_user_model()
 
@@ -143,7 +144,7 @@ class AddNowShowingMovieForm(forms.Form):
         })
     )
     
-    end_date = forms.DateField(
+    end_date = forms.DateTimeField(
         label="Showing End Date",
         widget=forms.DateTimeInput(attrs={
             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
@@ -187,3 +188,14 @@ class AddCinemaForm(forms.ModelForm):
     class Meta:
         model = Cinema
         fields = "__all__"
+
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        cinema_name = cleaned_data.get('cinema_name')
+
+        # Check if cinema name is already taken
+        if cinema_name and Cinema.objects.filter(cinema_name=cinema_name).exists():
+            self.add_error(None, "This cinema name is already taken. Please try a different name.")
+
+        return cleaned_data

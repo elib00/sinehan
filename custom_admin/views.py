@@ -164,7 +164,7 @@ class AdminDashboardAddNowShowing(View):
             cinema_id = now_showing_form.cleaned_data['cinema']
             cinema_instance = get_object_or_404(Cinema, id=cinema_id)
             movie_id = now_showing_form.cleaned_data['movie']
-            movie_instance = get_object_or_404(Cinema, id=movie_id)
+            movie_instance = get_object_or_404(Movie, id=movie_id)
             end_date = now_showing_form.cleaned_data['end_date'] 
             
             now_showing_movie = NowShowingMovie(
@@ -182,7 +182,8 @@ class AdminDashboardAddNowShowing(View):
             print(now_showing_form.errors)  # Print form errors for debugging
         
         context = {
-            "now_showing_form": now_showing_form
+            "now_showing_form": now_showing_form,
+            "add_cinema_form": AddCinemaForm()
         }
         
         return render(request, "sections/cinema.html", context)
@@ -203,12 +204,13 @@ class AdminDashboardAddCinema(View):
             messages.success(request, "A new cinema has been created!")
             return redirect("admin_dashboard_cinema")
         else:
-            messages.error(request, "Failed to add a new movie in Now Showing")
-            print(now_showing_form.errors)  # Print form errors for debugging
+            messages.error(request, "Failed to create a new cinema")
+            print(add_cinema_form.errors)  # Print form errors for debugging
         
           
         context = {
-            "add_cinema_form": add_cinema_form
+            "add_cinema_form": add_cinema_form, 
+            "now_showing_form": AddNowShowingMovieForm()
         }
         
         return render(request, "sections/cinema.html", context)
