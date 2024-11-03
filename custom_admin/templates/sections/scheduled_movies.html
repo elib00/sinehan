@@ -1,0 +1,79 @@
+{% extends "../pages/dashboard.html" %}
+
+{% load static %}
+{% block title %} Dashboard - Scheduled Movies {% endblock %}
+{% block content%}
+
+<!-- scheduled_movies.html -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Add New Schedule Form -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Add New Scheduled Movie</h2>
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {% for field in scheduled_movie_form %}
+                    <div class="flex flex-col">
+                        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                            {{ field.label }}
+                        </label>
+                        {{ field }}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <p class="text-red-500 text-xs mt-1">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="bg-black text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    Add Schedule
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Scheduled Movies List -->
+    <div class="bg-white rounded-lg shadow-md">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-xl font-bold text-gray-900">Scheduled Movies</h2>
+        </div>
+        <div class="divide-y divide-gray-200">
+            {% for scheduled_movie in scheduled_movies %}
+                <div class="p-6 hover:bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <!-- Movie Title -->
+                            <h3 class="text-lg font-medium text-gray-900">
+                                {{ scheduled_movie.now_showing_movie.movie.movie_name }}
+                            </h3>
+                            
+                            <div class="mt-1 text-sm text-gray-500">
+                                <!-- Cinema Name -->
+                                <p>Cinema: {{ scheduled_movie.now_showing_movie.cinema.cinema_name }}</p>
+                                
+                                <!-- Schedule Date and Time -->
+                                <p>Schedule: {{ scheduled_movie.schedule|date:"F j, Y, g:i a" }}</p>
+                                
+                                <!-- Audience Number -->
+                                <p>Audience Number: {{ scheduled_movie.audience_number }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <!-- No Scheduled Movies Found -->
+                <div class="p-6 text-center text-gray-500">
+                    No scheduled movies found
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% include "components/message_modal.html" %}
+
+
+{% endblock %}

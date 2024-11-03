@@ -144,6 +144,7 @@ class AddNowShowingMovieForm(forms.Form):
         })
     )
     
+    
     end_date = forms.DateTimeField(
         label="Showing End Date",
         widget=forms.DateTimeInput(attrs={
@@ -199,3 +200,45 @@ class AddCinemaForm(forms.ModelForm):
             self.add_error(None, "This cinema name is already taken. Please try a different name.")
 
         return cleaned_data
+
+class AddScheduledMovieForm(forms.Form):
+    now_showing_movie = forms.ChoiceField(
+        label="Select a Showing Movie",
+        widget=forms.Select(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'autocomplete': 'off'
+        })
+    )
+    
+    schedule = forms.DateTimeField(
+        label="Movie Schedule",
+        widget=forms.DateTimeInput(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'placeholder': 'Enter Username',
+            'autocomplete': 'off',
+            'type': 'datetime-local'  
+        })
+    )
+    
+    audience_number = forms.CharField(
+        label="Audience Number",
+        widget=forms.NumberInput(attrs={
+            'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-base',   
+            'min': '0',
+            'step': '1' 
+        })
+    )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Query the Movie model to get the movies
+        self.set_now_showing_choices()
+    
+    def set_now_showing_choices(self):
+        now_showing_movies = NowShowingMovie.objects.select_related('cinema', 'movie').filter(is_active=True)
+        
+        choices = [
+            (ns.id, f"{ns.cinema.cinema_name} - {ns.movie.movie_name}") for ns in now_showing_movies
+        ]
+        
+        self.fields["now_showing_movie"].choices = choices

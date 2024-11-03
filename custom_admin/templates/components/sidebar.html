@@ -20,6 +20,10 @@
 		    class="block py-2 px-4 mb-2 rounded {% is_active request 'admin_dashboard_tickets' %}">
 		    Tickets 
 		</a>
+        <a href="{% url 'admin_dashboard_add_scheduled_movie' %}" 
+            class="block py-2 px-4 mb-2 rounded {% is_active request 'admin_dashboard_add_scheduled_movie' %}">
+            Scheduled Movies 
+        </a>
         <a href="{% url 'admin_dashboard_movie_list' %}" 
             class="block py-2 px-4 mb-2 rounded {% is_active request 'admin_dashboard_movie_list' %}">
             Movie List

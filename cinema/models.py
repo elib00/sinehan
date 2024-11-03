@@ -15,7 +15,7 @@ class NowShowingMovie(models.Model):
 class ScheduledMovie(models.Model):
     # cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE, related_name="cinema_scheduled_movies")
     # movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="scheduled_movies")
-    # audience_number = models.PositiveIntegerField(default=0)
+    audience_number = models.PositiveIntegerField(default=0)
     now_showing_movie = models.ForeignKey(NowShowingMovie, on_delete=models.CASCADE, related_name="now_showing_scheduled_movies")
     schedule = models.DateTimeField()
     is_active = models.BooleanField(default=True)

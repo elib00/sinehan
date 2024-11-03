@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm, AddCinemaForm
-from cinema.models import NowShowingMovie, Cinema
+from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm, AddCinemaForm, AddScheduledMovieForm
+from cinema.models import NowShowingMovie, Cinema, ScheduledMovie
 from movies.models import Movie
 from accounts.forms import CustomUserCreationForm, CustomUserUpdateForm
 from django.contrib.auth import authenticate, login, get_user_model
@@ -179,7 +179,7 @@ class AdminDashboardCinema(View):
     def get(self, request):
         now_showing_form = AddNowShowingMovieForm()
         add_cinema_form = AddCinemaForm()
-        cinema_with_showings = self.process_cinema_display()
+        cinema_with_showings = self.process_cinema_with_showings()
         
         context = {
             "now_showing_form": now_showing_form, 
@@ -189,7 +189,7 @@ class AdminDashboardCinema(View):
         
         return render(request, "sections/cinema.html", context)
 
-    def process_cinema_display(self):
+    def process_cinema_with_showings(self):
         # Only get cinemas with active movies
         cinemas = Cinema.objects.prefetch_related(
             Prefetch(
@@ -264,3 +264,55 @@ class AdminDashboardAddCinema(View):
         }
         
         return render(request, "sections/cinema.html", context)
+
+class AdminDashboardAddScheduledMovieView(View):
+    def get(self, request):
+        scheduled_movie_form = AddScheduledMovieForm()
+        scheduled_movies = self.process_scheduled_movies()
+        
+        context = {
+            "scheduled_movie_form": scheduled_movie_form,
+            "scheduled_movies": scheduled_movies
+        }
+        
+        return render(request, "sections/scheduled_movies.html", context)
+
+    def post(self, request):
+        scheduled_movies = self.process_scheduled_movies()
+        scheduled_movie_form = AddScheduledMovieForm(request.POST)
+        if scheduled_movie_form.is_valid():
+            now_showing_movie_id = scheduled_movie_form.cleaned_data.get("now_showing_movie")
+            now_showing_movie_instance = get_object_or_404(NowShowingMovie, id=now_showing_movie_id)
+            schedule = scheduled_movie_form.cleaned_data.get("schedule")
+            audience_number = scheduled_movie_form.cleaned_data.get("audience_number")
+            
+            scheduled_movie = ScheduledMovie(
+                now_showing_movie=now_showing_movie_instance,
+                schedule=schedule,
+                audience_number=audience_number
+            )
+            
+            scheduled_movie.save()
+            messages.success(request, "A new scheduled movie has been successfully added!")
+            return redirect("admin_dashboard_add_scheduled_movie")
+        else:
+            messages.error(request, "Failed to add a new scheduled movie")
+            print(scheduled_movies_form.errors)  # Print form errors for debugging
+            
+        context = {
+            "scheduled_movie_form": scheduled_movie,
+            "scheduled_movies": scheduled_movies
+        }
+        
+               
+        return render(request, "sections/scheduled_movies.html", context)
+        
+
+    def process_scheduled_movies(self):
+        scheduled_movies = ScheduledMovie.objects.select_related(
+            'now_showing_movie__cinema',  # Cinema related to NowShowingMovie
+            'now_showing_movie__movie'    # Movie related to NowShowingMovie
+        ).all()
+        
+        return scheduled_movies
+
