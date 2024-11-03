@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
+from django.db.models import Prefetch
 
 CustomUser = get_user_model()
 
@@ -142,23 +143,24 @@ class AdminDashboardMovieListView(View):
         
         return render(request, "sections/movie_list.html", context)
 
+class AdminDashboardAddMovieView(View):
     def post(self, request):
-        form_type = request.POST.get("form_type")
-    
-        if form_type == "add_movie":
-            return self.process_add_movie(request)
-        
-    def process_add_movie(self, request):
-        form = AddMovieForm(request.POST)
-        if form.is_valid():
-            form.save()
-            print("na save ang movie")
-            return redirect("admin_dashboard")
+        movies = Movie.objects.all()
+        add_movie_form = AddMovieForm(request.POST)
+        if add_movie_form.is_valid():
+            add_movie_form.save()
+            messages.success(request, "A new movie has been added!")
+            return redirect("admin_dashboard_movie_list")
         else:
-            print(form.errors)
+            print(add_movie_form.errors)
+            messages.error(request, "Failed to add new movie")
 
-        return render(request, "pages/dashboard.html", {"add_movie_form": form})
-
+        context = {
+            "add_movie_form": add_movie_form,
+            "movies": movies
+        }
+        
+        return render(request, "sections/movie_list.html", context)
         
 
 class AdminLogoutView(LogoutView):
@@ -177,14 +179,34 @@ class AdminDashboardCinema(View):
     def get(self, request):
         now_showing_form = AddNowShowingMovieForm()
         add_cinema_form = AddCinemaForm()
+        cinema_with_showings = self.process_cinema_display()
         
         context = {
             "now_showing_form": now_showing_form, 
-            "add_cinema_form": add_cinema_form
+            "add_cinema_form": add_cinema_form,
+            "cinema_with_showings": cinema_with_showings
         }
         
         return render(request, "sections/cinema.html", context)
 
+    def process_cinema_display(self):
+        # Only get cinemas with active movies
+        cinemas = Cinema.objects.prefetch_related(
+            Prefetch(
+                'cinema_showing_movies',
+                queryset=NowShowingMovie.objects.filter(is_active=True),
+                to_attr='active_showings'
+            ),
+            'cinema_showing_movies__movie'
+        ).all()
+
+        for cinema in cinemas:
+            print(f"Cinema: {cinema.cinema_name}")
+            for showing in cinema.active_showings:  # uses the prefetched data
+                print(f"- Movie: {showing.movie.movie_name}")
+        
+        return cinemas
+                
 class AdminDashboardAddNowShowing(View):
     def post(self, request):    
         now_showing_form = AddNowShowingMovieForm(request.POST)

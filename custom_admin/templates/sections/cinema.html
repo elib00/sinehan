@@ -41,7 +41,7 @@
             
                 <div class="w-full flex flex-row items-center gap-4">
                     {% for field in now_showing_form %}
-                        <div class="flex-1">
+                        <div class="flex-1 {% if field.name == 'end_date' %}max-w-[200px]{% endif %}">
                             <label for="{{ field.id_for_label }}" class="block text-m font-medium text-gray-700">{{ field.label }}</label>
                             {{ field }}
                             {% for error in field.errors %}
@@ -64,10 +64,10 @@
         </div>
         
     </div>
-    <div class="h-full flex-1 bg-gray-800">
-        <div>
-            
-        </div>
+    <div class="h-full flex-1 flex flex-col gap-4 p-4 bg-gray-800 overflow-y-auto">
+        {% for cinema in cinema_with_showings %}
+            {% include "sections/cinema_with_showings.html" %}
+        {% endfor %}
     </div>
 </div>
 
