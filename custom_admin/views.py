@@ -129,6 +129,11 @@ class AdminDashboardAllUsersView(View):
         
         return render(request, "sections/all_users.html", context)
 
+class AdminDashboardMovieListView(View):
+    def get(self, request):
+        movies = Movie.objects.all()
+        return render(request, "sections/movie_list.html", {"movies": movies})
+
 class AdminLogoutView(LogoutView):
     next_page = reverse_lazy("admin_login")
     
@@ -136,10 +141,6 @@ class AdminLogoutView(LogoutView):
         response = super().dispatch(request, *args, **kwargs)
         messages.success(request, "Logout successful!")
         return response
-
-class AdminDashboardMovieList(View):
-    def get(self, request):
-        return render(request, "sections/movie_list.html")
     
 class AdminDashboardTickets(View):
     def get(self, request):

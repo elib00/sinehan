@@ -4,5 +4,27 @@
 {% block title %} Dashboard - Movie List {% endblock %}
 {% block content%}
 
+<div class="bg-gray-100 h-full flex items-center justify-center">
+    <!-- Container for scrolling cards -->
+    <div class="w-full max-w-5xl overflow-y-auto h-full rounded-lg shadow-lg p-4 bg-gray-800 space-y-4">
+        <!-- Movie Card Template -->
+        {% for movie in movies %}
+            {% include "components/movie_card.html" with movie=movie%}
+        {% empty %}
+            <p class="text-center text-gray-500 col-span-full">No movies found.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- TailwindCSS for the truncate effect and responsive styles -->
+<style>
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
 
 {% endblock %}
