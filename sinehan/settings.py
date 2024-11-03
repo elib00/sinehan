@@ -140,8 +140,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #TO ACCESS STATIC (ASSETS LIEK IMAGES, JS , CSS FILES) GLOBALLY
-STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]

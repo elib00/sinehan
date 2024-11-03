@@ -14,7 +14,16 @@
             <p class="text-center text-gray-500 col-span-full">No movies found.</p>
         {% endfor %}
     </div>
+    <div class="fixed bottom-6 right-6">
+        <button id="addMovieButton" class="bg-black text-white font-bold py-3 px-4 rounded-full shadow-lg flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Create
+        </button>
+    </div>
 </div>
+{% include "components/add_movie.html" %}
 
 <!-- TailwindCSS for the truncate effect and responsive styles -->
 <style>

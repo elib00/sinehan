@@ -8,7 +8,7 @@
     <div class="flex-grow overflow-hidden h-full pr-2">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for user in users %}
-                {% include "../components/user_card.html" with user=user %}
+                {% include "components/user_card.html" with user=user %}
             {% empty %}
                 <p class="text-center text-gray-500 col-span-full">No users found.</p>
             {% endfor %}
@@ -20,6 +20,6 @@
 {% include "components/message_modal.html" %}
 
 <!-- Edit User Modal -->
-{% include "components/edit_user_modal.html" %}
+{% include "components/edit_user_modal.html" with user=user %}
 
 {% endblock %}

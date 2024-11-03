@@ -103,6 +103,7 @@ class AdminDashboardAddUserView(View):
 class AdminDashboardUpdateUserView(View):
     def post(self, request, user_id):
         user = get_object_or_404(CustomUser, id=user_id)
+        print(user_id)
         form = CustomUserUpdateForm(request.POST, instance=user)
         
         if form.is_valid():
@@ -131,8 +132,34 @@ class AdminDashboardAllUsersView(View):
 
 class AdminDashboardMovieListView(View):
     def get(self, request):
+        add_movie_form = AddMovieForm()
         movies = Movie.objects.all()
-        return render(request, "sections/movie_list.html", {"movies": movies})
+        
+        context = {
+            "add_movie_form": add_movie_form,
+            "movies": movies
+        }
+        
+        return render(request, "sections/movie_list.html", context)
+
+    def post(self, request):
+        form_type = request.POST.get("form_type")
+    
+        if form_type == "add_movie":
+            return self.process_add_movie(request)
+        
+    def process_add_movie(self, request):
+        form = AddMovieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print("na save ang movie")
+            return redirect("admin_dashboard")
+        else:
+            print(form.errors)
+
+        return render(request, "pages/dashboard.html", {"add_movie_form": form})
+
+        
 
 class AdminLogoutView(LogoutView):
     next_page = reverse_lazy("admin_login")
