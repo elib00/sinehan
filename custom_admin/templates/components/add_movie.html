@@ -1,0 +1,72 @@
+{% load static %}
+
+<div id="movieModal" class="fixed inset-0 z-50 hidden overflow-y-auto overflow-x-hidden flex justify-center items-start pt-2">
+    <div class="fixed inset-0 bg-black opacity-50" id="modalOverlay"></div>
+    <div class="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md m-4">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Add Movie</h2>
+        <form id="addMovieForm" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_add_movie' %}" class="space-y-4">
+            {% csrf_token %}
+
+            {% comment %} hidden input field para mabaw-an unsa na field gisubmit {% endcomment %}
+            <input type="hidden" name="form_type" value="add_movie">
+
+            {% for field in add_movie_form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <p class="text-red-500 text-xs italic">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            {% if add_movie_form.non_field_errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    {{ add_movie_form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="mt-6">
+                <button type="submit" class="w-full inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Add Movie
+                </button>
+            </div>
+        </form>
+        
+        <button id="closeModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
+            &times;
+        </button>
+    </div>
+</div>
+
+{% include "components/message_modal.html" %}
+
+
+<script>
+    const openModalButton = document.getElementById("addMovieButton");
+    const closeModalButton = document.getElementById('closeModal');
+    const modal = document.getElementById('movieModal');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const addMovieForm = document.getElementById('addMovieForm');
+
+    function openModal() {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = ''; // Restore background scrolling
+    }
+
+    openModalButton.addEventListener('click', openModal);
+    closeModalButton.addEventListener('click', closeModal);
+
+    // Close the modal when clicking on the overlay
+    modalOverlay.addEventListener('click', closeModal);
+
+    // Prevent clicks inside the modal from closing it
+    modal.querySelector('.bg-white').addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+</script>

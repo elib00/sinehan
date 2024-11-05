@@ -1,0 +1,39 @@
+{% extends "../pages/dashboard.html" %}
+
+{% load static %}
+{% block title %} Dashboard - Movie List {% endblock %}
+{% block content%}
+
+<div class="bg-gray-100 h-full flex items-center justify-center">
+    <!-- Container for scrolling cards -->
+    <div class="w-full max-w-5xl overflow-y-auto h-full rounded-lg shadow-lg p-4 bg-gray-800 space-y-4">
+        <!-- Movie Card Template -->
+        {% for movie in movies %}
+            {% include "components/movie_card.html" with movie=movie%}
+        {% empty %}
+            <p class="text-center text-gray-500 col-span-full">No movies found.</p>
+        {% endfor %}
+    </div>
+    <div class="fixed bottom-3 right-3">
+        <button id="addMovieButton" class="bg-black text-white font-bold py-3 px-4 rounded-full shadow-lg flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Create
+        </button>
+    </div>
+</div>
+{% include "components/add_movie.html" %}
+
+<!-- TailwindCSS for the truncate effect and responsive styles -->
+<style>
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+
+{% endblock %}

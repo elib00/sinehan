@@ -1,0 +1,37 @@
+<div class="w-full max-w-2xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <!-- Cinema Header -->
+        <div class="p-6 border-b border-gray-200">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-gray-800">{{ cinema.cinema_name }}</h2>
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                    Capacity: {{ cinema.capacity }}
+                </span>
+            </div>
+        </div>
+        
+        <!-- Movies List -->
+        <div class="p-6">
+            {% if cinema.cinema_showing_movies.all %}
+                <ul class="space-y-4">
+                    {% for showing in cinema.cinema_showing_movies.all %}
+                        {% if showing.is_active %}
+                        <li class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-150">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-medium text-gray-800">{{ showing.movie.movie_name }}</h3>
+                                <p class="text-sm text-gray-500">
+                                    Showing until: {{ showing.end_date|date:"F j, Y" }}
+                                </p>
+                            </div>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="text-center py-8">
+                    <p class="text-gray-500">No movies currently showing</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

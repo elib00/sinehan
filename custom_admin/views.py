@@ -1,17 +1,26 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .forms import LoginForm
-from django.contrib.auth import authenticate, login
+from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm, AddCinemaForm, AddScheduledMovieForm
+from cinema.models import NowShowingMovie, Cinema, ScheduledMovie
+from movies.models import Movie
+from accounts.forms import CustomUserCreationForm, CustomUserUpdateForm
+from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LogoutView
+from django.urls import reverse_lazy, reverse
+from django.contrib import messages
+from django.db.models import Prefetch
+
+CustomUser = get_user_model()
 
 # Create your views here.
 class AdminLoginView(View):
     def get(self, request):
-        form = LoginForm()
-        return render(request, "login.html", {"form": form})
+        form = AdminLoginForm()
+        return render(request, "pages/login.html", {"form": form})
 
     def post(self, request):
-        form = LoginForm(request.POST)  
-        print(request.POST)
+        form = AdminLoginForm(request.POST)  
         if form.is_valid():
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
@@ -21,12 +30,289 @@ class AdminLoginView(View):
             if user is not None:
                 if user.is_superuser and user.is_staff:
                     login(request, user)
-                    return render(request, "login.html", {"form": form})
+                    messages.success(request, "User logged in successfully!")
+                    return redirect('admin_dashboard')
                 else:
+                    messages.error(request, "User lacks the necessary access permissions")
                     form.add_error(None, "User must be an admin to access this page")
             else:
+                messages.error(request, "Incorrect password")
                 form.add_error("password", "Incorrect password")
         else:
             print(form.errors)
+            messages.error(request, "User authentication failed")
             
-        return render(request, "login.html", {"form": form})
+        return render(request, "pages/login.html", {"form": form})
+
+class AdminDashboardView(LoginRequiredMixin, View):
+    #TODO ig get sa dashboard kay mo generate sha sa mga forms na needed 
+    
+    login_url = "/admin/login/"  # Specify the login URL here
+    redirect_field_name = "next"  # This is the default field to redirect after login
+    
+    def get(self, request): 
+        add_movie_form = AddMovieForm()
+        
+        context = {
+            "add_movie_form": add_movie_form
+        }
+        
+        return render(request, "pages/dashboard.html", context)
+
+    def post(self, request):
+        form_type = request.POST.get("form_type")
+    
+        if form_type == "add_movie":
+            return self.process_add_movie(request)
+        
+    def process_add_movie(self, request):
+        form = AddMovieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print("na save ang movie")
+            return redirect("admin_dashboard")
+        else:
+            print(form.errors)
+
+        return render(request, "pages/dashboard.html", {"add_movie_form": form})
+
+# TODO handle ang pag add og movie logic
+class AdminDashboardAddUserView(View):
+    def get(self, request):
+        add_movie_form = AddMovieForm()
+        add_user_form = CustomUserCreationForm()
+        
+        context = {
+            "add_movie_form": add_movie_form,
+            "add_user_form": add_user_form
+        }
+        
+        return render(request, "sections/add_user.html", context)
+        
+    def post(self, request):
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "User created successfully!")
+            return redirect("admin_dashboard")
+        else:
+            messages.error(request, "User creation failed")
+            print(form.errors)
+        
+        return render(request, "sections/add_user.html", {"add_user_form": form})
+
+class AdminDashboardUpdateUserView(View):
+    def post(self, request, user_id):
+        user = get_object_or_404(CustomUser, id=user_id)
+        print(user_id)
+        form = CustomUserUpdateForm(request.POST, instance=user)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, "User updated successfully!")
+            return redirect("admin_dashboard_all_users")
+        else:
+            messages.error(request, "User update unsuccessful")
+            print(form.errors)
+        
+        return render(request, "sections/all_users.html", {"update_user_form": form})
+        
+class AdminDashboardAllUsersView(View):
+    def get(self, request):
+        add_movie_form = AddMovieForm()
+        update_user_form = CustomUserUpdateForm()
+        users = CustomUser.objects.all()
+        
+        context = {
+            "users": users,
+            "add_movie_form": add_movie_form,
+            "update_user_form": update_user_form
+        }
+        
+        return render(request, "sections/all_users.html", context)
+
+class AdminDashboardMovieListView(View):
+    def get(self, request):
+        add_movie_form = AddMovieForm()
+        movies = Movie.objects.all()
+        
+        context = {
+            "add_movie_form": add_movie_form,
+            "movies": movies
+        }
+        
+        return render(request, "sections/movie_list.html", context)
+
+class AdminDashboardAddMovieView(View):
+    def post(self, request):
+        movies = Movie.objects.all()
+        add_movie_form = AddMovieForm(request.POST)
+        if add_movie_form.is_valid():
+            add_movie_form.save()
+            messages.success(request, "A new movie has been added!")
+            return redirect("admin_dashboard_movie_list")
+        else:
+            print(add_movie_form.errors)
+            messages.error(request, "Failed to add new movie")
+
+        context = {
+            "add_movie_form": add_movie_form,
+            "movies": movies
+        }
+        
+        return render(request, "sections/movie_list.html", context)
+        
+
+class AdminLogoutView(LogoutView):
+    next_page = reverse_lazy("admin_login")
+    
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        messages.success(request, "Logout successful!")
+        return response
+    
+class AdminDashboardTickets(View):
+    def get(self, request):
+        return render(request, "sections/tickets.html")
+    
+class AdminDashboardCinema(View):
+    def get(self, request):
+        now_showing_form = AddNowShowingMovieForm()
+        add_cinema_form = AddCinemaForm()
+        cinema_with_showings = self.process_cinema_with_showings()
+        
+        context = {
+            "now_showing_form": now_showing_form, 
+            "add_cinema_form": add_cinema_form,
+            "cinema_with_showings": cinema_with_showings
+        }
+        
+        return render(request, "sections/cinema.html", context)
+
+    def process_cinema_with_showings(self):
+        # Only get cinemas with active movies
+        cinemas = Cinema.objects.prefetch_related(
+            Prefetch(
+                'cinema_showing_movies',
+                queryset=NowShowingMovie.objects.filter(is_active=True),
+                to_attr='active_showings'
+            ),
+            'cinema_showing_movies__movie'
+        ).all()
+
+        for cinema in cinemas:
+            print(f"Cinema: {cinema.cinema_name}")
+            for showing in cinema.active_showings:  # uses the prefetched data
+                print(f"- Movie: {showing.movie.movie_name}")
+        
+        return cinemas
+                
+class AdminDashboardAddNowShowing(View):
+    def post(self, request):    
+        now_showing_form = AddNowShowingMovieForm(request.POST)
+        if now_showing_form.is_valid(): 
+            cinema_id = now_showing_form.cleaned_data['cinema']
+            cinema_instance = get_object_or_404(Cinema, id=cinema_id)
+            movie_id = now_showing_form.cleaned_data['movie']
+            movie_instance = get_object_or_404(Movie, id=movie_id)
+            end_date = now_showing_form.cleaned_data['end_date'] 
+            
+            now_showing_movie = NowShowingMovie(
+                cinema=cinema_instance,  # Set the foreign key using ID
+                movie=movie_instance,    # Set the foreign key using ID
+                end_date=end_date    # Use the provided end date
+            )
+            
+            now_showing_movie.save() 
+            
+            messages.success(request, "A new movie is now showing!")
+            return redirect("admin_dashboard_cinema")
+        else:
+            messages.error(request, "Failed to add a new movie in Now Showing")
+            print(now_showing_form.errors)  # Print form errors for debugging
+        
+        context = {
+            "now_showing_form": now_showing_form,
+            "add_cinema_form": AddCinemaForm()
+        }
+        
+        return render(request, "sections/cinema.html", context)
+        
+class AdminDashboardAddCinema(View):
+    def post(self, request):
+        add_cinema_form = AddCinemaForm(request.POST)
+        if add_cinema_form.is_valid():
+            capacity = add_cinema_form.cleaned_data.get("capacity")
+            cinema_name = add_cinema_form.cleaned_data.get("cinema_name")
+             
+            new_cinema = Cinema(
+                capacity=capacity,
+                cinema_name=cinema_name
+            )
+            
+            new_cinema.save()
+            messages.success(request, "A new cinema has been created!")
+            return redirect("admin_dashboard_cinema")
+        else:
+            messages.error(request, "Failed to create a new cinema")
+            print(add_cinema_form.errors)  # Print form errors for debugging
+        
+          
+        context = {
+            "add_cinema_form": add_cinema_form, 
+            "now_showing_form": AddNowShowingMovieForm()
+        }
+        
+        return render(request, "sections/cinema.html", context)
+
+class AdminDashboardAddScheduledMovieView(View):
+    def get(self, request):
+        scheduled_movie_form = AddScheduledMovieForm()
+        scheduled_movies = self.process_scheduled_movies()
+        
+        context = {
+            "scheduled_movie_form": scheduled_movie_form,
+            "scheduled_movies": scheduled_movies
+        }
+        
+        return render(request, "sections/scheduled_movies.html", context)
+
+    def post(self, request):
+        scheduled_movies = self.process_scheduled_movies()
+        scheduled_movie_form = AddScheduledMovieForm(request.POST)
+        if scheduled_movie_form.is_valid():
+            now_showing_movie_id = scheduled_movie_form.cleaned_data.get("now_showing_movie")
+            now_showing_movie_instance = get_object_or_404(NowShowingMovie, id=now_showing_movie_id)
+            schedule = scheduled_movie_form.cleaned_data.get("schedule")
+            audience_number = scheduled_movie_form.cleaned_data.get("audience_number")
+            
+            scheduled_movie = ScheduledMovie(
+                now_showing_movie=now_showing_movie_instance,
+                schedule=schedule,
+                audience_number=audience_number
+            )
+            
+            scheduled_movie.save()
+            messages.success(request, "A new scheduled movie has been successfully added!")
+            return redirect("admin_dashboard_add_scheduled_movie")
+        else:
+            messages.error(request, "Failed to add a new scheduled movie")
+            print(scheduled_movies_form.errors)  # Print form errors for debugging
+            
+        context = {
+            "scheduled_movie_form": scheduled_movie,
+            "scheduled_movies": scheduled_movies
+        }
+        
+               
+        return render(request, "sections/scheduled_movies.html", context)
+        
+
+    def process_scheduled_movies(self):
+        scheduled_movies = ScheduledMovie.objects.select_related(
+            'now_showing_movie__cinema',  # Cinema related to NowShowingMovie
+            'now_showing_movie__movie'    # Movie related to NowShowingMovie
+        ).all()
+        
+        return scheduled_movies
+

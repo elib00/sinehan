@@ -1,0 +1,40 @@
+<div data-user-card data-firstname="{{user.first_name}}" data-lastname="{{user.last_name}}" data-username="{{user.username}}" data-id="{{user.id}}" 
+    data-email="{{user.email}}" data-birthdate="{{user.birth_date}}" data-address="{{user.address}}"
+    class="bg-white shadow-lg rounded-lg overflow-hidden max-w-sm mx-auto mb-6 w-full cursor-pointer"
+    title="Click to Edit">
+    <div class="bg-gradient-to-r from-red-500 to-black p-4">
+        <div class="flex items-center justify-center">
+            <div class="bg-white p-2 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="p-4">
+        <h2 class="text-2xl font-semibold text-center text-gray-800">{{ user.first_name }} {{ user.last_name }}</h2>
+        <h2 class="hidden text-2xl font-semibold text-center text-gray-800"> {{user.id}}</h2>
+        <p class="text-center text-gray-600 mt-1">@{{ user.username }}</p>
+        <div class="mt-4 space-y-3">
+            <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span class="text-gray-700">{{ user.email }}</span>
+            </div>
+            <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span class="text-gray-700">{{ user.birth_date|date:"F d, Y" }}</span>
+            </div>  
+            <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span class="text-gray-700">{{ user.address }}</span>
+            </div>
+        </div>
+    </div>
+</div>

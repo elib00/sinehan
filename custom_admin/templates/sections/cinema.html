@@ -1,0 +1,76 @@
+{% extends "../pages/dashboard.html" %}
+
+{% load static %}
+{% block title %} Dashboard - Cinema {% endblock %}
+{% block content %}
+<div class="h-full flex flex-row items-center container mx-auto py-4">
+    <div class="h-full flex flex-col flex-1 p-4 overflow-y-auto justify-center gap-6">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full mx-auto bg-white rounded-xl overflow-hidden shadow-2xl border-2 mb-2">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Add Cinema</h2>
+            <form id="addNewCinemaForm" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_add_cinema' %}" class="space-y-4">
+                {% csrf_token %}
+    
+                <div class="w-full flex flex-row items-center gap-4">
+                    {% for field in add_cinema_form %}
+                        <div class="flex-1">
+                            <label for="{{ field.id_for_label }}"  class="block text-m font-medium text-gray-700">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+     
+                         
+                {% for error in add_cinema_form.non_field_errors %}
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        {{ error }}
+                    </div>  
+                {% endfor %}
+    
+                <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-m font-medium text-white bg-gradient-to-r from-black to-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    Create Cinema
+                </button>
+            </form>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full mx-auto bg-white rounded-xl overflow-hidden shadow-2xl border-2 mb-2">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Now Showing</h2>
+            <form id="addNowShowingForm" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_add_now_showing' %}" class="space-y-4">
+                {% csrf_token %}
+            
+                <div class="w-full flex flex-row items-center gap-4">
+                    {% for field in now_showing_form %}
+                        <div class="flex-1 {% if field.name == 'end_date' %}max-w-[200px]{% endif %}">
+                            <label for="{{ field.id_for_label }}" class="block text-m font-medium text-gray-700">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <p class="text-red-500 text-xs italic mt-1">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+             
+                {% for error in now_showing_form.non_field_errors %}
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        {{ error }}
+                    </div>  
+                {% endfor %}
+            
+                <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-m font-medium text-white bg-gradient-to-r from-black to-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                    Show Now!
+                </button>
+            </form>
+        </div>
+        
+    </div>
+    <div class="h-full flex-1 flex flex-col gap-4 p-4 bg-gray-800 overflow-y-auto">
+        {% for cinema in cinema_with_showings %}
+            {% include "sections/cinema_with_showings.html" %}
+        {% endfor %}
+    </div>
+</div>
+
+{% include "components/message_modal.html" %}
+
+{% endblock %}

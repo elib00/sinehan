@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Dashboard {% endblock %} </title>  
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex flex-col h-screen">
+    {% include "components/header.html" %}
+
+   <div class="flex flex-row flex-1 overflow-y-hidden">
+        {% comment %} mo sayop ang layout basta naay aside {% endcomment %}
+        {% include "components/sidebar.html" %}
+        <main class="flex-1 p-6 bg-gray-100 shadow-md overflow-y-auto">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

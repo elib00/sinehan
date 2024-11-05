@@ -1,0 +1,15 @@
+{% load static %}
+<header class="bg-black text-white py-4 shadow-lg">
+    <div class="mx-auto px-4">
+        <div class="flex items-center justify-between">
+            {% comment %} <div class="px-4 text-2xl font-semibold">Sinehan</div> {% endcomment %}
+            <img src="{% static 'images/logo.png' %}" alt="Sinehan Logo" class="h-14 w-auto" />
+             {% comment %} di pwede ang logout og get request sheeesh {% endcomment %}
+
+            <button id="logoutBtn" class="bg-white font-semibold text-red-800 py-2 px-4 rounded hover:bg-gray-200">Log Out</button>    
+        </div>
+    </div>  
+</header>
+
+<!-- Logout Confirmation Modal -->
+{% include "components/logout_modal.html" %}
