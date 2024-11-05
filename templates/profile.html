@@ -19,29 +19,33 @@
                     <ul class="border-r border-yellow-400 mt-10">
                         <li class="mb-2">
                             <a href="{% url 'profile' %}" class="w-full block">
-                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
-                                    Profile
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md flex items-center">
+                                    <ion-icon name="person-outline" size="large"></ion-icon>
+                                    <span class="ml-4 mt-2">Profile</span>
                                 </button>
                             </a>
                         </li>
                         <li class="mb-2">
                             <a href="{% url 'profile' %}" class="w-full block">
-                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
-                                    Account Settings
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md flex items-center">
+                                    <ion-icon name="settings-outline" size="large"></ion-icon>
+                                    <span class="ml-4 mt-2">Account Settings</span>
                                 </button>
                             </a>
                         </li>
                         <li class="mb-2">
                             <a href="{% url 'tickets' %}" class="w-full block">
-                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
-                                    Tickets
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md flex items-center">
+                                    <ion-icon name="ticket-outline" size="large"></ion-icon>
+                                    <span class="ml-4 mt-2">Tickets</span>
                                 </button>
                             </a>
                         </li>
                         <li class="mb-2">
                             <a href="{% url 'history' %}" class="w-full block">
-                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md">
-                                    History
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md flex items-center">
+                                    <ion-icon name="clipboard-outline" size="large"></ion-icon>
+                                    <span class="ml-4 mt-2">History</span>
                                 </button>
                             </a>
                         </li>
@@ -51,7 +55,10 @@
                 <!-- Log Out Button -->
                 <div>
                     <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded mb-9">
-                        <a href="{% url 'logout' %}">Log Out</a>
+                        <a href="{% url 'logout' %}" class="flex items-center">
+                            <ion-icon name="log-out-outline" size="large"></ion-icon>
+                            <span class="ml-4">Log Out</span>
+                        </a>
                     </button>
                 </div>
             </div>
