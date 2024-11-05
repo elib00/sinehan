@@ -18,11 +18,19 @@ https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css
   </ul>
 
   <div class="actions-container flex">
-    <div class="max-w-md mx-auto mr-10">   
+    <div class="max-w-md mx-auto">   
       <div class="relative">
-          <input type="search" id="default-search" class="p-4 ps-10 text-sm text-black bg-white rounded-xl focus:border-yellow-400 " placeholder="Search Movies" required />
-
+        <input 
+          type="search" 
+          id="default-search" 
+          placeholder="Search Movies" 
+          required 
+          style="padding: 1rem !important; height: auto !important; padding-left: 2.5rem; font-size: 1rem !important; color: #000000; background-color: #ffffff; border-radius: 0.75rem; border: 1px solid transparent; outline: none; transition: border-color 0.3s ease; margin-right: 2rem !important; width: auto !important;"
+          onfocus="this.style.borderColor = '#FBBF24';" 
+          onblur="this.style.borderColor = 'transparent';"
+        />
       </div>
+      
     </div>
     
 
