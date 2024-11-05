@@ -1,31 +1,180 @@
 .date-time-section {
-  margin: 20px 0 0 0;
+  margin: 20px 0;
 }
 
-.date-grid,
-.time-grid {
+.date-grid, .time-grid {
   display: flex;
   gap: 10px;
-  margin: 5px 0;
+  margin: 10px 0;
+  flex-wrap: wrap;
 }
 
-.date-btn,
-.time-btn {
-  background-color: #333;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  height: auto;
-  width: 60px;
-  margin: 3px;
-  border-radius: 15px;
+.date-btn, .time-btn {
+  background: #333;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: white;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
-  letter-spacing: 1.5px;
+  transition: all 0.3s;
 }
 
-.time-btn {
-  width: 80px;
-  letter-spacing: 2.3px;
+.date-btn:hover, .time-btn:hover {
+  background: #444;
+}
+
+.date-btn.selected, .time-btn.selected {
+  background: #dc1111;
+}
+
+.screen {
+  width: 80%;
+  height: 4px;
+  background: linear-gradient(to right, transparent, #fff, transparent);
+  margin: 40px auto;
+  position: relative;
+}
+
+.screen::after {
+  content: 'SCREEN';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #666;
+}
+
+.seats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 40px 0;
+}
+
+.seat-row {
+  display: flex;
+  gap: 10px;
+}
+
+.seat {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #333;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.seat:hover {
+  background: #dc1111;
+}
+
+.seat.selected {
+  background: #dc1111;
+}
+
+.seat.booked {
+  background: #666;
+  cursor: not-allowed;
+}
+
+.row-label {
+  width: 20px;
+  text-align: center;
+  line-height: 25px;
+  color: #666;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #1a1a1a;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.form-group {
+  margin: 15px 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #999;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 10px;
+  background: #333;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.purchase-btn {
+  background: #dc1111;
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.purchase-btn:disabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+.selected-seats-info {
+  margin: 20px 0;
+  padding: 15px;
+  background: #222;
+  border-radius: 5px;
+}
+
+.success-modal {
+  text-align: center;
+}
+
+.success-modal h2 {
+  margin-bottom: 20px;
+}
+
+.save-ticket-btn {
+  background: #dc1111;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .row-label {
@@ -84,6 +233,7 @@
   border-radius: 5px;
   cursor: pointer;
   margin-top: 20px;
+  cursor: not-allowed;
 }
 
 .purchase-btn:disabled {
@@ -249,6 +399,7 @@
 
 .seat.selected {
   background-color: #ff1414;
+  cursor: not-allowed;
 }
 
 .seat.occupied {
