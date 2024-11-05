@@ -20,6 +20,9 @@ class ScheduledMovie(models.Model):
     now_showing_movie = models.ForeignKey(NowShowingMovie, on_delete=models.CASCADE, related_name="now_showing_scheduled_movies")
     schedule = models.DateTimeField()
     is_active = models.BooleanField(default=True)
+    seats = models.CharField(max_length=1000)
+    
+    
     
 class Ticket(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user_tickets")
