@@ -27,6 +27,8 @@ class Movie(models.Model):
         default="G"
     )
     genre = models.CharField(max_length=100)
+    #added field now showing
+    now_showing = models.BooleanField(default = True)
     
     
 
