@@ -1,6 +1,7 @@
 {% extends 'movies.html' %}
 {% load static %}
 {% block content1 %}
+
 <link rel="stylesheet" href="{% static "css/movie_book.css" %}">
 
         <div class="flex flex-[7] h-[80vh] mt-[100px] py-[20px]">
@@ -25,7 +26,7 @@
                             <!-- Cinema will be populated by Django -->
                             {% comment %} <button onclick="selectCinema(1)">Cinema 1</button> {% endcomment %}
                             {% for cinema in cinemas %}
-                                <button onclick="selectCinema({{ cinema.id }})">{{ cinema.cinema_name }}</button>
+                                <button data-cinema="{{ cinema.cinema_name }}" onclick="selectCinema(`{{ cinema.id }}`)">{{ cinema.cinema_name }}</button>
                             {% endfor %}
                             
                         </div>
@@ -35,7 +36,7 @@
                             <!-- Dates will be populated by Django -->
                             {% comment %} <button onclick="selectDate(${date})">${date}</button> {% endcomment %}
                             {% for date in dates %}
-                                <button onclick="selectDate('{{ date }}')">{{ date }}</button>
+                                <button data-date="{{ date }}" onclick="selectDate(`{{ date }}`)">{{ date }}</button>
                             {% endfor %}
                         </div>
             
@@ -44,11 +45,13 @@
                             <!-- Time will be populated by Django -->
                             {% comment %} <button onclick="selectTime('13:15')">13:15</button> {% endcomment %} 
 
-                            {% for scheduled_movie in scheduled_movies %}
-                                <button onclick="selectTime('{{ scheduled_movie.schedule|time:"H:i" }}')">
-                                    {{ scheduled_movie.schedule|time:"H:i" }}
+                            {% for time in times %}
+                                <button data-time="{{ time }}" onclick="selectTime(`{{ time }}`)">
+                                    {{ time }}
                                 </button>
                             {% endfor %}
+
+                           
                         </div>
             
                         <div class="selection-summary" id="selectionSummary">
@@ -267,11 +270,16 @@
 
 
         <script>
+
+            
+            const validCombinations = JSON.parse('{{ valid_combinations|safe }}');
+            const cinemaButtons = document.querySelectorAll('#cinemaGrid button');
+            const dateButtons = document.querySelectorAll('#dateGrid button');
+            const timeButtons = document.querySelectorAll('#timeGrid button');
+
+            
             let currentStep = 1;
             const totalSteps = 2;
-            let selectedCinema = null;
-            let selectedDate = null;
-            let selectedTime = null;
             
             const container = document.querySelector('.seat-container');
             const seats = document.querySelectorAll('.row .seat:not(.occupied)');
@@ -288,34 +296,94 @@
     
   
             // Selection functions
+
+            let selectedCinema = null;
+            let selectedDate = null;
+            let selectedTime = null;
+
             function selectCinema(cinema) {
-                selectedCinema = cinema;
-                document.querySelectorAll('#cinemaGrid button').forEach(btn => {
-                    btn.classList.remove('selected');
-                });
-                event.target.classList.add('selected');
+
+                if (selectedCinema == cinema) {
+                    event.target.classList.remove('selected');
+                    selectedCinema = null;
+                } else {
+                    selectedCinema = cinema;
+
+                    document.querySelectorAll('#cinemaGrid button').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    
+                    event.target.classList.add('selected');
+                }
+                
                 updateSelectionSummary();
                 updateNavigationButtons();
+      
+                dateButtons.forEach(btn => {
+                    let date = btn.getAttribute('data-date');
+                    btn.disabled = !isValidCombination(selectedCinema, date, selectedTime);
+                });
+
+                timeButtons.forEach(btn => {
+                    let time = btn.getAttribute('data-time');
+                    btn.disabled = !isValidCombination(selectedCinema, selectedDate, time);
+                });
             }
     
             function selectDate(date) {
-                selectedDate = date;
-                document.querySelectorAll('#dateGrid button').forEach(btn => {
-                    btn.classList.remove('selected');
-                });
-                event.target.classList.add('selected');
+
+                if (selectedDate == date) {
+                    event.target.classList.remove('selected');
+                    selectedDate = null;
+                } else {
+                    selectedDate = date;
+                    document.querySelectorAll('#dateGrid button').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    event.target.classList.add('selected');
+                }
+                
                 updateSelectionSummary();
                 updateNavigationButtons();
+
+                cinemaButtons.forEach(btn => {
+                    let cinema = btn.getAttribute('data-cinema');
+                    btn.disabled = !isValidCombination(cinema, selectedDate, selectedTime);
+                });
+
+                timeButtons.forEach(btn => {
+                    let time = btn.getAttribute('data-time');
+                    btn.disabled = !isValidCombination(selectedCinema, selectedDate, time);
+                });
             }
     
             function selectTime(time) {
-                selectedTime = time;
-                document.querySelectorAll('#timeGrid button').forEach(btn => {
-                    btn.classList.remove('selected');
-                });
-                event.target.classList.add('selected');
+
+                if (selectedTime == time) {
+                    event.target.classList.remove('selected');
+                    selectedTime = null;
+                } else {
+                    selectedTime = time;
+                    document.querySelectorAll('#timeGrid button').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    event.target.classList.add('selected');
+                }
+                
                 updateSelectionSummary();
                 updateNavigationButtons();
+
+
+                cinemaButtons.forEach(btn => {
+                    let cinema = btn.getAttribute('data-cinema');
+                    btn.disabled = !isValidCombination(cinema, selectedDate, selectedTime);
+                });
+
+                dateButtons.forEach(btn => {
+                    let date = btn.getAttribute('data-date');
+                    btn.disabled = !isValidCombination(selectedCinema, date, selectedTime);
+                });
+            
             }
     
             function updateSelectionSummary() {
@@ -330,8 +398,25 @@
                     summaryText.textContent = `Please select: ${missing.join(', ')}`;
                 }
             }
-    
-           
+
+            function isValidCombination(cinema, date, time) {
+                return validCombinations.some(combination => {
+                    console.log(`Checking combination:`);
+                    console.log(`Cinema: ${combination.cinema_name} vs ${cinema}`);
+                    console.log(`Date: ${combination.date} vs ${date}`);
+                    console.log(`Time: ${combination.time} vs ${time}`);
+                    
+                    const cinemaMatch = (cinema === null || combination.cinema_name == cinema);
+                    const dateMatch = (date === null || combination.date == date);
+                    const timeMatch = (time === null || combination.time == time);
+            
+                    console.log(`Matches: Cinema=${cinemaMatch}, Date=${dateMatch}, Time=${timeMatch}`);
+                    
+                    return cinemaMatch && dateMatch && timeMatch;
+                });
+            }
+            
+             
             // Navigation functions
             function updateNavigationButtons() {
                 const prevBtn = document.getElementById('prevBtn');

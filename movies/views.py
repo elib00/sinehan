@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -23,12 +24,22 @@ def movie_book(request, movie_id):
         
         cinemas = {sm.cinema for sm in scheduled_movies}
         dates = {sm.schedule.date() for sm in scheduled_movies}
+        times = {sm.schedule.time() for sm in scheduled_movies}
+        
+        valid_combinations = []
+        for sm in scheduled_movies:
+            valid_combinations.append({
+                'cinema_name': sm.cinema.cinema_name,
+                'date': sm.schedule.date().strftime('%b. %d, %Y'),
+                'time': sm.schedule.time().strftime('%H:%M'),
+            })
         
         context = {
         'movie': movie,
-        'scheduled_movies': scheduled_movies,
+        'valid_combinations': json.dumps(valid_combinations),
         'cinemas': cinemas,
         'dates': sorted(dates),  
+        'times': sorted(time.strftime('%H:%M') for time in times),
         }
 
         return render(request, 'movie_book.html', context)
