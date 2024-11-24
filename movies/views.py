@@ -4,7 +4,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import Movie
-from cinema.models import ScheduledMovie
+from cinema.models import ScheduledMovie, Ticket
 
 
 def movie_list(request):
@@ -51,4 +51,34 @@ def movie_book(request, movie_id):
     
 
         
-    
+def movie_book_purchase(request, movie_id):
+    if request.method == 'POST':
+        user = request.user
+        scheduled_movie_id = request.POST.get('scheduled_movie')
+        seatsCodes = json.loads(request.POST.get('seats')) 
+        
+        seats = scheduled_movie.seats
+        
+        for code in seatsCodes:
+            row_index = ord(code[0].upper()) - ord('A') 
+            col_index = int(code[1:]) - 1    
+            seats[row_index][col_index] = True
+        
+        
+        
+        try:
+            scheduled_movie = ScheduledMovie.objects.get(id=scheduled_movie_id)
+            tickets = [
+                Ticket(user = user, scheduled_movie=scheduled_movie, seat_identifier=seat)
+                for seat in seatsCodes
+            ]
+            
+            Ticket.objects.bulk_create(tickets)
+            scheduled_movie.seats = seats
+            scheduled_movie.save()
+            
+            
+            return render(request, 'home.html')
+        except ScheduledMovie.DoesNotExist:
+            return HttpResponse("Scheduled Movie not found", status=404)
+    return HttpResponse("Invalid request method", status=405)

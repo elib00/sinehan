@@ -285,7 +285,7 @@
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('paymentModal')">×</button>
             
-            <form id="paymentForm">
+            <form id="paymentForm" method="POST" action="purchase/">
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" required>
@@ -320,7 +320,15 @@
 **
 **" required>
                 </div>
-                <button  class="purchase-btn" id="purchase-btn" >Purchase</button>
+
+               
+                    {% csrf_token %}
+                    <input type="hidden" name="scheduled_movie" id="scheduled_movie">
+                    <input type="hidden" name="seats" id="selected_seats">
+
+                    <button type="submit" class="purchase-btn" id="purchase-btn" >Purchase</button>
+                
+                
             </form>
         </div>
     </div>
@@ -361,7 +369,6 @@
             const dateGrid = document.getElementById('dateGrid');
             const today = new Date();
 
-            const newTickets = [];
 
 
             // Navigation functions
@@ -441,8 +448,8 @@
 
             function checkSummary(){
 
-                const selectedSeats = document.querySelectorAll('.seat.selected');
-                const selectedSeatsArray = Array.from(selectedSeats).map(seat => seat.getAttribute('data-seat'));
+                let selectedSeats = document.querySelectorAll('.seat.selected');
+                let selectedSeatsArray = Array.from(selectedSeats).map(seat => seat.getAttribute('data-seat'));
                 
                 const movie_box = document.getElementById("selected-movie");
                 const cinema = document.getElementById("selected-cinema");
@@ -472,14 +479,11 @@
                     }
                 }
 
-                for (const seat of seats) {
-                    newTickets.push({
-                        user: '1', 
-                        scheduled_movie: selectedScheduledMovie,
-                        seat_identifier: seat
-                    });
-                }
-                
+
+                selectedSeatsArray = selectedSeatsArray.filter(item => item != null);
+
+                document.getElementById('scheduled_movie').value = selectedScheduledMovieID;
+                document.getElementById('selected_seats').value = JSON.stringify(selectedSeatsArray);   
 
             }
     
@@ -517,18 +521,7 @@
                 document.getElementById(modalId).style.display = 'none';
             }
     
-            document.getElementById('paymentForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                document.getElementById('paymentModal').style.display = 'none';
-                document.getElementById('successModal').style.display = 'flex';
-            });
-    
-            document.querySelector('.save-ticket-btn').addEventListener('click', () => {
-                document.getElementById('successModal').style.display = 'none';
-            });
-
-
-
+            
             checkoutBtn.addEventListener('click', () => {
                 const selectedSeats = document.querySelectorAll('.row .seat.selected');
                 const seatNumbers = Array.from(selectedSeats).map(seat => seat.dataset.seat);
@@ -543,10 +536,6 @@
             const validCombinations = JSON.parse('{{ valid_combinations|safe }}');
             const cinemaButtons = document.querySelectorAll('#cinemaGrid button');
             const dateButtons = document.querySelectorAll('#dateGrid button');
-
-            console.log(validCombinations);
-
-            
 
             let selectedCinema = null;
             let selectedDate = null;
