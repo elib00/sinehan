@@ -1,4 +1,5 @@
 import json
+from django.forms import model_to_dict
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -20,6 +21,7 @@ def movie_details(request, movie_id):
 def movie_book(request, movie_id):
     try:
         movie = Movie.objects.get(id=movie_id)
+        movie_data = model_to_dict(movie, fields=['id', 'movie_name', 'price'])
         scheduled_movies = ScheduledMovie.objects.filter(movie_id=movie_id, is_active=True)
         
         cinemas = {sm.cinema for sm in scheduled_movies}
@@ -29,13 +31,14 @@ def movie_book(request, movie_id):
         valid_combinations = []
         for sm in scheduled_movies:
             valid_combinations.append({
+                'id': sm.id,
                 'cinema_name': sm.cinema.cinema_name,
                 'date': sm.schedule.date().strftime('%b. %d, %Y'),
                 'time': sm.schedule.time().strftime('%H:%M'),
             })
         
         context = {
-        'movie': movie,
+        'movie': json.dumps(movie_data),
         'valid_combinations': json.dumps(valid_combinations),
         'cinemas': cinemas,
         'dates': sorted(dates),  
@@ -45,3 +48,7 @@ def movie_book(request, movie_id):
         return render(request, 'movie_book.html', context)
     except Movie.DoesNotExist:
         return HttpResponse("Movie not found")
+    
+
+        
+    

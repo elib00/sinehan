@@ -158,6 +158,7 @@ button:disabled {
   background: #222;
   border-radius: 4px;
   font-size: 0.9em;
+  text-align: center;
 }
 
 .screen {
@@ -300,17 +301,6 @@ button:disabled {
   cursor: pointer;
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-}
-
 .row-label {
   width: 20px;
   text-align: center;
@@ -393,9 +383,7 @@ button:disabled {
 }
 
 .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  display: flex;
   background: none;
   border: none;
   color: white;
@@ -429,7 +417,7 @@ button:disabled {
 }
 
 .step {
-  text-align: center;
+  text-align: left;
   position: relative;
   z-index: 2;
 }
@@ -459,12 +447,12 @@ button:disabled {
 }
 
 .step-title {
-  font-size: 14px;
+  font-size: 1.5rem;
   color: white;
 }
 
 .step.active .step-title {
-  color: #ff0000;
+  color: white;
 }
 
 .movie-container {
@@ -571,8 +559,9 @@ button:disabled {
   text-align: center;
   margin: 5px 0;
   color: white;
-  font-size: 0.8em;
+  font-size: 0.9em;
   padding: 5px 0;
+  background-color: #222;
 }
 
 .title {
@@ -604,4 +593,39 @@ button:disabled {
 .checkout-btn:disabled {
   background-color: #666;
   cursor: not-allowed;
+}
+
+.step3-item {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.step3-item.amount {
+  justify-content: space-between;
+}
+
+.step3-item ion-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.step3-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.step3-item h3 {
+  margin: 0;
+}
+
+.step3-item p {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.step3-item h4 {
+  color: white;
+  font-size: 1.1rem;
 }

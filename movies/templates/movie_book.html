@@ -16,6 +16,7 @@
                         <div class="progress-line"></div>
                         <div class="progress-step active">1</div>
                         <div class="progress-step">2</div>
+                        <div class="progress-step">3</div>
                     </div>
             
                     <!-- Step 1: Combined Selection -->
@@ -195,9 +196,77 @@
                                 Total Price: ₱ <span id="total">0</span>
                             </div>
                     
-                            <button class="checkout-btn" id="checkout-btn" disabled  onclick="toPurchase()">Proceed to Checkout</button>
+                            
                         </div>
                         
+                    </div>
+
+                    <div class="step" id="step3">
+
+                        <p class="step-title">Order Summary</p>
+                        <div class="step3-item">
+                           
+                            <ion-icon name="videocam-outline"></ion-icon>
+                            <div>
+                                <p>Movie</p>
+                                <h4 id="selected-movie"></h4>
+                            </div>
+                            
+                        </div>
+
+                        <div class="step3-item">
+                            <ion-icon name="location-outline"></ion-icon>
+                            <div>
+                                <p>Cinema</p>
+                                <h4 id="selected-cinema"></h4>
+                            </div>
+                        </div>
+
+                        <div class="step3-item">
+                            <ion-icon name="time-outline"></ion-icon>
+                            <div>
+                                <p>Date and Time</p>
+                                <h4 id="selected-date-time"></h4>
+                            </div>
+                        </div>
+
+                        <div class="step3-item">
+                            <ion-icon name="people-outline"></ion-icon>
+                            <div>
+                                <p>Selected Seats</p>
+                                <h4 id="selected-seats"></h4>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="step3-item amount">
+                            <h3 id="selected-ticket-count"></h3>
+                            <h4 id="selected-ticket-price"></h4>
+                        </div>
+
+                        <div class="step3-item amount">
+                            <h3>Total Amount </h3> 
+                            <h4 id="selected-total-price"></h4>
+                        </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                        
+
+                    
+
+
+
+                        
+
+                        <button class="checkout-btn" id="checkout-btn" disabled  onclick="toPurchase()">Checkout</button>
                     </div>
             
                     <div class="navigation">
@@ -215,12 +284,10 @@
      <div class="modal text-white" id="paymentModal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('paymentModal')">×</button>
-            <h2>Complete Your Order</h2>
-            <div class="selected-seats-info" id="selectedSeatsInfo"></div>
             
             <form id="paymentForm">
                 <div class="form-group">
-                    <label>Name and Surname</label>
+                    <label>Name</label>
                     <input type="text" required>
                 </div>
                 <div class="form-group">
@@ -233,7 +300,7 @@
                         <select style="width: 100px;">
                             <option>+1</option>
                             <option>+44</option>
-                            <option>+81</option>
+                            <option>+63</option>
                         </select>
                         <input type="tel" required>
                     </div>
@@ -243,6 +310,7 @@
                     <select>
                         <option>Credit Card</option>
                         <option>Debit Card</option>
+                        <option>Gcash</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -252,7 +320,7 @@
 **
 **" required>
                 </div>
-                <button  class="purchase-btn" id="purchase-btn">Purchase</button>
+                <button  class="purchase-btn" id="purchase-btn" >Purchase</button>
             </form>
         </div>
     </div>
@@ -270,32 +338,215 @@
 
 
         <script>
-
+            let selectedScheduledMovieID = null;
             
-            const validCombinations = JSON.parse('{{ valid_combinations|safe }}');
-            const cinemaButtons = document.querySelectorAll('#cinemaGrid button');
-            const dateButtons = document.querySelectorAll('#dateGrid button');
+            
             const timeButtons = document.querySelectorAll('#timeGrid button');
 
             
-            let currentStep = 1;
-            const totalSteps = 2;
+            let currentStep = 1;    
+            const totalSteps = 3; 
+            let selectedSeatsCount = document.querySelectorAll('.seat.selected').length;
             
             const container = document.querySelector('.seat-container');
-            const seats = document.querySelectorAll('.row .seat:not(.occupied)');
             const count = document.getElementById('count');
             const total = document.getElementById('total');
-            const movieSelect = document.getElementById('movie-select');
-            const movieTitle = document.getElementById('movie-title');
             const checkoutBtn = document.getElementById('checkout-btn');
             const purchase = document.getElementById('purchase-btn');
-            const ticketPrice = 250; 
+
+            const movie = JSON.parse('{{ movie|safe }}');
+           
+            const ticketPrice = movie.price; 
 
             const dateGrid = document.getElementById('dateGrid');
             const today = new Date();
+
+            const newTickets = [];
+
+
+            // Navigation functions
+            function updateNavigationButtons() {
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+            
+                prevBtn.style.display = currentStep === 1 ? 'none' : 'block';
+            
+                if (currentStep === totalSteps) {
+                    checkSummary();
+                    nextBtn.style.display = 'none';
+                } else {
+                    nextBtn.style.display = 'block';
+                    nextBtn.textContent = 'Next';
+                    nextBtn.disabled = !canProceedToNextStep();
+                }
+
+                updateProgressLine(currentStep, 3);
+            }
+
+            function updateProgressLine(currentStep, totalSteps) {
+                const progressLine = document.querySelector('.progress-line');
+
+                const percentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            
+                progressLine.style.background = `linear-gradient(to right, #ff1414 ${percentage}%, #333 ${percentage}%)`;
+            }
+            
     
+            function canProceedToNextStep() {
+                selectedSeats = document.querySelectorAll('.seat.selected');
+               
+
+                switch (currentStep) {
+
+                    case 1: 
+                        return selectedCinema !== null && selectedDate !== null && selectedTime !== null;
+                    case 2:     
+                        return selectedSeats.length > 1;
+                    case 3:
+                        return selectedSeats.length > 0;  
+                    default: 
+                        return false;
+                }
+            }
+    
+            function updateProgressBar() {
+                document.querySelectorAll('.progress-step').forEach((step, index) => {
+                    if (index + 1 === currentStep) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else if (index + 1 < currentStep) {
+                        step.classList.remove('active');
+                        step.classList.add('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            }
+    
+            function showStep(step) {
+                document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+                document.getElementById(`step${step}`).classList.add('active');
+                updateNavigationButtons();
+                updateProgressBar();
+            }
+    
+            function nextStep() {
+                
+            
+                if (canProceedToNextStep()) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            }
+
+            function checkSummary(){
+
+                const selectedSeats = document.querySelectorAll('.seat.selected');
+                const selectedSeatsArray = Array.from(selectedSeats).map(seat => seat.getAttribute('data-seat'));
+                
+                const movie_box = document.getElementById("selected-movie");
+                const cinema = document.getElementById("selected-cinema");
+                const date_time = document.getElementById("selected-date-time");
+                const seats = document.getElementById("selected-seats");
+                const ticket_count = document.getElementById("selected-ticket-count");
+                const ticket_price = document.getElementById("selected-ticket-price");
+                const total = document.getElementById("selected-total-price");
+                
+                movie_box.innerHTML = movie.movie_name;
+                cinema.innerHTML = selectedCinema;
+                date_time.innerHTML = selectedDate + ' at ' + selectedTime;
+                seats.innerHTML = selectedSeatsArray.join(' ');
+                ticket_count.innerHTML = 'Ticket Price (' + (selectedSeatsArray.length - 1) + 'x)';
+                ticket_price.innerHTML ='₱' + ticketPrice;
+                total.innerHTML = '₱' + ((selectedSeatsArray.length - 1) * ticketPrice).toFixed(2);
+
+
+                for (const combination of validCombinations) {
+                    const cinemaMatch = (selectedCinema === null || combination.cinema_name == selectedCinema);
+                    const dateMatch = (selectedDate === null || combination.date == selectedDate);
+                    const timeMatch = (selectedTime === null || combination.time == selectedTime);
+                
+                    if (cinemaMatch && dateMatch && timeMatch) {
+                        selectedScheduledMovieID = combination.id;
+                        break; 
+                    }
+                }
+
+                for (const seat of seats) {
+                    newTickets.push({
+                        user: '1', 
+                        scheduled_movie: selectedScheduledMovie,
+                        seat_identifier: seat
+                    });
+                }
+                
+
+            }
+    
+            function prevStep() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            }
+
+            container.addEventListener('click', (e) => {
+                if (e.target.classList.contains('seat') && 
+                    !e.target.classList.contains('occupied')) {
+
+                    e.target.classList.toggle('selected');
+                    const selectedSeats = document.querySelectorAll('.row .seat.selected').length;
+                    count.textContent = selectedSeats;
+                    total.textContent = (selectedSeats * ticketPrice).toFixed(2);
+                    
+                    checkoutBtn.disabled = selectedSeats === 0;
+                    updateNavigationButtons();
+                    
+                }
+    
+            });
+    
+
+            function toPurchase(){
+                checkSummary();
+
+                document.getElementById('paymentModal').style.display = 'flex';
+            }
+    
+            function closeModal(modalId) {
+                document.getElementById(modalId).style.display = 'none';
+            }
+    
+            document.getElementById('paymentForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                document.getElementById('paymentModal').style.display = 'none';
+                document.getElementById('successModal').style.display = 'flex';
+            });
+    
+            document.querySelector('.save-ticket-btn').addEventListener('click', () => {
+                document.getElementById('successModal').style.display = 'none';
+            });
+
+
+
+            checkoutBtn.addEventListener('click', () => {
+                const selectedSeats = document.querySelectorAll('.row .seat.selected');
+                const seatNumbers = Array.from(selectedSeats).map(seat => seat.dataset.seat);
+                const totalAmount = parseFloat(total.textContent);
+            
+            });
+
+        
   
             // Selection functions
+
+            const validCombinations = JSON.parse('{{ valid_combinations|safe }}');
+            const cinemaButtons = document.querySelectorAll('#cinemaGrid button');
+            const dateButtons = document.querySelectorAll('#dateGrid button');
+
+            console.log(validCombinations);
+
+            
 
             let selectedCinema = null;
             let selectedDate = null;
@@ -401,133 +652,21 @@
 
             function isValidCombination(cinema, date, time) {
                 return validCombinations.some(combination => {
-                    console.log(`Checking combination:`);
-                    console.log(`Cinema: ${combination.cinema_name} vs ${cinema}`);
-                    console.log(`Date: ${combination.date} vs ${date}`);
-                    console.log(`Time: ${combination.time} vs ${time}`);
+                   
                     
                     const cinemaMatch = (cinema === null || combination.cinema_name == cinema);
                     const dateMatch = (date === null || combination.date == date);
                     const timeMatch = (time === null || combination.time == time);
-            
-                    console.log(`Matches: Cinema=${cinemaMatch}, Date=${dateMatch}, Time=${timeMatch}`);
+
+                
+
                     
                     return cinemaMatch && dateMatch && timeMatch;
                 });
             }
             
              
-            // Navigation functions
-            function updateNavigationButtons() {
-                const prevBtn = document.getElementById('prevBtn');
-                const nextBtn = document.getElementById('nextBtn');
-                
-                prevBtn.style.display = currentStep === 1 ? 'none' : 'block';
-                
-                if (currentStep === totalSteps) {
-                    nextBtn.style.display = 'none';
-                } else {
-                    nextBtn.style.display = 'block';
-                    nextBtn.textContent = 'Next';
-                    nextBtn.disabled = !canProceedToNextStep();
-                }
-            }
-    
-            function canProceedToNextStep() {
-                switch (currentStep) {
-                    case 1: return selectedCinema !== null && selectedDate !== null && selectedTime !== null;
-                    case 2: return selectedSeats.length > 0;
-                    default: return false;
-                }
-            }
-    
-            function updateProgressBar() {
-                document.querySelectorAll('.progress-step').forEach((step, index) => {
-                    if (index + 1 === currentStep) {
-                        step.classList.add('active');
-                        step.classList.remove('completed');
-                    } else if (index + 1 < currentStep) {
-                        step.classList.remove('active');
-                        step.classList.add('completed');
-                    } else {
-                        step.classList.remove('active', 'completed');
-                    }
-                });
-            }
-    
-            function showStep(step) {
-                document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-                document.getElementById(`step${step}`).classList.add('active');
-                updateNavigationButtons();
-                updateProgressBar();
-            }
-    
-            function nextStep() {
-                if (currentStep === totalSteps) {
-                    // Handle booking confirmation
-                    alert('Booking confirmed!\n\nCinema: ' + selectedCinema +
-                          '\nDate: ' + selectedDate +
-                          '\nTime: ' + selectedTime +
-                          '\nSeats: ' + selectedSeats.join(', ') +
-                          '\nTotal: ₱' + (selectedSeats.length * seatPrice).toFixed(2));
-                    return;
-                }
-    
-                if (canProceedToNextStep()) {
-                    currentStep++;
-                    showStep(currentStep);
-                }
-            }
-    
-            function prevStep() {
-                if (currentStep > 1) {
-                    currentStep--;
-                    showStep(currentStep);
-                }
-            }
-
-            container.addEventListener('click', (e) => {
-                if (e.target.classList.contains('seat') && 
-                    !e.target.classList.contains('occupied')) {
-                    e.target.classList.toggle('selected');
-                    
-                    const selectedSeats = document.querySelectorAll('.row .seat.selected').length;
-                    count.textContent = selectedSeats;
-                    total.textContent = (selectedSeats * ticketPrice).toFixed(2);
-                    
-                    checkoutBtn.disabled = selectedSeats === 0;
-                    
-                }
-    
-            });
-    
-
-            function toPurchase(){
-                document.getElementById('paymentModal').style.display = 'flex';
-            }
-    
-            function closeModal(modalId) {
-                document.getElementById(modalId).style.display = 'none';
-            }
-    
-            document.getElementById('paymentForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                document.getElementById('paymentModal').style.display = 'none';
-                document.getElementById('successModal').style.display = 'flex';
-            });
-    
-            document.querySelector('.save-ticket-btn').addEventListener('click', () => {
-                document.getElementById('successModal').style.display = 'none';
-            });
-
-
-
-            checkoutBtn.addEventListener('click', () => {
-                const selectedSeats = document.querySelectorAll('.row .seat.selected');
-                const seatNumbers = Array.from(selectedSeats).map(seat => seat.dataset.seat);
-                const totalAmount = parseFloat(total.textContent);
             
-            });
     
             // Initialize the booking system
             window.onload = function() {
