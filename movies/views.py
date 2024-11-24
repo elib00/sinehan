@@ -35,6 +35,7 @@ def movie_book(request, movie_id):
                 'cinema_name': sm.cinema.cinema_name,
                 'date': sm.schedule.date().strftime('%b. %d, %Y'),
                 'time': sm.schedule.time().strftime('%H:%M'),
+                'seats': sm.seats
             })
         
         context = {
@@ -57,17 +58,19 @@ def movie_book_purchase(request, movie_id):
         scheduled_movie_id = request.POST.get('scheduled_movie')
         seatsCodes = json.loads(request.POST.get('seats')) 
         
-        seats = scheduled_movie.seats
-        
-        for code in seatsCodes:
-            row_index = ord(code[0].upper()) - ord('A') 
-            col_index = int(code[1:]) - 1    
-            seats[row_index][col_index] = True
         
         
         
         try:
             scheduled_movie = ScheduledMovie.objects.get(id=scheduled_movie_id)
+            
+            seats = scheduled_movie.seats
+        
+            for code in seatsCodes:
+                row_index = ord(code[0].upper()) - ord('A') 
+                col_index = int(code[1:]) - 1    
+                seats[row_index][col_index] = True
+            
             tickets = [
                 Ticket(user = user, scheduled_movie=scheduled_movie, seat_identifier=seat)
                 for seat in seatsCodes

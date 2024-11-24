@@ -181,7 +181,7 @@
                                     <span>Available</span>
                                 </div>
                                 <div class="legend-item">
-                                    <div class="seat selected"></div>
+                                    <div class="seat selected" ></div>
                                     <span>Selected</span>
                                 </div>
                                 <div class="legend-item">
@@ -354,7 +354,8 @@
             
             let currentStep = 1;    
             const totalSteps = 3; 
-            let selectedSeatsCount = document.querySelectorAll('.seat.selected').length;
+            let selectedSeatsBoxes = document.querySelectorAll('.seat.selected');
+            let selectedSeatsCount = selectedSeatsBoxes.length;
             
             const container = document.querySelector('.seat-container');
             const count = document.getElementById('count');
@@ -370,6 +371,52 @@
             const today = new Date();
 
 
+            function initializeSeats() {
+             
+                let selectedSeatsBoxes = document.querySelectorAll('.seat[data-seat]');
+                
+                
+                let seatData = Array.from(selectedSeatsBoxes).map(seat => ({
+                    element: seat, 
+                    code: seat.getAttribute('data-seat') 
+                }));
+            
+        
+                let sortedSeats = seatData.sort((a, b) => {
+                    let [rowA, colA] = [a.code.charAt(0), parseInt(a.code.slice(1))];
+                    let [rowB, colB] = [b.code.charAt(0), parseInt(b.code.slice(1))];
+            
+                    if (rowA < rowB) return -1;
+                    if (rowA > rowB) return 1;
+            
+                    return colA - colB;
+                });
+            
+               
+                let ctr = 0; 
+                for (let i = 0; i < 5; i++) {
+                    for (let j = 0; j < 12; j++) {
+                        if (selectedSeatsMatrix[i][j] == true) {
+                            seatData[ctr].element.classList.add('occupied');
+
+                            
+                        } else {
+                            seatData[ctr].element.classList.remove('occupied');
+                        }
+                        
+                        ctr++; 
+                    }
+                }
+
+                
+            }
+            
+            
+            
+            
+            
+
+
 
             // Navigation functions
             function updateNavigationButtons() {
@@ -377,16 +424,19 @@
                 const nextBtn = document.getElementById('nextBtn');
             
                 prevBtn.style.display = currentStep === 1 ? 'none' : 'block';
+
+                
             
                 if (currentStep === totalSteps) {
-                    checkSummary();
                     nextBtn.style.display = 'none';
                 } else {
                     nextBtn.style.display = 'block';
                     nextBtn.textContent = 'Next';
                     nextBtn.disabled = !canProceedToNextStep();
                 }
-
+                checkSummary();
+                initializeSeats();
+                console.log(selectedSeatsMatrix);
                 updateProgressLine(currentStep, 3);
             }
 
@@ -475,6 +525,7 @@
                 
                     if (cinemaMatch && dateMatch && timeMatch) {
                         selectedScheduledMovieID = combination.id;
+                        selectedSeatsMatrix = combination.seats;
                         break; 
                     }
                 }
@@ -483,8 +534,7 @@
                 selectedSeatsArray = selectedSeatsArray.filter(item => item != null);
 
                 document.getElementById('scheduled_movie').value = selectedScheduledMovieID;
-                document.getElementById('selected_seats').value = JSON.stringify(selectedSeatsArray);   
-
+                document.getElementById('selected_seats').value = JSON.stringify(selectedSeatsArray); 
             }
     
             function prevStep() {
@@ -512,8 +562,6 @@
     
 
             function toPurchase(){
-                checkSummary();
-
                 document.getElementById('paymentModal').style.display = 'flex';
             }
     
@@ -540,6 +588,7 @@
             let selectedCinema = null;
             let selectedDate = null;
             let selectedTime = null;
+            let selectedSeatsMatrix = null;
 
             function selectCinema(cinema) {
 
