@@ -216,7 +216,8 @@ class AddScheduledMovieForm(forms.Form):
             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
             'placeholder': 'Enter Username',
             'autocomplete': 'off',
-            'type': 'datetime-local'  
+            'type': 'datetime-local',
+            'title': "Choose date and time for movie schedule"
         })
     )
     
@@ -242,3 +243,6 @@ class AddScheduledMovieForm(forms.Form):
         ]
         
         self.fields["now_showing_movie"].choices = choices
+        
+class AddTicketForm(forms.Form):
+    pass
