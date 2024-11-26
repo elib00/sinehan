@@ -1,27 +1,76 @@
-{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content%}
-\<br />
-<br />
+{% extends 'base.html' %} 
+{% block title %}Home{% endblock %} 
+{% block content %}
+<div class="overflow-y-hidden">
+    <div class="flex h-screen items-center">
+        <!-- Left box -->    
+        <div class="basis-[20%]">
+            <div class="bg-black shadow p-6 h-[100vh] flex flex-col justify-between">
+                <!-- Upper Section -->
+                <div class="text-white mt-20">
+                    <div class="flex flex-col items-center justify-center">
+                        <img class="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-[#E0A405]"
+                             src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+                             alt="Bordered avatar">
+                        <p class="text-white text-xl mt-2">{{ user.username }}</p>
+                    </div>
 
-<a href="{% url 'home' %}" class="text-white"> back </a>
-<div class="h-screen flex items-center justify-center">
-  <div class="flex flex-col w-1/3 bg-blue-500 text-center">
-    <h1 class="text-white py-4">ZHAZTED</h1>
-    <a href="{% url 'profile' request.user.id %}" class="text-white">
-      Profile
-    </a>
-    <a href="{% url 'tickets' request.user.id %}" class="text-white">
-      Tickets
-    </a>
-    <a href="{% url 'history' request.user.id %}" class="text-white">
-      History
-    </a>
-  </div>
+                    <!-- Links Section -->
+                    <ul class="border-r border-yellow-400 mt-10">
+                        <li class="mb-2">
+                            <a href="{% url 'profile' %}" class="w-full block">
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md flex items-center">
+                                    <ion-icon name="person-outline" size="large"></ion-icon>
+                                    <span class="ml-4 mt-2">Profile</span>
+                                </button>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'profile' %}" class="w-full block">
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md flex items-center">
+                                    <ion-icon name="settings-outline" size="large"></ion-icon>
+                                    <span class="ml-4 mt-2">Account Settings</span>
+                                </button>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'tickets' %}" class="w-full block">
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md flex items-center">
+                                    <ion-icon name="ticket-outline" size="large"></ion-icon>
+                                    <span class="ml-4 mt-2">Tickets</span>
+                                </button>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'history' %}" class="w-full block">
+                                <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded-md flex items-center">
+                                    <ion-icon name="clipboard-outline" size="large"></ion-icon>
+                                    <span class="ml-4 mt-2">History</span>
+                                </button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Log Out Button -->
+                <div>
+                    <button class="text-white hover:text-yellow-400 hover:bg-gray-800 w-full text-left p-2 rounded mb-9">
+                        <a href="{% url 'logout' %}" class="flex items-center">
+                            <ion-icon name="log-out-outline" size="large"></ion-icon>
+                            <span class="ml-4">Log Out</span>
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-  <div class="flex-grow w-full flex justify-center items-center">
-    <div class="content w-2/3 bg-white p-6 shadow-md rounded-lg">
-      {% block content1 %} {% endblock %}
+        <!-- Right box -->
+        <div class="basis-[80%]">
+            <div class="shadow pt-16 h-[100vh] mt-auto text-white overflow-x-auto">
+                {% block content1 %}
+                {% endblock %}
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-
 {% endblock %}

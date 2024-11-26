@@ -1,22 +1,39 @@
 {% load static %}
-<nav
-  class="navbar fixed top-0 left-0 right-0 bg-black text-white shadow-md flex items-center px-5 py-3 z-20"
->
-  <!-- Logo -->
-  <div class="logo-container w-2/5">
-    <a href="#">
-      <img src="{% static 'images/logo.png' %}" alt="logo" class="logo h-12" />
-    </a>
-  </div>
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+<link href="
+https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css
+" rel="stylesheet">
 
-  <!-- Links -->
-  <div class="links-container flex w-1/5 justify-evenly items-center">
-    <a href="/home" class="link hover:text-yellow-400 text-x">Home</a>
-    <a href="/movies" class="link hover:text-yellow-400 text-x">Movies</a>
-  </div>
 
-  <!-- Actions -->
-  <div class="actions-container flex w-2/5 justify-end items-center">
+<header>
+  
+  <a href="#" class="logo">
+    <img src="{% static 'images/logo.png' %}" alt="logo" class="logo h-12" />
+  </a>
+
+  <ul class="navbar">
+    <li> <a href="/home/" class="nav-link">Home</a></li>
+    <li> <a href="/movies/" class="nav-link">Movies</a></li>
+    <li> <a href="/coming/" class="nav-link">Coming</a></li>
+  </ul>
+
+  <div class="actions-container flex">
+    <div class="max-w-md mx-auto">   
+      <div class="relative">
+        <input 
+          type="search" 
+          id="default-search" 
+          placeholder="Search Movies" 
+          required 
+          style="padding: 1rem !important; height: auto !important; padding-left: 2.5rem; font-size: 1rem !important; color: #000000; background-color: #ffffff; border-radius: 0.75rem; border: 1px solid transparent; outline: none; transition: border-color 0.3s ease; margin-right: 2rem !important; width: auto !important;"
+          onfocus="this.style.borderColor = '#FBBF24';" 
+          onblur="this.style.borderColor = 'transparent';"
+        />
+      </div>
+      
+    </div>
+    
+
     <div class="relative">
       {% if user.is_authenticated %}
       <!-- Profile as a circular button -->
@@ -29,20 +46,24 @@
         P
       </button>
 
+      
+      
+
+
       <!-- Dropdown menu -->
       <div
         id="profileDropdown"
         class="absolute right-0 w-48 bg-white rounded-md shadow-lg hidden"
       >
         <a
-          href="{% url 'profile' request.user.id %}"
+          href="{% url 'profile' %}"
           class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
         >
           My Profile
         </a>
 
         <a
-          href="{% url 'tickets' request.user.id %}"
+          href="{% url 'tickets' %}"
           class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
         >
           My Tickets
@@ -66,9 +87,30 @@
       {% endif %}
     </div>
   </div>
-</nav>
+
+
+</header>
+
+
+
+
 
 <script>
+
+   // Get the current URL path
+   const currentPath = window.location.pathname;
+
+   // Select all navbar links
+   const navbarLinks = document.querySelectorAll('.navbar .nav-link');
+ 
+   // Loop through each link to find a match with the current URL
+   navbarLinks.forEach(link => {
+     // If the link's href matches the current path, add 'active' class
+     if (link.getAttribute('href') === currentPath) {
+       link.classList.add('active');
+     }
+   });
+
   function toggleDropdown() {
     const dropdown = document.getElementById("profileDropdown");
     dropdown.classList.toggle("hidden");

@@ -1,0 +1,18 @@
+<!-- components/movie_card.html -->
+<div class="box text-white  text-center space-y-2">
+
+
+    <!-- <span class="rating">
+        <img src="https://www.smcinema.com/CDN/media/entity/get/RatingIconGraphic/PG?referenceScheme=Global&allowPlaceHolder=true">
+    </span> -->
+
+    <a href="{% url 'movie_details' movie_id %}">
+        <div class="box-img ">
+            <img src="{{ image_url }}" alt="">
+        </div>
+    </a>    
+    
+
+    <p class="text-xl ">{{ movie_title }}</p>
+    
+</div>

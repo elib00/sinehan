@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/coming.css' %}">
+
+<div class="main-container flex-col">
+    <div class="card-wrapper" id="coming-1">
+        <div class="movie-detail-card">
+            <div class="content">
+                <h1 class="title">OPPENHEIMER</h1>
+                <div class="meta">(2024) SCI-FI, THRILLER</div>
+                <p class="description">
+                    During World War II, Lt. Gen. Leslie Groves Jr. appoints physicist J. Robert Oppenheimer to work on the top-secret Manhattan Project. Oppenheimer and a team of scientists spend years developing and designing the atomic bomb. Their work comes to fruition on July 16, 1945, as they witness the world's first nuclear explosion, forever changing the course of history.
+                </p>
+                <button class="trailer-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                    Watch Trailer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-wrapper" id="coming-2">
+        <div class="movie-detail-card">
+            <div class="content">
+                <h1 class="title">BLADE RUNNER</h1>
+                <div class="meta">(1982) SCI-FI, THRILLER</div>
+                <p class="description">
+                    A blade runner must pursue and try to terminate four replicants who stole a ship in space and have returned
+                    to Earth to find their creator.
+                </p>
+                <button class="trailer-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                    Watch Trailer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-wrapper" id="coming-3">
+        <div class="movie-detail-card">
+            <div class="content">
+                <h1 class="title">JOKER</h1>
+                <div class="meta">(2024) SCI-FI, THRILLER, HORROR</div>
+                <p class="description">
+                    Forever alone in a crowd, failed comedian Arthur Fleck seeks connection as he walks the streets of Gotham City. Arthur wears two masks -- the one he paints for his day job as a clown, and the guise he projects in a futile attempt to feel like he's part of the world around him. Isolated, bullied and disregarded by society, Fleck begins a slow descent into madness as he transforms into the criminal mastermind known as the Joker.
+                </p>
+                <button class="trailer-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="play-icon">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                    Watch Trailer
+                </button>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock %}

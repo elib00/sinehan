@@ -5,24 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Sinehan{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
   </head>
   <body
-    class="bg-gray-100"
+    
     style="
-      background: linear-gradient(
-        176deg,
-        rgba(0, 0, 0, 1) 0%,
-        rgb(122, 1, 1) 20%,
-        rgba(0, 0, 0, 1) 57%,
-        rgba(0, 0, 0, 1) 100%
-      );
+      background: linear-gradient(to bottom, rgba(139, 0, 0, 0.9) 0%, black 30%, black 100%);
+
     "
   >
-    {% include 'components/navbar.html' %}  
-    <br />
+    
+    {% include 'components/navbar.html' %}
     {% include 'components/register.html' %}
 
     <!-- Placeholder for content that will change in each page -->
     <div class="content">{% block content %}{% endblock %}</div>
-  </body>
+  </body> 
 </html>

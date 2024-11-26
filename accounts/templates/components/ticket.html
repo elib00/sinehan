@@ -1,0 +1,157 @@
+{% load static %}
+
+
+<div class="w-full max-w-4xl mx-auto p-4">
+    <div class="bg-zinc-900 text-white rounded-lg overflow-hidden flex">
+        <!-- Main Ticket Section -->
+        <div class="flex-grow pr-8 flex items-center">
+
+        
+            <div class="flex-1">
+                <img src={% static "images/logo.png"%} width="200" style="transform: rotate(-90deg)">
+            </div>
+            
+
+            <!-- Ticket Info -->
+            <div class="flex-4">
+                
+                
+                <h1 class="text-4xl font-bold mb-6">
+                    <span class="text-white">CINEMA </span>
+                    <span class="text-yellow-400">TICKET</span>
+                </h1>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="border border-zinc-700 p-3">
+                        <div class="text-lg">27 May</div>
+                    </div>
+                    <div class="border border-zinc-700 p-3">
+                        <div class="text-lg" id="showTime">4:00 PM</div>
+                    </div>
+                    <div class="border border-zinc-700 p-3">
+                        <div class="text-lg" id="movieTitle">Wolverine</div>
+                    </div>
+                    <div class="border border-zinc-700 p-3">
+                        <div class="text-lg">SINEHAN SM City Cebu</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ticket Stub -->
+        <div class="w-48 bg-yellow-400 relative">
+            <!-- Perforation -->
+            <div class="absolute left-0 top-0 bottom-0 flex flex-col justify-between py-4">
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+                <div class="w-2 h-2 bg-zinc-900 rounded-full -ml-1"></div>
+            </div>
+            
+            <!-- Stub Content -->
+            <div class="h-full p-6 flex flex-col justify-between">
+                <div class="text-black font-bold text-2xl">
+                    ADMIT ONE
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="border border-black p-2">
+                        <div class="text-sm text-black">Cinema</div>
+                        <div class="text-lg text-black font-bold" id="cinemaNumber">02</div>
+                    </div>
+                    <div class="border border-black p-2">
+                        <div class="text-sm text-black">Row</div>
+                        <div class="text-lg text-black font-bold" id="seatNumber">03</div>
+                    </div>
+                    <div class="border border-black p-2">
+                        <div class="text-sm text-black">Seat</div>
+                        <div class="text-lg text-black font-bold">04</div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <div class="text-black text-xs mb-1">Ticket No:</div>
+                    <div class="text-black font-mono" id="ticketNumber">0123456789</div>
+                </div>
+
+                <button class="mt-3 flex items-center text-black" onclick="generatePdf()">
+                    <ion-icon name="download" size="large" style="color: rgb(24 24 27);"></ion-icon>
+                    <span class="ml-2 mt-2">Download</span>
+                </button>
+                  
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function generatePdf() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+            orientation: 'landscape',
+            unit: 'mm',
+            format: [120, 200]
+        });
+
+        // Get input values
+        const movieTitle = document.getElementById('movieTitle').textContent;
+        const customerName = "Zhazted Rhixin Valles";
+        const seatNumber = document.getElementById('seatNumber').textContent;
+        const showTime = document.getElementById('showTime').textContent;
+        const ticketNumber = document.getElementById('ticketNumber').textContent;
+        const cinema = document.getElementById('cinemaNumber').textContent;
+        
+
+        // Create QR code
+        const qr = new QRCode(document.createElement("div"), {
+            text: `Ticket#${ticketNumber}\nMovie:${movieTitle}\nName:${customerName}\nSeat:${seatNumber}\nTime:${showTime}`,
+            width: 128,
+            height: 128
+        });
+
+        // Wait for QR code to generate
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Get QR code as data URL
+        const qrImage = qr._el.querySelector('img').src;
+
+        // Background
+        doc.setFillColor(240, 240, 240);
+        doc.rect(0, 0, 200, 110, 'F');
+
+        // Decorative elements
+        doc.setFillColor(229, 9, 20);
+        doc.rect(0, 0, 200, 10, 'F');
+        doc.rect(0, 110, 200, 10, 'F');
+
+        // Title
+        doc.setFontSize(24);
+        doc.setTextColor(20, 20, 20);
+        doc.text("CINEMA TICKET", 70, 25);
+
+        // Movie details
+        doc.setFontSize(14);
+        doc.text(`Movie: ${movieTitle}`, 20, 40);
+        doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 50);
+        doc.text(`Time: ${showTime}`, 20, 60);
+        doc.text(`Cinema: ${cinema}`, 20, 70);
+        doc.text(`Seat: ${seatNumber}`, 20, 80);
+        doc.text(`Customer: ${customerName}`, 20, 90);
+
+        // Ticket number with special styling
+        doc.setFontSize(12);
+        doc.text(`Ticket #${ticketNumber}`, 142, 85);
+
+        // Add QR code
+        doc.addImage(qrImage, 'PNG', 140, 35, 40, 40);
+
+        // Save PDF
+        const pdfBlob = doc.output("blob");
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        window.open(pdfUrl, "_blank");
+    }
+</script>

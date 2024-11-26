@@ -18,11 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import home_view
 from .views import movies_view
+from .views import coming_view
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
-    path('admin/', include("custom_admin.urls")),
+    path('admin/', admin.site.urls),
+    #path('admin/', include("custom_admin.urls")),
     path('accounts/', include('accounts.urls')),
     path('home/', home_view, name='home'),  
-    path('movies/', movies_view, name="movies"),
+    path('movies/', include('movies.urls')),
+    path('coming/', coming_view, name='coming_view'),
+    
 ]
