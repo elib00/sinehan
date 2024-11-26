@@ -71,7 +71,26 @@
     movies = JSON.parse(movies);
     console.log(movies);
    
-    
+
+    function changeListener(selectElement){
+        var value = selectElement.value;
+          
+        if (value == "runtime"){
+          sortByRuntime();
+        }else if (value == "price"){
+          sortByPrice();
+        } else if (value == "az"){
+          sortByAZ();
+        } else if (value == "za"){
+          sortByAZ();
+        } 
+   
+        const cards_container = document.getElementById('list-cards-container');
+        const content = displayListViewCards(movies);
+        console.log(movies);
+        cards_container.innerHTML = content;
+    }
+   
 
     document.addEventListener('DOMContentLoaded' , function() {
         const sliderContent = document.querySelector('.slider-content');
@@ -103,19 +122,22 @@
             if (e.target.getAttribute('name') === 'grid-outline') {
                 content = `
                             <div id="filter-box">
-                                <ion-icon name="options-outline"></ion-icon>
+                                <ion-icon name="options-outline" onclick="sortByRuntime()"></ion-icon>
                                 <div>
                                     <p>Sort by</p>
-                                    <select id="sort-options">
+                                    <select id="sort-options" onchange="changeListener(this)">
                                         <option value="runtime">Runtime</option>
                                         <option value="price">Price</option>
                                         <option value="az">A-Z</option>
                                         <option value="za">Z-A</option>
+                                        <option value="all">All</option>
                                     </select>
                                 </div>
 
                             </div>
-                            <div class="container">${displayListViewCards(movies)}</div>`;
+                            
+                            <div class="container" id="list-cards-container">${displayListViewCards(movies)}</div>`;
+                
             } else {
                 content = `
                         <div class="hero-image-container">
@@ -166,6 +188,8 @@
                 });
             }
 
+            
+
             dynamic_container.innerHTML = content;
         }
     });
@@ -213,6 +237,26 @@
 
         return content;
     }
+
+
+    
+
+
+    function sortByRuntime(){
+        movies.sort((a,b) => a.fields.duration.localeCompare(b.fields.duration));
+    }
+
+    function sortByAZ(){
+        movies.sort((a,b) => a.fields.movie_name.localeCompare(b.fields.movie_name));
+    }
+
+    function sortByPrice(){
+        movies.sort((a,b) => a.fields.price.localeCompare(b.fields.price));
+    }
+
+
+
+
 </script>
 
 
