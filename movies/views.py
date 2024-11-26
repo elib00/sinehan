@@ -3,13 +3,18 @@ from django.forms import model_to_dict
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.core.serializers import serialize
+
+from accounts.models import CustomUser
 from .models import Movie
 from cinema.models import ScheduledMovie, Ticket
 
 
 def movie_list(request):
     movies = Movie.objects.all()
-    return render(request, 'movie_list.html', {'movies': movies})
+    movies_json = serialize('json', movies)
+
+    return render(request, 'movie_list.html', {'movies': movies, 'movies_json': movies_json})
 
 def movie_details(request, movie_id):
     try:
@@ -57,8 +62,6 @@ def movie_book_purchase(request, movie_id):
         user = request.user
         scheduled_movie_id = request.POST.get('scheduled_movie')
         seatsCodes = json.loads(request.POST.get('seats')) 
-        
-        
         
         
         try:

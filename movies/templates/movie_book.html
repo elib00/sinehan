@@ -206,7 +206,7 @@
                         <p class="step-title">Order Summary</p>
                         <div class="step3-item">
                            
-                            <ion-icon name="videocam-outline"></ion-icon>
+                            <ion-icon name="film-outline"></ion-icon>
                             <div>
                                 <p>Movie</p>
                                 <h4 id="selected-movie"></h4>
@@ -325,6 +325,7 @@
                     {% csrf_token %}
                     <input type="hidden" name="scheduled_movie" id="scheduled_movie">
                     <input type="hidden" name="seats" id="selected_seats">
+                  
 
                     <button type="submit" class="purchase-btn" id="purchase-btn" >Purchase</button>
                 
@@ -347,8 +348,6 @@
 
         <script>
             let selectedScheduledMovieID = null;
-            
-            
             const timeButtons = document.querySelectorAll('#timeGrid button');
 
             
@@ -436,7 +435,6 @@
                 }
                 checkSummary();
                 initializeSeats();
-                console.log(selectedSeatsMatrix);
                 updateProgressLine(currentStep, 3);
             }
 
