@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm, AddCinemaForm, AddScheduledMovieForm
-from cinema.models import NowShowingMovie, Cinema, ScheduledMovie
+from cinema.models import Cinema, Ticket, ScheduledMovie
 from movies.models import Movie
 from accounts.forms import CustomUserCreationForm, CustomUserUpdateForm
 from django.contrib.auth import authenticate, login, get_user_model
@@ -173,9 +173,26 @@ class AdminLogoutView(LogoutView):
     
 class AdminDashboardTickets(View):
     def get(self, request):
-        return render(request, "sections/tickets.html")
+        #for displaying by scheduled_movie
+        scheduled_movies = ScheduledMovie.objects.select_related("movie").prefetch_related("scheduled_movie_tickets")
+        
+        #for displaying by tickets only
+        tickets = Ticket.objects.select_related("user", "scheduled_movie")
+        
+        #for displaying by users
+        users = CustomUser.objects.prefetch_related("user_tickets").all()
+        
+        context = {
+            "scheduled_movies": scheduled_movies,
+            "tickets": tickets,
+            "users": users
+        }
+        
+        return render(request, "sections/tickets.html", context)
+
     
 class AdminDashboardCinema(View):
+    
     def get(self, request):
         now_showing_form = AddNowShowingMovieForm()
         add_cinema_form = AddCinemaForm()
@@ -315,4 +332,3 @@ class AdminDashboardAddScheduledMovieView(View):
         ).all()
         
         return scheduled_movies
-

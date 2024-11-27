@@ -1,6 +1,6 @@
 from django import forms
 from movies.models import Movie
-from cinema.models import NowShowingMovie, Cinema
+from cinema.models import Cinema
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
