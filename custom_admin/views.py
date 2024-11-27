@@ -174,10 +174,14 @@ class AdminLogoutView(LogoutView):
 class AdminDashboardTickets(View):
     def get(self, request):
         #for displaying by scheduled_movie
-        scheduled_movies = ScheduledMovie.objects.select_related("movie").prefetch_related("scheduled_movie_tickets")
+        scheduled_movies = ScheduledMovie.objects.select_related("movie").prefetch_related("movie_tickets").all()
         
         #for displaying by tickets only
-        tickets = Ticket.objects.select_related("user", "scheduled_movie")
+        tickets = Ticket.objects.select_related("user", "scheduled_movie__movie", "scheduled_movie__cinema").all()
+        for ticket in tickets:
+            print(ticket.scheduled_movie.cinema.capacity)
+            print(ticket.scheduled_movie.audience_number)
+            ticket.available_seats = ticket.scheduled_movie.cinema.capacity - ticket.scheduled_movie.audience_number
         
         #for displaying by users
         users = CustomUser.objects.prefetch_related("user_tickets").all()
