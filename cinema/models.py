@@ -64,6 +64,7 @@ class Ticket(models.Model):
         on_delete=models.CASCADE, 
         related_name="user_tickets"
     )
+    
     scheduled_movie = models.ForeignKey(
         ScheduledMovie, 
         on_delete=models.CASCADE, 

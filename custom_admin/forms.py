@@ -1,6 +1,6 @@
 from django import forms
 from movies.models import Movie
-from cinema.models import Cinema
+from cinema.models import Cinema, ScheduledMovie
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
@@ -245,4 +245,51 @@ class AddScheduledMovieForm(forms.Form):
         self.fields["now_showing_movie"].choices = choices
         
 class AddTicketForm(forms.Form):
-    pass
+    user = forms.ChoiceField(
+        label="Select a User",
+        widget=forms.Select(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'autocomplete': 'off'
+        })
+    )
+    
+    scheduled_movie = forms.ChoiceField(
+        label="Select a Scheduled Movie",
+        widget=forms.Select(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'autocomplete': 'off'
+        })
+    )
+    
+    seat_identifier = forms.CharField(
+        label="Seat Identifier",
+        widget=forms.TextInput(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm',
+            'placeholder': 'Enter seat identifier'
+        })
+    )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Query the Movie model to get the movies
+        self.set_user_choices()
+        self.set_scheduled_movie_choices()
+        
+    def set_user_choices(self):
+        users = CustomUser.objects.all()
+        
+        choices = [
+            (user.id, f"{user.first_name} {user.last_name}") for user in users
+        ]
+        
+        self.fields["user"].choices = choices
+    
+    def set_scheduled_movie_choices(self):
+        scheduled_movies = ScheduledMovie.objects.select_related('cinema', 'movie').filter(is_active=True)
+        
+        choices = [
+            (sm.id, f"{sm.cinema.cinema_name} - {sm.movie.movie_name}") for sm in scheduled_movies
+        ]
+        
+        self.fields["scheduled_movie"].choices = choices
+        

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm, AddCinemaForm, AddScheduledMovieForm
+from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm, AddCinemaForm, AddScheduledMovieForm, AddTicketForm
 from cinema.models import Cinema, Ticket, ScheduledMovie
 from movies.models import Movie
 from accounts.forms import CustomUserCreationForm, CustomUserUpdateForm
@@ -171,8 +171,15 @@ class AdminLogoutView(LogoutView):
         messages.success(request, "Logout successful!")
         return response
     
-class AdminDashboardTickets(View):
+class AdminDashboardTicketsView(View):
     def get(self, request):
+        add_ticket_form = AddTicketForm()
+        context = self.init_context()
+        
+        context["add_ticket_form"] = add_ticket_form
+        return render(request, "sections/tickets.html", context)
+
+    def init_context(self):
         #for displaying by scheduled_movie
         scheduled_movies = ScheduledMovie.objects.select_related("movie").prefetch_related("movie_tickets").all()
         
@@ -192,9 +199,66 @@ class AdminDashboardTickets(View):
             "users": users
         }
         
+        return context
+
+class AdminDashboardAddTicketView(View):
+    def post(self, request):
+        add_ticket_form = AddTicketForm(request.POST)
+        
+        if add_ticket_form.is_valid():
+            user_id = add_ticket_form.cleaned_data["user"]
+            scheduled_movie_id = add_ticket_form.cleaned_data["scheduled_movie"]
+            
+            user_instance = get_object_or_404(CustomUser, id=user_id)
+            scheduled_movie_instance = get_object_or_404(ScheduledMovie, id=scheduled_movie_id)
+            
+            seat_identifier = add_ticket_form.cleaned_data["seat_identifier"]
+            
+            new_ticket = Ticket(
+                user=user_instance,
+                scheduled_movie=scheduled_movie_instance,
+                seat_identifier=seat_identifier
+            )
+            
+            new_ticket.save()
+            messages.success(request, "Ticket successfully booked!")
+            return redirect("admin_dashboard_tickets")
+        else:
+            messages.error(request, "Failed to book a ticket. Please try again.")
+            print(add_ticket_form.errors)  # Print form errors for debugging
+            
+            for field, errors in add_ticket_form.errors.items():
+                for error in errors:    
+                    messages.error(request, f"{field.capitalize()}: {error}")
+        
+        context = self.init_context()
+        context["add_ticket_form"] = add_ticket_form
         return render(request, "sections/tickets.html", context)
 
-    
+    def init_context(self):
+        #for displaying by scheduled_movie
+        scheduled_movies = ScheduledMovie.objects.select_related("movie").prefetch_related("movie_tickets").all()
+        
+        #for displaying by tickets only
+        tickets = Ticket.objects.select_related("user", "scheduled_movie__movie", "scheduled_movie__cinema").all()
+        for ticket in tickets:
+            print(ticket.scheduled_movie.cinema.capacity)
+            print(ticket.scheduled_movie.audience_number)
+            ticket.available_seats = ticket.scheduled_movie.cinema.capacity - ticket.scheduled_movie.audience_number
+        
+        #for displaying by users
+        users = CustomUser.objects.prefetch_related("user_tickets").all()
+        
+        context = {
+            "scheduled_movies": scheduled_movies,
+            "tickets": tickets,
+            "users": users
+        }
+        
+        return context
+        
+          
+            
 class AdminDashboardCinema(View):
     
     def get(self, request):
