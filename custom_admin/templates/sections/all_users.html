@@ -3,28 +3,21 @@
 {% load static %}
 {% block title %} Dashboard - All Users {% endblock %}
 {% block content %}
-<div class="container mx-auto px-4 flex flex-col">
+
+<div class="container mx-auto p-6 h-full flex flex-col">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">All Users</h1>
         <div class="flex space-x-3">
-            <form method="GET" class="flex items-center">
+            <div class="flex items-center">
                 <input type="text" name="search" placeholder="Search user..." 
-                       value="{{ request.GET.search }}"
                        class="border rounded-l-md px-3 py-2 w-64">
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r-md">
+                <button type="submit" class="bg-black text-white px-4 py-2 rounded-r-md">
                     Search
                 </button>
-            </form>
-            <a
-               class="bg-black text-white px-4 py-2 rounded-md flex items-center cursor-pointer">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                </svg>
-                Export
-            </a>
+            </div>
         </div>
     </div>
-    <div class="flex-grow overflow-hidden h-full p-3">
+    <div class="flex-grow overflow-y-auto h-full p-3">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for user in users %}
                 {% include "components/user_card.html" with user=user %}

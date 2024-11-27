@@ -70,6 +70,7 @@ class Ticket(models.Model):
         on_delete=models.CASCADE, 
         related_name="movie_tickets"
     )
+    
     seat_identifier = models.CharField(
         max_length=3, 
         default="Z1" 

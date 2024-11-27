@@ -4,7 +4,7 @@
 {% block title %} Dashboard - Tickets {% endblock %}
 {% block content%}
 
-<div class="container mx-auto p-6">
+<div class="container mx-auto p-6 h-full">
     <div class="flex justify-between items-center mb-6">
         <div class="flex flex-row items-center gap-4">
             <h1 id="ticketsPageTitle" class="text-3xl font-bold">Tickets</h1>
@@ -16,9 +16,10 @@
                 <!-- Dropdown Content (Hidden by default) -->
                 <div id="ticketsDisplayOptionsDropdown" class="absolute left-0 hidden mt-2 w-48 bg-gray-800 shadow-lg rounded border border-gray-200 space-y-2 z-10">
                   <!-- Choices inside the dropdown -->
-                  <button href="#" class="block w-full text-left px-4 rounded py-2 text-sm text-white hover:bg-gray-700">By All Tickets</button>
-                  <button href="#" class="block w-full text-left px-4 rounded py-2 text-sm text-white hover:bg-gray-700">By Scheduled Movie</button>
-                  <button href="#" class="block w-full text-left px-4 rounded py-2 text-sm text-white hover:bg-gray-700">By Users</button>
+                  <button id="allTicketsChoice" href="#" class="block w-full text-left px-4 rounded py-2 text-sm text-white hover:bg-gray-700">By All Tickets</button>
+                  <button id="scheduledMovieChoice" href="#" class="block w-full text-left px-4 rounded py-2 text-sm text-white hover:bg-gray-700">By Scheduled Movie</button>
+                  <button id="usersChoice" href="#" class="block w-full text-left px-4 rounded py-2 text-sm text-white hover:bg-gray-700">By Users</button>
+                  <button id="activeChoice" href="#" class="block w-full text-left px-4 rounded py-2 text-sm text-white hover:bg-gray-700">By Active</button>
                 </div>
             </div>
             <p class="font-normal text-sm">By All Tickets</p>
@@ -42,9 +43,11 @@
     </div>
 
     {% if tickets %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="ticketsContainer" class="flex-grow overflow-y-auto h-full p-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 box-border">
             {% for ticket in tickets %}
-                <div class="bg-white shadow-md rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105">
+                <div 
+                    class="bg-white shadow-md rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 cursor-pointer">
                     <div class="p-6">
                         <!-- Ticket Info -->
                         <div class="mb-4 flex items-center space-x-4">
@@ -100,16 +103,21 @@
                             </div>
 
                             <!-- Action Buttons -->
-                            <div class="flex space-x-3 mt-4">
-                                <a href="" 
-                                   class="flex-1 text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300">
-                                    View Details
-                                </a>
+                            <div class="flex space-x-3 mt-4 justify-between">
+                                <form method="POST" class="flex-1">
+                                    {% csrf_token %}
+                                    <button 
+                                        class="flex-1 block w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300">
+                                        View Details
+                                    </button>
+                                </form>
                                 {% if ticket.is_active %}
-                                    <a href="" 
-                                       class="flex-1 text-center bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300">
+                                    <button
+                                        data-cancel-ticket-button
+                                        data-cancel-url="{% url 'admin_dashboard_cancel_ticket' ticket.id %}"
+                                        class="flex-1 block w-full text-center bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300">
                                         Cancel Ticket
-                                    </a>
+                                    </button>
                                 {% endif %}
                             </div>
                         </div>
@@ -117,14 +125,12 @@
                 </div>
             {% endfor %}
         </div>
-        {% comment %} <div class="mt-6 flex justify-center">
-            {% include 'includes/pagination.html' %}
-        </div> {% endcomment %}
+    <div>
     {% else %}
         <div class="bg-white shadow-md rounded-lg p-6 text-center">
             <p class="text-gray-600 text-xl">No tickets found.</p>
         </div>
-    {% endif %}
+    {% endif %} 
     
     <div class="fixed bottom-3 right-3">
         <button id="addTicketButton" class="bg-black text-white font-bold py-3 px-4 rounded-full shadow-lg flex items-center">
@@ -137,15 +143,22 @@
 </div>
 
 {% include "components/add_ticket.html" %}
+{% include "components/cancel_ticket_modal.html" %}
 {% include "components/message_modal.html" %}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script>
+    //main
     document.addEventListener("DOMContentLoaded", () => {
+        initializeTicketsDisplayOptionsDropdown();
+    });
+
+    //helpers
+    const initializeTicketsDisplayOptionsDropdown = () => {
         const ticketsDisplayOptionsDropdown = document.getElementById("ticketsDisplayOptionsDropdown");
         const ticketsDisplayOptionsButton = document.getElementById("ticketsDisplayOptionsButton");
 
         ticketsDisplayOptionsButton.addEventListener("mouseenter", () => {
-            //alert("hi")
             ticketsDisplayOptionsDropdown.classList.remove("hidden");
         });
 
@@ -165,7 +178,48 @@
                 }
             }, 100);  // Small delay to handle the mouse movement gracefully
         });
-    });
+
+        const allTicketsChoice = document.getElementById("allTicketsChoice");
+        const scheduledMovieChoice = document.getElementById("scheduledMovieChoice");
+        const usersChoice = document.getElementById("usersChoice");
+        const activeChoice = document.getElementById("activeChoice");
+
+        allTicketsChoice.addEventListener("click", () => {
+            displayAllTickets();
+        });
+
+        scheduledMovieChoice.addEventListener("click", () => {
+            const container = document.getElementById("ticketsContainer");
+            const newDiv = document.createElement("div");
+            replaceWithGSAP(container, newDiv);
+        });
+        
+    };
+
+    const displayAllTickets = () => {
+
+    };
+
+    const replaceWithGSAP = (container, newContent) => {
+        // Animate out current content
+        gsap.to(container.children, {
+            opacity: 0,
+            y: 50,
+            duration: 0.5,
+            onComplete: () => { 
+                // Clear and add new content
+                container.innerHTML = '';
+                container.appendChild(newContent);
+                
+                // Animate in new content
+                gsap.from(container.children, {
+                    opacity: 0,
+                    y: -50,
+                    duration: 0.5
+                });
+            }
+        });
+    }
 </script>
 
 {% endblock %}

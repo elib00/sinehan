@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.http import HttpResponseForbidden
 from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm, AddCinemaForm, AddScheduledMovieForm, AddTicketForm
 from cinema.models import Cinema, Ticket, ScheduledMovie
 from movies.models import Movie
@@ -186,8 +187,6 @@ class AdminDashboardTicketsView(View):
         #for displaying by tickets only
         tickets = Ticket.objects.select_related("user", "scheduled_movie__movie", "scheduled_movie__cinema").all()
         for ticket in tickets:
-            print(ticket.scheduled_movie.cinema.capacity)
-            print(ticket.scheduled_movie.audience_number)
             ticket.available_seats = ticket.scheduled_movie.cinema.capacity - ticket.scheduled_movie.audience_number
         
         #for displaying by users
@@ -202,6 +201,9 @@ class AdminDashboardTicketsView(View):
         return context
 
 class AdminDashboardAddTicketView(View):
+    def get(self, request):
+        return redirect("admin_dashboard_tickets")
+        
     def post(self, request):
         add_ticket_form = AddTicketForm(request.POST)
         
@@ -213,6 +215,12 @@ class AdminDashboardAddTicketView(View):
             scheduled_movie_instance = get_object_or_404(ScheduledMovie, id=scheduled_movie_id)
             
             seat_identifier = add_ticket_form.cleaned_data["seat_identifier"]
+            
+            if Ticket.objects.filter(scheduled_movie=scheduled_movie_instance, seat_identifier=seat_identifier, is_active=True).exists():
+                messages.error(request, "This seat is already taken. Please choose another seat.")
+                context = self.init_context()
+                context["add_ticket_form"] = add_ticket_form
+                return render(request, "sections/tickets.html", context)
             
             new_ticket = Ticket(
                 user=user_instance,
@@ -231,6 +239,8 @@ class AdminDashboardAddTicketView(View):
                 for error in errors:    
                     messages.error(request, f"{field.capitalize()}: {error}")
         
+        # return redirect("admin_dashboard_tickets")
+        
         context = self.init_context()
         context["add_ticket_form"] = add_ticket_form
         return render(request, "sections/tickets.html", context)
@@ -242,8 +252,6 @@ class AdminDashboardAddTicketView(View):
         #for displaying by tickets only
         tickets = Ticket.objects.select_related("user", "scheduled_movie__movie", "scheduled_movie__cinema").all()
         for ticket in tickets:
-            print(ticket.scheduled_movie.cinema.capacity)
-            print(ticket.scheduled_movie.audience_number)
             ticket.available_seats = ticket.scheduled_movie.cinema.capacity - ticket.scheduled_movie.audience_number
         
         #for displaying by users
@@ -256,9 +264,18 @@ class AdminDashboardAddTicketView(View):
         }
         
         return context
-        
-          
-            
+
+class AdminDashboardCancelTicketView(View):
+    def get(self, request, ticket_id):
+        return HttpResponseForbidden("GET requests are forbidden")
+    
+    def post(self, request, ticket_id):
+        ticket_instance = get_object_or_404(Ticket, id=ticket_id)
+        ticket_instance.is_active = False
+        ticket_instance.save()
+        messages.success(request, "Ticket successfully cancelled. Seat can now be booked.")
+        return redirect("admin_dashboard_tickets")
+
 class AdminDashboardCinema(View):
     
     def get(self, request):
