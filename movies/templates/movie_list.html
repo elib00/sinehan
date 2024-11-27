@@ -6,7 +6,10 @@
 <link rel="stylesheet" href="{% static 'css/movies_gallery.css' %}">
 
 <section class="movies" id="movies">
+
     <div class="hero-container">
+
+        
         <!-- Main Hero Image -->
         <div id="gallery-view">
             <ion-icon name="images-outline" class="active"></ion-icon>
@@ -14,6 +17,10 @@
         </div>
 
         <div id="dynamic-container">
+
+
+
+
             <div class="hero-image-container">
                 <img 
                     src="/static/images/joker-banner.jpg"
@@ -70,6 +77,25 @@
     let movies = (`{{ movies_json|safe }}`);
     movies = JSON.parse(movies);
     console.log(movies);
+
+
+
+    //MODAL SETTIGNS
+
+    var modal = null;
+
+    function showModal() {
+
+        if (modal == null){
+            return;
+        }
+
+        if (modal.style.display === "block") {
+            modal.style.display = "none"; 
+        } else {
+            modal.style.display = "block"; 
+        }
+    }
    
 
     function changeListener(selectElement){
@@ -122,7 +148,7 @@
             if (e.target.getAttribute('name') === 'grid-outline') {
                 content = `
                             <div id="filter-box">
-                                <ion-icon name="options-outline" onclick="sortByRuntime()"></ion-icon>
+                                <ion-icon name="options-outline" onclick="showModal()"></ion-icon>
                                 <div>
                                     <p>Sort by</p>
                                     <select id="sort-options" onchange="changeListener(this)">
@@ -130,67 +156,112 @@
                                         <option value="price">Price</option>
                                         <option value="az">A-Z</option>
                                         <option value="za">Z-A</option>
-                                        <option value="all">All</option>
+                                       
                                     </select>
                                 </div>
 
                             </div>
+
+                            <div id="filter-modal">
+                                <div class="modal-content">
+                                    <span class="close-button">&times;</span>
+                                    <h2>Genres</h2>
+                                    <div class="genres filter-type">
+                                        <button class="genre-btn filter-btn selected">Drama</button>
+                                        <button class="genre-btn filter-btn selected">Adventure</button>
+                                        <button class="genre-btn filter-btn">Thriller</button>
+                                        <button class="genre-btn filter-btn">Action</button>
+                                        <button class="genre-btn filter-btn">Crime</button>
+                                        <button class="genre-btn filter-btn">Comedy</button>
+                                        <button class="genre-btn filter-btn">Mystery</button>
+                                        <button class="genre-btn filter-btn selected">War</button>
+                                        <button class="genre-btn filter-btn">Fantasy</button>
+                                        <button class="genre-btn filter-btn">Sci-Fi</button>
+                                    </div>
+                                    <h2>Rating</h2>
+                                    <div class="movie-ratings filter-type">
+                                        <button class="rating-btn filter-btn">General Audience</button>
+                                        <button class="rating-btn filter-btn">Parental Guidance</button>
+                                        <button class="rating-btn filter-btn">Restricted-13</button>
+                                        <button class="rating-btn filter-btn">Restricted-16</button>
+                                        <button class="rating-btn filter-btn">Restricted-18</button>
+                                    </div>
+
+                                    <h2>Format</h2>
+                                    <div class="movie-formats filter-type">
+                                        <button class="format-btn filter-btn">2D</button>
+                                        <button class="format-btn filter-btn">3D</button>
+                                    </div>
+
+                                </div>
+                            </div>
                             
                             <div class="container" id="list-cards-container">${displayListViewCards(movies)}</div>`;
-                
+
             } else {
                 content = `
                         <div class="hero-image-container">
-                <img 
-                    src="/static/images/joker-banner.jpg"
-                    alt="Background Image"
-                    class="hero-image"
-                />
-                <div class="gradient-overlay"></div>
-            </div>
-            
-            <div class="movie-gallery">
-                <h2 class="gallery-title">Now Showing</h2>
-                <div class="slider-container">
-                    <button class="slider-button prev">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="slider-icon">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-            
-                    <div class="slider-content">
-                        ${displayGalleryViewCards(movies)}
-                    </div>
+                            <img 
+                                src="/static/images/joker-banner.jpg"
+                                alt="Background Image"
+                                class="hero-image"
+                            />
+                            <div class="gradient-overlay"></div>
+                        </div>
                     
-                    <button class="slider-button next">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="slider-icon">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-                    `;
+                        <div class="movie-gallery">
+                            <h2 class="gallery-title">Now Showing</h2>
+                            <div class="slider-container">
+                                <button class="slider-button prev">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="slider-icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                        
+                                <div class="slider-content">
+                                    ${displayGalleryViewCards(movies)}
+                                </div>
+                                
+                                <button class="slider-button next">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="slider-icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                            `;
 
                 
-                document.addEventListener('click' , function() {
-                    const sliderContent = document.querySelector('.slider-content');
-                    const prevButton = document.querySelector('.prev');
-                    const nextButton = document.querySelector('.next');
-                    const cardWidth = 208; 
-            
-                    prevButton.addEventListener('click', () => {
-                        sliderContent.scrollLeft -= cardWidth * 4;
-                    });
-            
-                    nextButton.addEventListener('click', () => {
-                        sliderContent.scrollLeft += cardWidth * 4; 
-                    });
-                });
+                        document.addEventListener('click' , function() {
+                            const sliderContent = document.querySelector('.slider-content');
+                            const prevButton = document.querySelector('.prev');
+                            const nextButton = document.querySelector('.next');
+                            const cardWidth = 208; 
+                    
+                            prevButton.addEventListener('click', () => {
+                                sliderContent.scrollLeft -= cardWidth * 4;
+                            });
+                    
+                            nextButton.addEventListener('click', () => {
+                                sliderContent.scrollLeft += cardWidth * 4; 
+                            });
+                        });
             }
 
-            
-
             dynamic_container.innerHTML = content;
+            modal = document.getElementById("filter-modal");
+            // Get the close button
+            var closeButton = document.getElementsByClassName("close-button")[0];
+
+            closeButton.onclick = function() {
+            modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            }
         }
     });
 
@@ -238,10 +309,6 @@
         return content;
     }
 
-
-    
-
-
     function sortByRuntime(){
         movies.sort((a,b) => a.fields.duration.localeCompare(b.fields.duration));
     }
@@ -254,6 +321,8 @@
         movies.sort((a,b) => a.fields.price.localeCompare(b.fields.price));
     }
 
+
+    
 
 
 

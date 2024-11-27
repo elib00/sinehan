@@ -33,6 +33,8 @@ def movie_book(request, movie_id):
         dates = {sm.schedule.date() for sm in scheduled_movies}
         times = {sm.schedule.time() for sm in scheduled_movies}
         
+        
+
         valid_combinations = []
         for sm in scheduled_movies:
             valid_combinations.append({
@@ -49,6 +51,7 @@ def movie_book(request, movie_id):
         'cinemas': cinemas,
         'dates': sorted(dates),  
         'times': sorted(time.strftime('%H:%M') for time in times),
+        
         }
 
         return render(request, 'movie_book.html', context)
@@ -67,12 +70,6 @@ def movie_book_purchase(request, movie_id):
         try:
             scheduled_movie = ScheduledMovie.objects.get(id=scheduled_movie_id)
             
-            seats = scheduled_movie.seats
-        
-            for code in seatsCodes:
-                row_index = ord(code[0].upper()) - ord('A') 
-                col_index = int(code[1:]) - 1    
-                seats[row_index][col_index] = True
             
             tickets = [
                 Ticket(user = user, scheduled_movie=scheduled_movie, seat_identifier=seat)
@@ -80,9 +77,7 @@ def movie_book_purchase(request, movie_id):
             ]
             
             Ticket.objects.bulk_create(tickets)
-            scheduled_movie.seats = seats
-            scheduled_movie.save()
-            
+            scheduled_movie.update_seat_matrix()
             
             return render(request, 'home.html')
         except ScheduledMovie.DoesNotExist:
