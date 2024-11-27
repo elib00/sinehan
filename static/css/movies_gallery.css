@@ -156,7 +156,7 @@
   box-sizing: border-box;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
-  margin-top: 12rem;
+  margin-top: 1rem;
 }
 
 .movie-card {
@@ -182,24 +182,37 @@
 }
 
 #filter-box {
-  position: absolute;
-  top: 7rem;
-  left: 0;
   width: 100%;
-  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 64rem;
+  margin-top: 7rem;
+  flex-direction: column;
+  padding: 0 17rem;
 }
 
-#filter-box div {
+#filter-box-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  width: 100%;
+}
+
+#filter-box-bottom {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+#filter-box-top div {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  color: white;
 }
 
 #filter-box option {
@@ -246,10 +259,11 @@
 .modal-content {
   background-color: #000000;
   margin: 15% auto;
-  padding: 20px;
+  padding: 50px 30px;
   border-radius: 10px;
   width: 60%;
   color: white;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.5);
 }
 
 .modal-content h2 {
@@ -294,4 +308,22 @@
   color: #fccc14;
   text-decoration: none;
   cursor: pointer;
+}
+
+.selected-filter {
+  display: inline-block;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #fccc14;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.selected-filter .close {
+  background: none;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 5px;
 }

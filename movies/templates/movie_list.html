@@ -75,13 +75,18 @@
     
 
     let movies = (`{{ movies_json|safe }}`);
+    let filtered_movies = movies;
+    let selectedFilters = [];
+    let selectedFiltersJSON = {
+    "genre" : [],
+    "movie_rating" : [],
+    "movie_format" : []
+    };
+
     movies = JSON.parse(movies);
-    console.log(movies);
-
-
+    
 
     //MODAL SETTIGNS
-
     var modal = null;
 
     function showModal() {
@@ -112,8 +117,7 @@
         } 
    
         const cards_container = document.getElementById('list-cards-container');
-        const content = displayListViewCards(movies);
-        console.log(movies);
+        const content = displayListViewCards(filtered_movies);
         cards_container.innerHTML = content;
     }
    
@@ -148,16 +152,23 @@
             if (e.target.getAttribute('name') === 'grid-outline') {
                 content = `
                             <div id="filter-box">
-                                <ion-icon name="options-outline" onclick="showModal()"></ion-icon>
-                                <div>
-                                    <p>Sort by</p>
-                                    <select id="sort-options" onchange="changeListener(this)">
-                                        <option value="runtime">Runtime</option>
-                                        <option value="price">Price</option>
-                                        <option value="az">A-Z</option>
-                                        <option value="za">Z-A</option>
-                                       
-                                    </select>
+
+                                <div id="filter-box-top">
+                                    <ion-icon name="options-outline" onclick="showModal()"></ion-icon>
+                                    <div>
+                                        <p>Sort by</p>
+                                        <select id="sort-options" onchange="changeListener(this)">
+                                            <option value="runtime">Runtime</option>
+                                            <option value="price">Price</option>
+                                            <option value="az">A-Z</option>
+                                            <option value="za">Z-A</option>
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="filter-box-bottom">
+                                    
                                 </div>
 
                             </div>
@@ -167,14 +178,14 @@
                                     <span class="close-button">&times;</span>
                                     <h2>Genres</h2>
                                     <div class="genres filter-type">
-                                        <button class="genre-btn filter-btn selected">Drama</button>
-                                        <button class="genre-btn filter-btn selected">Adventure</button>
+                                        <button class="genre-btn filter-btn">Drama</button>
+                                        <button class="genre-btn filter-btn">Adventure</button>
                                         <button class="genre-btn filter-btn">Thriller</button>
                                         <button class="genre-btn filter-btn">Action</button>
                                         <button class="genre-btn filter-btn">Crime</button>
                                         <button class="genre-btn filter-btn">Comedy</button>
                                         <button class="genre-btn filter-btn">Mystery</button>
-                                        <button class="genre-btn filter-btn selected">War</button>
+                                        <button class="genre-btn filter-btn">War</button>
                                         <button class="genre-btn filter-btn">Fantasy</button>
                                         <button class="genre-btn filter-btn">Sci-Fi</button>
                                     </div>
@@ -197,6 +208,8 @@
                             </div>
                             
                             <div class="container" id="list-cards-container">${displayListViewCards(movies)}</div>`;
+
+                            
 
             } else {
                 content = `
@@ -250,18 +263,117 @@
 
             dynamic_container.innerHTML = content;
             modal = document.getElementById("filter-modal");
-            // Get the close button
+            
             var closeButton = document.getElementsByClassName("close-button")[0];
 
             closeButton.onclick = function() {
-            modal.style.display = "none";
+                modal.style.display = "none";
             }
 
             window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
             }
+
+            function displaySelectedFilters() {
+                const container = document.getElementById("filter-box-bottom");
+                const cards_container = document.getElementById("list-cards-container");
+
+                container.innerHTML = "";
+                
+        
+                selectedFilters.forEach(button => {
+                    const filterLabel = document.createElement("span");
+                    filterLabel.classList.add("selected-filter");
+        
+                    filterLabel.textContent = button.textContent;
+        
+                    const closeBtn = document.createElement("button");
+                    closeBtn.textContent = "×";
+                    closeBtn.classList.add("close");
+                    closeBtn.onclick = function() {
+                       
+                        button.classList.remove('selected');
+                        selectedFilters = selectedFilters.filter(filter => filter !== button);
+
+                        let text = button.textContent;
+                        let genre = ["Drama", "Adventure", "Thriller", "Action", "Crime", "Comedy", "Mystery", "War", "Fantasy", "Sci-Fi"];
+                        let rating = ["General Audience", "Parental Guidance", "Restricted-13", "Restricted-16","Restricted-18"];
+                        let format = ["2D", "3D"];
+
+
+                        if (genre.includes(text)) {
+                            selectedFiltersJSON.genre = selectedFiltersJSON.genre.filter(item => item !== text);
+                        } else if (rating.includes(text)) {
+                            selectedFiltersJSON.movie_rating = selectedFiltersJSON.movie_rating.filter(item => item !== text);
+                        } else if (format.includes(text)) {
+                            selectedFiltersJSON.movie_format = selectedFiltersJSON.movie_format.filter(item => item !== text);
+                        }
+
+                        displaySelectedFilters();
+
+                    };
+        
+                    
+                    filterLabel.appendChild(closeBtn);
+                    container.appendChild(filterLabel);
+                });
+
+                //filter movies here
+                filtered_movies = movies.filter(movie =>
+                    Object.entries(selectedFiltersJSON).every(([key, filters]) =>
+                        filters.length === 0 || filters.includes(movie.fields[key]) 
+                    )
+                );
+
+                
+                console.log(selectedFiltersJSON);
+                
+                cards_container.innerHTML = displayGalleryViewCards(filtered_movies);
             }
+
+            function toggleSelection(event) {
+                const button = event.target;
+                let text = button.textContent;
+                let genre = ["Drama", "Adventure", "Thriller", "Action", "Crime", "Comedy", "Mystery", "War", "Fantasy", "Sci-Fi"];
+                let rating = ["General Audience", "Parental Guidance", "Restricted-13", "Restricted-16","Restricted-18"];
+                let format = ["2D", "3D"];
+
+                if (button.classList.contains('selected')) {
+                    button.classList.remove('selected');
+                    selectedFilters = selectedFilters.filter(filter => filter !== button);
+
+                    if (genre.includes(text)) {
+                        selectedFiltersJSON.genre = selectedFiltersJSON.genre.filter(item => item !== text);
+                    } else if (rating.includes(text)) {
+                        selectedFiltersJSON.movie_rating = selectedFiltersJSON.movie_rating.filter(item => item !== text);
+                    } else if (format.includes(text)) {
+                        selectedFiltersJSON.movie_format = selectedFiltersJSON.movie_format.filter(item => item !== text);
+                    }
+
+                } else {
+                    button.classList.add('selected');
+                    selectedFilters.push(button);
+                    
+                    if (genre.includes(text)){
+                        selectedFiltersJSON.genre.push(text);
+                    } else if (rating.includes(text)){
+                        selectedFiltersJSON.movie_rating.push(text);
+                    } else if (format.includes(text)){
+                        selectedFiltersJSON.movie_format.push(text);
+                    }
+                }
+
+
+
+                displaySelectedFilters();
+            }
+
+        
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', toggleSelection);
+            });
         }
     });
 
@@ -310,15 +422,15 @@
     }
 
     function sortByRuntime(){
-        movies.sort((a,b) => a.fields.duration.localeCompare(b.fields.duration));
+        filtered_movies.sort((a,b) => a.fields.duration.localeCompare(b.fields.duration));
     }
 
     function sortByAZ(){
-        movies.sort((a,b) => a.fields.movie_name.localeCompare(b.fields.movie_name));
+        filtered_movies.sort((a,b) => a.fields.movie_name.localeCompare(b.fields.movie_name));
     }
 
     function sortByPrice(){
-        movies.sort((a,b) => a.fields.price.localeCompare(b.fields.price));
+        filtered_movies.sort((a,b) => a.fields.price.localeCompare(b.fields.price));
     }
 
 
