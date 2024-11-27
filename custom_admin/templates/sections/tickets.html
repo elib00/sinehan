@@ -147,79 +147,17 @@
 {% include "components/message_modal.html" %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script>
-    //main
-    document.addEventListener("DOMContentLoaded", () => {
-        initializeTicketsDisplayOptionsDropdown();
-    });
-
-    //helpers
-    const initializeTicketsDisplayOptionsDropdown = () => {
-        const ticketsDisplayOptionsDropdown = document.getElementById("ticketsDisplayOptionsDropdown");
-        const ticketsDisplayOptionsButton = document.getElementById("ticketsDisplayOptionsButton");
-
-        ticketsDisplayOptionsButton.addEventListener("mouseenter", () => {
-            ticketsDisplayOptionsDropdown.classList.remove("hidden");
-        });
-
-        // Hide the dropdown when mouse leaves both the button and the dropdown
-        ticketsDisplayOptionsButton.addEventListener("mouseleave", () => {
-            setTimeout(() => {
-                if (!ticketsDisplayOptionsDropdown.matches(":hover") && !ticketsDisplayOptionsButton.matches(":hover")) {
-                    ticketsDisplayOptionsDropdown.classList.add("hidden");
-                }
-            }, 100);  // Small delay to handle the mouse movement gracefully
-        });
-
-        ticketsDisplayOptionsDropdown.addEventListener("mouseleave", () => {
-            setTimeout(() => {
-                if (!ticketsDisplayOptionsButton.matches(":hover") && !ticketsDisplayOptionsDropdown.matches(":hover")) {
-                    ticketsDisplayOptionsDropdown.classList.add("hidden");
-                }
-            }, 100);  // Small delay to handle the mouse movement gracefully
-        });
-
-        const allTicketsChoice = document.getElementById("allTicketsChoice");
-        const scheduledMovieChoice = document.getElementById("scheduledMovieChoice");
-        const usersChoice = document.getElementById("usersChoice");
-        const activeChoice = document.getElementById("activeChoice");
-
-        allTicketsChoice.addEventListener("click", () => {
-            displayAllTickets();
-        });
-
-        scheduledMovieChoice.addEventListener("click", () => {
-            const container = document.getElementById("ticketsContainer");
-            const newDiv = document.createElement("div");
-            replaceWithGSAP(container, newDiv);
-        });
-        
-    };
-
-    const displayAllTickets = () => {
-
-    };
-
-    const replaceWithGSAP = (container, newContent) => {
-        // Animate out current content
-        gsap.to(container.children, {
-            opacity: 0,
-            y: 50,
-            duration: 0.5,
-            onComplete: () => { 
-                // Clear and add new content
-                container.innerHTML = '';
-                container.appendChild(newContent);
-                
-                // Animate in new content
-                gsap.from(container.children, {
-                    opacity: 0,
-                    y: -50,
-                    duration: 0.5
-                });
-            }
-        });
+{% comment %} <script id="ticketsData" type="application/json">
+    {{ tickets_json|json_script:"tickets" }}
+</script> {% endcomment %}
+<script id="displayData" type="application/json">
+    {
+        "tickets": {{ tickets_json|safe }},
+        "scheduledMovies": {{ scheduled_movie_json|safe }}
     }
 </script>
+
+<script src="{% static 'js/ticketsDisplay.js' %}"></script>
+
 
 {% endblock %}

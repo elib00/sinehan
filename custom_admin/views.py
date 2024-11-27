@@ -11,6 +11,7 @@ from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from django.db.models import Prefetch
+import json
 
 CustomUser = get_user_model()
 
@@ -182,7 +183,7 @@ class AdminDashboardTicketsView(View):
 
     def init_context(self):
         #for displaying by scheduled_movie
-        scheduled_movies = ScheduledMovie.objects.select_related("movie").prefetch_related("movie_tickets").all()
+        scheduled_movies = ScheduledMovie.objects.select_related("movie").prefetch_related("movie_tickets__user").all()
         
         #for displaying by tickets only
         tickets = Ticket.objects.select_related("user", "scheduled_movie__movie", "scheduled_movie__cinema").all()
@@ -192,10 +193,60 @@ class AdminDashboardTicketsView(View):
         #for displaying by users
         users = CustomUser.objects.prefetch_related("user_tickets").all()
         
+        #json for dynamic content with js
+        tickets_data = [
+            {
+                'ticket_id': ticket.id,
+                'ticket_is_active': ticket.is_active,
+                'user_id': ticket.user.id,  # You might want to include specific fields from related models
+                'user_first_name': ticket.user.first_name,
+                'user_last_name': ticket.user.last_name,
+                'user_email': ticket.user.email,
+                'scheduled_movie_id': ticket.scheduled_movie.id,
+                'scheduled_movie_movie_name': ticket.scheduled_movie.movie.movie_name,
+                'scheduled_movie_cinema_id': ticket.scheduled_movie.cinema.id,
+                'scheduled_movie_cinema_name': ticket.scheduled_movie.cinema.cinema_name,
+                'available_seats': ticket.available_seats,
+                'seat_identifier': ticket.seat_identifier
+            }
+            for ticket in tickets
+        ]
+        
+        # scheduled_movies = ScheduledMovie.objects.select_related("movie").prefetch_related("movie_tickets").all()
+        scheduled_movie_data = [
+            {
+                'scheduled_movie_id': scheduled_movie.id,
+                'scheduled_movie_is_active': scheduled_movie.is_active,
+                'scheduled_movie_movie_name': scheduled_movie.movie.movie_name,
+                'scheduled_movie_date': scheduled_movie.schedule.strftime('%Y-%m-%d'),  # Date only
+                'scheduled_movie_time': scheduled_movie.schedule.strftime('%H:%M:%S'),  # Time only
+                'scheduled_movie_cinema_name': scheduled_movie.cinema.cinema_name,
+                'scheduled_movie_tickets': [
+                    {
+                        'ticket_id': ticket.id,
+                        'ticket_seat_identifier': ticket.seat_identifier,
+                        'ticket_holder': f"{ticket.user.first_name} {ticket.user.last_name}",
+                        'ticket_holder_username': f"{ticket.user.username}",
+                    }
+                    for ticket in scheduled_movie.movie_tickets.all()  # Iterate over related tickets
+                ]
+            }
+            for scheduled_movie in scheduled_movies
+        ]
+    
+        # Serialize the data to JSON
+        tickets_json = json.dumps(tickets_data)
+        scheduled_movie_json = json.dumps(scheduled_movie_data)
+
+        # print(tickets_json)
+
+        
         context = {
             "scheduled_movies": scheduled_movies,
             "tickets": tickets,
-            "users": users
+            "users": users,
+            "tickets_json": tickets_json,
+            "scheduled_movie_json": scheduled_movie_json
         }
         
         return context

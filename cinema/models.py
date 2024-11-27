@@ -57,7 +57,7 @@ class ScheduledMovie(models.Model):
 
         self.seats = seat_matrix
         self.save()
-
+    
 class Ticket(models.Model):
     user = models.ForeignKey(
         CustomUser, 
