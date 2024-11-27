@@ -2,192 +2,333 @@
 {% load static %}
 {% block content1 %}
 
+
+<link rel="stylesheet" href="{% static 'css/movies_gallery.css' %}">
+
 <section class="movies" id="movies">
+
     <div class="hero-container">
+
+        
         <!-- Main Hero Image -->
-        <div class="hero-image-container">
-            <img 
-                src="/static/images/joker-banner.jpg"
-                alt="Background Image"
-                class="hero-image"
-            />
-            <!-- Gradient Overlay -->
-            <div class="gradient-overlay"></div>
+        <div id="gallery-view">
+            <ion-icon name="images-outline" class="active"></ion-icon>
+            <ion-icon name="grid-outline" class=""></ion-icon>
         </div>
 
-        <!-- Movie Gallery -->
-        <div class="movie-gallery">
-            <h2 class="gallery-title">Now Showing</h2>
-            <div class="slider-container">
-                <button class="slider-button prev">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="slider-icon">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                
-                <div class="slider-content">
-                    {% for movie in movies %}
-                    <div class="movie-card-wrapper">
-                        {% include 'components/movie_card.html' with image_url="https://cringemdb.com/img/movie-poster-placeholder.png" movie_title=movie.movie_name duration=movie.duration genre=movie.genre movie_id=movie.id %}
+        <div id="dynamic-container">
 
-                    </div>
-                    {% endfor %}
-                </div>
 
-                <button class="slider-button next">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="slider-icon">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
+
+
+            <div class="hero-image-container">
+                <img 
+                    src="/static/images/joker-banner.jpg"
+                    alt="Background Image"
+                    class="hero-image"
+                />
+                <div class="gradient-overlay"></div>
             </div>
+            
+            <div class="movie-gallery">
+                <h2 class="gallery-title">Now Showing</h2>
+                <div class="slider-container">
+                    <button class="slider-button prev">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="slider-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+            
+                    <div class="slider-content">
+                        {% for movie in movies %}
+                        <div class="movie-card-wrapper">
+                            {% include 'components/movie_card.html' with image_url="https://cringemdb.com/img/movie-poster-placeholder.png" movie_title=movie.movie_name duration=movie.duration genre=movie.genre movie_id=movie.id %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <button class="slider-button next">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="slider-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
         </div>
+        
+            
+
+            
+            
+        
     </div>
 </section>
 
-<style>
-    .hero-container {
-        width: 100%;
-        height: 100vh;
-        position: relative;
-        overflow: hidden;
-    }
 
-    .hero-image-container {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-    }
 
-    .hero-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-    }
 
-    .gradient-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgb(17 24 39) 0%, rgba(17, 24, 39, 0.5) 50%, transparent 100%);
-    }
+    
 
-    .movie-gallery {
-        position: absolute;
-        bottom: 2rem;
-        width: 100%;
-        z-index: 10;
-    }
-
-    .gallery-title {
-        color: white;
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    .slider-container {
-        position: relative;
-        display: flex;
-        align-items: center;
-        padding: 0 1rem;
-    }
-
-    .slider-content {
-        display: flex;
-        gap: 1rem;
-        overflow-x: hidden;
-        scroll-behavior: smooth;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-
-    .slider-content::-webkit-scrollbar {
-        display: none;
-    }
-
-    .movie-card-wrapper {
-        flex: 0 0 auto;
-        width: 12rem;
-        transition: transform 0.3s ease;
-    }
-
-    .movie-card-wrapper:hover {
-        transform: scale(1.05);
-        cursor: pointer;
-    }
-
-    .slider-button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(0, 0, 0, 0.5);
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        z-index: 20;
-        transition: background-color 0.3s ease;
-    }
-
-    .slider-button:hover {
-        background: rgba(0, 0, 0, 0.8);
-    }
-
-    .slider-button.prev {
-        left: 0;
-    }
-
-    .slider-button.next {
-        right: 0;
-    }
-
-    .slider-icon {
-        width: 24px;
-        height: 24px;
-    }
-
-    /* Prevent background from interfering with clicks */
-    .hero-image-container {
-        pointer-events: none;
-    }
-
-    .gradient-overlay {
-        pointer-events: none;
-    }
-</style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    
+
+    let movies = (`{{ movies_json|safe }}`);
+    movies = JSON.parse(movies);
+    console.log(movies);
+
+
+
+    //MODAL SETTIGNS
+
+    var modal = null;
+
+    function showModal() {
+
+        if (modal == null){
+            return;
+        }
+
+        if (modal.style.display === "block") {
+            modal.style.display = "none"; 
+        } else {
+            modal.style.display = "block"; 
+        }
+    }
+   
+
+    function changeListener(selectElement){
+        var value = selectElement.value;
+          
+        if (value == "runtime"){
+          sortByRuntime();
+        }else if (value == "price"){
+          sortByPrice();
+        } else if (value == "az"){
+          sortByAZ();
+        } else if (value == "za"){
+          sortByAZ();
+        } 
+   
+        const cards_container = document.getElementById('list-cards-container');
+        const content = displayListViewCards(movies);
+        console.log(movies);
+        cards_container.innerHTML = content;
+    }
+   
+
+    document.addEventListener('DOMContentLoaded' , function() {
         const sliderContent = document.querySelector('.slider-content');
         const prevButton = document.querySelector('.prev');
         const nextButton = document.querySelector('.next');
-        const cardWidth = 208; // 12rem (192px) + 1rem gap (16px)
+        const cardWidth = 208; 
 
         prevButton.addEventListener('click', () => {
-            sliderContent.scrollLeft -= cardWidth * 4; // Scroll 4 items at a time
+            sliderContent.scrollLeft -= cardWidth * 4;
         });
 
         nextButton.addEventListener('click', () => {
-            sliderContent.scrollLeft += cardWidth * 4; // Scroll 4 items at a time
-        });
-
-        // Optional: Add keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                sliderContent.scrollLeft -= cardWidth * 4;
-            } else if (e.key === 'ArrowRight') {
-                sliderContent.scrollLeft += cardWidth * 4;
-            }
+            sliderContent.scrollLeft += cardWidth * 4; 
         });
     });
+    
+
+    document.getElementById('gallery-view').addEventListener('click', function (e) {
+        if (e.target.tagName === 'ION-ICON') {
+            
+            document.querySelectorAll('#gallery-view ion-icon').forEach(icon => {
+                icon.classList.remove('active');
+            });
+
+            e.target.classList.add('active');
+    
+            let dynamic_container = document.getElementById('dynamic-container');
+            let content = '';
+            if (e.target.getAttribute('name') === 'grid-outline') {
+                content = `
+                            <div id="filter-box">
+                                <ion-icon name="options-outline" onclick="showModal()"></ion-icon>
+                                <div>
+                                    <p>Sort by</p>
+                                    <select id="sort-options" onchange="changeListener(this)">
+                                        <option value="runtime">Runtime</option>
+                                        <option value="price">Price</option>
+                                        <option value="az">A-Z</option>
+                                        <option value="za">Z-A</option>
+                                       
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div id="filter-modal">
+                                <div class="modal-content">
+                                    <span class="close-button">&times;</span>
+                                    <h2>Genres</h2>
+                                    <div class="genres filter-type">
+                                        <button class="genre-btn filter-btn selected">Drama</button>
+                                        <button class="genre-btn filter-btn selected">Adventure</button>
+                                        <button class="genre-btn filter-btn">Thriller</button>
+                                        <button class="genre-btn filter-btn">Action</button>
+                                        <button class="genre-btn filter-btn">Crime</button>
+                                        <button class="genre-btn filter-btn">Comedy</button>
+                                        <button class="genre-btn filter-btn">Mystery</button>
+                                        <button class="genre-btn filter-btn selected">War</button>
+                                        <button class="genre-btn filter-btn">Fantasy</button>
+                                        <button class="genre-btn filter-btn">Sci-Fi</button>
+                                    </div>
+                                    <h2>Rating</h2>
+                                    <div class="movie-ratings filter-type">
+                                        <button class="rating-btn filter-btn">General Audience</button>
+                                        <button class="rating-btn filter-btn">Parental Guidance</button>
+                                        <button class="rating-btn filter-btn">Restricted-13</button>
+                                        <button class="rating-btn filter-btn">Restricted-16</button>
+                                        <button class="rating-btn filter-btn">Restricted-18</button>
+                                    </div>
+
+                                    <h2>Format</h2>
+                                    <div class="movie-formats filter-type">
+                                        <button class="format-btn filter-btn">2D</button>
+                                        <button class="format-btn filter-btn">3D</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            
+                            <div class="container" id="list-cards-container">${displayListViewCards(movies)}</div>`;
+
+            } else {
+                content = `
+                        <div class="hero-image-container">
+                            <img 
+                                src="/static/images/joker-banner.jpg"
+                                alt="Background Image"
+                                class="hero-image"
+                            />
+                            <div class="gradient-overlay"></div>
+                        </div>
+                    
+                        <div class="movie-gallery">
+                            <h2 class="gallery-title">Now Showing</h2>
+                            <div class="slider-container">
+                                <button class="slider-button prev">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="slider-icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                        
+                                <div class="slider-content">
+                                    ${displayGalleryViewCards(movies)}
+                                </div>
+                                
+                                <button class="slider-button next">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="slider-icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                            `;
+
+                
+                        document.addEventListener('click' , function() {
+                            const sliderContent = document.querySelector('.slider-content');
+                            const prevButton = document.querySelector('.prev');
+                            const nextButton = document.querySelector('.next');
+                            const cardWidth = 208; 
+                    
+                            prevButton.addEventListener('click', () => {
+                                sliderContent.scrollLeft -= cardWidth * 4;
+                            });
+                    
+                            nextButton.addEventListener('click', () => {
+                                sliderContent.scrollLeft += cardWidth * 4; 
+                            });
+                        });
+            }
+
+            dynamic_container.innerHTML = content;
+            modal = document.getElementById("filter-modal");
+            // Get the close button
+            var closeButton = document.getElementsByClassName("close-button")[0];
+
+            closeButton.onclick = function() {
+            modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            }
+        }
+    });
+
+    const movieDetailsBaseUrl = "{% url 'movie_details' 0 %}".replace('/0', '').replace(/\/$/, '');
+    
+    function displayGalleryViewCards(movies){
+        let content = '';
+        movies.forEach(item => {
+            content += `
+                <div class="movie-card-wrapper">
+                <div class="box text-white  text-center space-y-2">
+
+                    <a href="${movieDetailsBaseUrl}/${item.pk}">
+                        <div class="box-img">
+                            <img src="https://cringemdb.com/img/movie-poster-placeholder.png" alt="">
+                        </div>
+                    </a>    
+            
+                    <p class="text-xl ">${item.fields.movie_name}</p>
+                    
+                </div></div>`;
+        });
+
+       
+        
+
+        return content;
+    }
+
+    function displayListViewCards(movies){
+        let content = '';
+        movies.forEach(item => {
+            content += `
+            <div class="movie-card">
+                <a href="${movieDetailsBaseUrl}/${item.pk}">
+                    <img src="https://cringemdb.com/img/movie-poster-placeholder.png" alt="${item.fields.movie_name}">
+                </a>  
+                <div class="movie-info">
+                    <h3>${item.fields.movie_name}</h3>
+                </div>
+            </div>
+            `;
+        });
+
+        return content;
+    }
+
+    function sortByRuntime(){
+        movies.sort((a,b) => a.fields.duration.localeCompare(b.fields.duration));
+    }
+
+    function sortByAZ(){
+        movies.sort((a,b) => a.fields.movie_name.localeCompare(b.fields.movie_name));
+    }
+
+    function sortByPrice(){
+        movies.sort((a,b) => a.fields.price.localeCompare(b.fields.price));
+    }
+
+
+    
+
+
+
 </script>
+
+
+
 
 {% endblock %}

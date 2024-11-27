@@ -29,6 +29,7 @@ class Movie(models.Model):
     genre = models.CharField(max_length=100)
     #added field now showing
     now_showing = models.BooleanField(default = True)
+    price = models.FloatField(default=0)
     
     
 

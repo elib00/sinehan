@@ -2,166 +2,280 @@
 {% load static %}
 {% block content1 %}
 
-    <link rel="stylesheet" href="{% static "css/movie_book.css" %}">
+<link rel="stylesheet" href="{% static "css/movie_book.css" %}">
 
-        <div class="flex flex-[7] h-[100vh] pt-[80px]">
-            <div class="flex-1 flex justify-center py-[50px]">
-                <img src="https://cringemdb.com/img/movie-poster-placeholder.png" alt="Image" width="400">
+        <div class="flex flex-[7] h-[80vh] mt-[100px] py-[20px]">
+            <div class="flex-1 flex justify-center">
+                <img src="https://cringemdb.com/img/movie-poster-placeholder.png" alt="Image" >
             </div>
     
-            <div class=" text-white flex-[1.45] pt-[40px]">
+            <div class=" text-white flex-[1.80] pl-[10px] pr-[70px]">
 
-                <div class="date-time-section">
-                    <h3>Date</h3>
-                    <div class="date-grid" id="dateGrid">
-                    </div>
-                    
-                    <h3>Time</h3>
-                    <div class="time-grid" id="timeGrid">
-                        <button class="time-btn">13:15</button>
-                        <button class="time-btn">15:15</button>
-                        <button class="time-btn">18:15</button>
-                        <button class="time-btn">20:30</button>
-                        <button class="time-btn">22:30</button>
-                    </div>
-                </div>
-                
-        
-                    <div class="movie-container">
-                        <div class="screen text-gray-700 text-center">Screen</div>
-                        
-                        <div class="seat-container">
-                            <!-- Left Section -->
-                            <div class="section">
-                                <div class="row">
-                                    <div class="seat" data-seat="A1"></div>
-                                    <div class="seat" data-seat="A2"></div>
-                                    <div class="seat" data-seat="A3"></div>
-                                    <div class="seat" data-seat="A4"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="B1"></div>
-                                    <div class="seat" data-seat="B2"></div>
-                                    <div class="seat" data-seat="B3"></div>
-                                    <div class="seat" data-seat="B4"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="C1"></div>
-                                    <div class="seat" data-seat="C2"></div>
-                                    <div class="seat" data-seat="C3"></div>
-                                    <div class="seat" data-seat="C4"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="D1"></div>
-                                    <div class="seat" data-seat="D2"></div>
-                                    <div class="seat" data-seat="D3"></div>
-                                    <div class="seat" data-seat="D4"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="E1"></div>
-                                    <div class="seat" data-seat="E2"></div>
-                                    <div class="seat" data-seat="E3"></div>
-                                    <div class="seat" data-seat="E4"></div>
-                                </div>
-                               
-                            </div>
-                
-                            <!-- Middle Section -->
-                            <div class="section">
-                                <div class="row">
-                                    <div class="seat" data-seat="A5"></div>
-                                    <div class="seat" data-seat="A6"></div>
-                                    <div class="seat" data-seat="A7"></div>
-                                    <div class="seat" data-seat="A8"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="B5"></div>
-                                    <div class="seat" data-seat="B6"></div>
-                                    <div class="seat" data-seat="B7"></div>
-                                    <div class="seat" data-seat="B8"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="C5"></div>
-                                    <div class="seat" data-seat="C6"></div>
-                                    <div class="seat" data-seat="C7"></div>
-                                    <div class="seat" data-seat="C8"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="D5"></div>
-                                    <div class="seat" data-seat="D6"></div>
-                                    <div class="seat" data-seat="D7"></div>
-                                    <div class="seat" data-seat="D8"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="E5"></div>
-                                    <div class="seat" data-seat="E6"></div>
-                                    <div class="seat" data-seat="E7"></div>
-                                    <div class="seat" data-seat="E8"></div>
-                                </div>
-                                
-                            </div>
-                
-                            <!-- Right Section -->
-                            <div class="section">
-                                <div class="row">
-                                    <div class="seat" data-seat="A9"></div>
-                                    <div class="seat" data-seat="A10"></div>
-                                    <div class="seat" data-seat="A11"></div>
-                                    <div class="seat" data-seat="A12"></div>
-                                    
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="B9"></div>
-                                    <div class="seat" data-seat="B10"></div>
-                                    <div class="seat" data-seat="B11"></div>
-                                    <div class="seat" data-seat="B12"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="C9"></div>
-                                    <div class="seat" data-seat="C10"></div>
-                                    <div class="seat" data-seat="C11"></div>
-                                    <div class="seat" data-seat="C12"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="D9"></div>
-                                    <div class="seat" data-seat="D10"></div>
-                                    <div class="seat" data-seat="D11"></div>
-                                    <div class="seat" data-seat="D12"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="seat" data-seat="E9"></div>
-                                    <div class="seat" data-seat="E10"></div>
-                                    <div class="seat" data-seat="E11"></div>
-                                    <div class="seat" data-seat="E12"></div>
-                                </div>
-                               
-                            </div>
-                        </div>
-                
-                        <div class="legend">
-                            <div class="legend-item">
-                                <div class="seat"></div>
-                                <span>Available</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="seat selected"></div>
-                                <span>Selected</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="seat occupied"></div>
-                                <span>Occupied</span>
-                            </div>
-                        </div>
-                
-                        <div class="summary">
-                            You have selected <span id="count">0</span> seats
-                            <br>
-                            Total Price: ₱ <span id="total">0</span>
-                        </div>
-                
-                        <button class="checkout-btn" id="checkout-btn" disabled  onclick="toPurchase()">Proceed to Checkout</button>
+                <div class="booking-container">
+                    <div class="progress-bar">
+                        <div class="progress-line"></div>
+                        <div class="progress-step active">1</div>
+                        <div class="progress-step">2</div>
+                        <div class="progress-step">3</div>
                     </div>
             
+                    <!-- Step 1: Combined Selection -->
+                    <div class="step active" id="step1">
+                        
+                        <h3>Select Cinema</h3>
+                        <div class="selection-grid" id="cinemaGrid">
+                            <!-- Cinema will be populated by Django -->
+                            {% comment %} <button onclick="selectCinema(1)">Cinema 1</button> {% endcomment %}
+                            {% for cinema in cinemas %}
+                                <button data-cinema="{{ cinema.cinema_name }}" onclick="selectCinema(`{{ cinema.id }}`)">{{ cinema.cinema_name }}</button>
+                            {% endfor %}
+                            
+                        </div>
+            
+                        <h3>Select Date</h3>
+                        <div class="selection-grid" id="dateGrid">
+                            <!-- Dates will be populated by Django -->
+                            {% comment %} <button onclick="selectDate(${date})">${date}</button> {% endcomment %}
+                            {% for date in dates %}
+                                <button data-date="{{ date }}" onclick="selectDate(`{{ date }}`)">{{ date }}</button>
+                            {% endfor %}
+                        </div>
+            
+                        <h3>Select Time</h3>
+                        <div class="selection-grid" id="timeGrid">
+                            <!-- Time will be populated by Django -->
+                            {% comment %} <button onclick="selectTime('13:15')">13:15</button> {% endcomment %} 
+
+                            {% for time in times %}
+                                <button data-time="{{ time }}" onclick="selectTime(`{{ time }}`)">
+                                    {{ time }}
+                                </button>
+                            {% endfor %}
+
+                           
+                        </div>
+            
+                        <div class="selection-summary" id="selectionSummary">
+                            Selected: 
+                            <span id="summaryText">Please make all selections to continue</span>
+                        </div>
+                    </div>
+            
+                    <!-- Step 2: Seat Selection -->
+                    <div class="step" id="step2">
+
+                        <div class="movie-container">
+                            <div class="screen text-gray-700 text-center">Screen</div>
+                            
+                            <div class="seat-container">
+                                <!-- Left Section -->
+                                <div class="section">
+                                    <div class="row">
+                                        <div class="seat" data-seat="A1"></div>
+                                        <div class="seat" data-seat="A2"></div>
+                                        <div class="seat" data-seat="A3"></div>
+                                        <div class="seat" data-seat="A4"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="B1"></div>
+                                        <div class="seat" data-seat="B2"></div>
+                                        <div class="seat" data-seat="B3"></div>
+                                        <div class="seat" data-seat="B4"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="C1"></div>
+                                        <div class="seat" data-seat="C2"></div>
+                                        <div class="seat" data-seat="C3"></div>
+                                        <div class="seat" data-seat="C4"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="D1"></div>
+                                        <div class="seat" data-seat="D2"></div>
+                                        <div class="seat" data-seat="D3"></div>
+                                        <div class="seat" data-seat="D4"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="E1"></div>
+                                        <div class="seat" data-seat="E2"></div>
+                                        <div class="seat" data-seat="E3"></div>
+                                        <div class="seat" data-seat="E4"></div>
+                                    </div>
+                                   
+                                </div>
+                    
+                                <!-- Middle Section -->
+                                <div class="section">
+                                    <div class="row">
+                                        <div class="seat" data-seat="A5"></div>
+                                        <div class="seat" data-seat="A6"></div>
+                                        <div class="seat" data-seat="A7"></div>
+                                        <div class="seat" data-seat="A8"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="B5"></div>
+                                        <div class="seat" data-seat="B6"></div>
+                                        <div class="seat" data-seat="B7"></div>
+                                        <div class="seat" data-seat="B8"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="C5"></div>
+                                        <div class="seat" data-seat="C6"></div>
+                                        <div class="seat" data-seat="C7"></div>
+                                        <div class="seat" data-seat="C8"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="D5"></div>
+                                        <div class="seat" data-seat="D6"></div>
+                                        <div class="seat" data-seat="D7"></div>
+                                        <div class="seat" data-seat="D8"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="E5"></div>
+                                        <div class="seat" data-seat="E6"></div>
+                                        <div class="seat" data-seat="E7"></div>
+                                        <div class="seat" data-seat="E8"></div>
+                                    </div>
+                                    
+                                </div>
+                    
+                                <!-- Right Section -->
+                                <div class="section">
+                                    <div class="row">
+                                        <div class="seat" data-seat="A9"></div>
+                                        <div class="seat" data-seat="A10"></div>
+                                        <div class="seat" data-seat="A11"></div>
+                                        <div class="seat" data-seat="A12"></div>
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="B9"></div>
+                                        <div class="seat" data-seat="B10"></div>
+                                        <div class="seat" data-seat="B11"></div>
+                                        <div class="seat" data-seat="B12"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="C9"></div>
+                                        <div class="seat" data-seat="C10"></div>
+                                        <div class="seat" data-seat="C11"></div>
+                                        <div class="seat" data-seat="C12"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="D9"></div>
+                                        <div class="seat" data-seat="D10"></div>
+                                        <div class="seat" data-seat="D11"></div>
+                                        <div class="seat" data-seat="D12"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seat" data-seat="E9"></div>
+                                        <div class="seat" data-seat="E10"></div>
+                                        <div class="seat" data-seat="E11"></div>
+                                        <div class="seat" data-seat="E12"></div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                    
+                            <div class="legend">
+                                <div class="legend-item">
+                                    <div class="seat"></div>
+                                    <span>Available</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="seat selected" ></div>
+                                    <span>Selected</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="seat occupied"></div>
+                                    <span>Occupied</span>
+                                </div>
+                            </div>
+                    
+                            <div class="summary">
+                                You have selected <span id="count">0</span> seats
+                                <br>
+                                Total Price: ₱ <span id="total">0</span>
+                            </div>
+                    
+                            
+                        </div>
+                        
+                    </div>
+
+                    <div class="step" id="step3">
+
+                        <p class="step-title">Order Summary</p>
+                        <div class="step3-item">
+                           
+                            <ion-icon name="film-outline"></ion-icon>
+                            <div>
+                                <p>Movie</p>
+                                <h4 id="selected-movie"></h4>
+                            </div>
+                            
+                        </div>
+
+                        <div class="step3-item">
+                            <ion-icon name="location-outline"></ion-icon>
+                            <div>
+                                <p>Cinema</p>
+                                <h4 id="selected-cinema"></h4>
+                            </div>
+                        </div>
+
+                        <div class="step3-item">
+                            <ion-icon name="time-outline"></ion-icon>
+                            <div>
+                                <p>Date and Time</p>
+                                <h4 id="selected-date-time"></h4>
+                            </div>
+                        </div>
+
+                        <div class="step3-item">
+                            <ion-icon name="people-outline"></ion-icon>
+                            <div>
+                                <p>Selected Seats</p>
+                                <h4 id="selected-seats"></h4>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="step3-item amount">
+                            <h3 id="selected-ticket-count"></h3>
+                            <h4 id="selected-ticket-price"></h4>
+                        </div>
+
+                        <div class="step3-item amount">
+                            <h3>Total Amount </h3> 
+                            <h4 id="selected-total-price"></h4>
+                        </div>
+                        
+
+                        
+
+                        
+
+                        
+
+                        
+                        
+
+                    
+
+
+
+                        
+
+                        <button class="checkout-btn" id="checkout-btn" disabled  onclick="toPurchase()">Checkout</button>
+                    </div>
+            
+                    <div class="navigation">
+                        <button id="prevBtn" onclick="prevStep()" style="display: none;">Previous</button>
+                        <button id="nextBtn" onclick="nextStep()" disabled>Next</button>
+                    </div>
+
+                
+                
             </div>
 
         </div>
@@ -170,12 +284,10 @@
      <div class="modal text-white" id="paymentModal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('paymentModal')">×</button>
-            <h2>Complete Your Order</h2>
-            <div class="selected-seats-info" id="selectedSeatsInfo"></div>
             
-            <form id="paymentForm">
+            <form id="paymentForm" method="POST" action="purchase/">
                 <div class="form-group">
-                    <label>Name and Surname</label>
+                    <label>Name</label>
                     <input type="text" required>
                 </div>
                 <div class="form-group">
@@ -188,7 +300,7 @@
                         <select style="width: 100px;">
                             <option>+1</option>
                             <option>+44</option>
-                            <option>+81</option>
+                            <option>+63</option>
                         </select>
                         <input type="tel" required>
                     </div>
@@ -198,6 +310,7 @@
                     <select>
                         <option>Credit Card</option>
                         <option>Debit Card</option>
+                        <option>Gcash</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -207,7 +320,16 @@
 **
 **" required>
                 </div>
-                <button  class="purchase-btn" id="purchase-btn">Purchase</button>
+
+               
+                    {% csrf_token %}
+                    <input type="hidden" name="scheduled_movie" id="scheduled_movie">
+                    <input type="hidden" name="seats" id="selected_seats">
+                  
+
+                    <button type="submit" class="purchase-btn" id="purchase-btn" >Purchase</button>
+                
+                
             </form>
         </div>
     </div>
@@ -220,91 +342,375 @@
             <p>Please save your tickets and show them at the entrance.</p>
             <button class="save-ticket-btn" >Save Tickets</button>
         </div>
-    </div>
+    </div> 
 
 
 
-    <script>
-        const container = document.querySelector('.seat-container');
-        const seats = document.querySelectorAll('.row .seat:not(.occupied)');
-        const count = document.getElementById('count');
-        const total = document.getElementById('total');
-        const movieSelect = document.getElementById('movie-select');
-        const movieTitle = document.getElementById('movie-title');
-        const checkoutBtn = document.getElementById('checkout-btn');
-        const purchase = document.getElementById('purchase-btn');
-        const ticketPrice = 250; 
+        <script>
+            let selectedScheduledMovieID = null;
+            const timeButtons = document.querySelectorAll('#timeGrid button');
 
-        const dateGrid = document.getElementById('dateGrid');
-        const today = new Date();
+            
+            let currentStep = 1;    
+            const totalSteps = 3; 
+            let selectedSeatsBoxes = document.querySelectorAll('.seat.selected');
+            let selectedSeatsCount = selectedSeatsBoxes.length;
+            
+            const container = document.querySelector('.seat-container');
+            const count = document.getElementById('count');
+            const total = document.getElementById('total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const purchase = document.getElementById('purchase-btn');
+
+            const movie = JSON.parse('{{ movie|safe }}');
+           
+            const ticketPrice = movie.price; 
+
+            const dateGrid = document.getElementById('dateGrid');
+            const today = new Date();
+
+
+            function initializeSeats() {
+             
+                let selectedSeatsBoxes = document.querySelectorAll('.seat[data-seat]');
+                
+                
+                let seatData = Array.from(selectedSeatsBoxes).map(seat => ({
+                    element: seat, 
+                    code: seat.getAttribute('data-seat') 
+                }));
+            
         
-        for(let i = 0; i < 7; i++) {
-            const date = new Date(today);
-            date.setDate(today.getDate() + i);
-            const btn = document.createElement('button');
-            btn.className = 'date-btn';
-            btn.textContent = date.getDate();
-            dateGrid.appendChild(btn);
-        }
+                let sortedSeats = seatData.sort((a, b) => {
+                    let [rowA, colA] = [a.code.charAt(0), parseInt(a.code.slice(1))];
+                    let [rowB, colB] = [b.code.charAt(0), parseInt(b.code.slice(1))];
+            
+                    if (rowA < rowB) return -1;
+                    if (rowA > rowB) return 1;
+            
+                    return colA - colB;
+                });
+            
+               
+                let ctr = 0; 
+                for (let i = 0; i < 5; i++) {
+                    for (let j = 0; j < 12; j++) {
+                        if (selectedSeatsMatrix[i][j] == true) {
+                            seatData[ctr].element.classList.add('occupied');
 
-        container.addEventListener('click', (e) => {
-            if (e.target.classList.contains('seat') && 
-                !e.target.classList.contains('occupied')) {
-                e.target.classList.toggle('selected');
-                
-                const selectedSeats = document.querySelectorAll('.row .seat.selected').length;
-                count.textContent = selectedSeats;
-                total.textContent = (selectedSeats * ticketPrice).toFixed(2);
-                
-                checkoutBtn.disabled = selectedSeats === 0;
+                            
+                        } else {
+                            seatData[ctr].element.classList.remove('occupied');
+                        }
+                        
+                        ctr++; 
+                    }
+                }
+
                 
             }
+            
+            
+            
+            
+            
 
-        });
 
 
-        function toPurchase(){
-            document.getElementById('paymentModal').style.display = 'flex';
-        }
+            // Navigation functions
+            function updateNavigationButtons() {
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+            
+                prevBtn.style.display = currentStep === 1 ? 'none' : 'block';
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
+                
+            
+                if (currentStep === totalSteps) {
+                    nextBtn.style.display = 'none';
+                } else {
+                    nextBtn.style.display = 'block';
+                    nextBtn.textContent = 'Next';
+                    nextBtn.disabled = !canProceedToNextStep();
+                }
+                checkSummary();
+                initializeSeats();
+                updateProgressLine(currentStep, 3);
+            }
 
-        document.getElementById('paymentForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            document.getElementById('paymentModal').style.display = 'none';
-            document.getElementById('successModal').style.display = 'flex';
-        });
+            function updateProgressLine(currentStep, totalSteps) {
+                const progressLine = document.querySelector('.progress-line');
 
-        document.querySelector('.save-ticket-btn').addEventListener('click', () => {
-            document.getElementById('successModal').style.display = 'none';
-        });
+                const percentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            
+                progressLine.style.background = `linear-gradient(to right, #ff1414 ${percentage}%, #333 ${percentage}%)`;
+            }
+            
+    
+            function canProceedToNextStep() {
+                selectedSeats = document.querySelectorAll('.seat.selected');
+               
 
-        checkoutBtn.addEventListener('click', () => {
-            const selectedSeats = document.querySelectorAll('.row .seat.selected');
-            const seatNumbers = Array.from(selectedSeats).map(seat => seat.dataset.seat);
-            const totalAmount = parseFloat(total.textContent);
+                switch (currentStep) {
+
+                    case 1: 
+                        return selectedCinema !== null && selectedDate !== null && selectedTime !== null;
+                    case 2:     
+                        return selectedSeats.length > 1;
+                    case 3:
+                        return selectedSeats.length > 0;  
+                    default: 
+                        return false;
+                }
+            }
+    
+            function updateProgressBar() {
+                document.querySelectorAll('.progress-step').forEach((step, index) => {
+                    if (index + 1 === currentStep) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else if (index + 1 < currentStep) {
+                        step.classList.remove('active');
+                        step.classList.add('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+
+                    
+                });
+            }
+    
+            function showStep(step) {
+                document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+                document.getElementById(`step${step}`).classList.add('active');
+                updateNavigationButtons();
+                updateProgressBar();
+            }
+    
+            function nextStep() {
+                
+            
+                if (canProceedToNextStep()) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            }
+
+            function checkSummary(){
+
+                let selectedSeats = document.querySelectorAll('.seat.selected');
+                let selectedSeatsArray = Array.from(selectedSeats).map(seat => seat.getAttribute('data-seat'));
+                
+                const movie_box = document.getElementById("selected-movie");
+                const cinema = document.getElementById("selected-cinema");
+                const date_time = document.getElementById("selected-date-time");
+                const seats = document.getElementById("selected-seats");
+                const ticket_count = document.getElementById("selected-ticket-count");
+                const ticket_price = document.getElementById("selected-ticket-price");
+                const total = document.getElementById("selected-total-price");
+                
+                movie_box.innerHTML = movie.movie_name;
+                cinema.innerHTML = selectedCinema;
+                date_time.innerHTML = selectedDate + ' at ' + selectedTime;
+                seats.innerHTML = selectedSeatsArray.join(' ');
+                ticket_count.innerHTML = 'Ticket Price (' + (selectedSeatsArray.length - 1) + 'x)';
+                ticket_price.innerHTML ='₱' + ticketPrice;
+                total.innerHTML = '₱' + ((selectedSeatsArray.length - 1) * ticketPrice).toFixed(2);
+
+
+                for (const combination of validCombinations) {
+                    const cinemaMatch = (selectedCinema === null || combination.cinema_name == selectedCinema);
+                    const dateMatch = (selectedDate === null || combination.date == selectedDate);
+                    const timeMatch = (selectedTime === null || combination.time == selectedTime);
+                
+                    if (cinemaMatch && dateMatch && timeMatch) {
+                        selectedScheduledMovieID = combination.id;
+                        selectedSeatsMatrix = combination.seats;
+                        break; 
+                    }
+                }
+
+
+                selectedSeatsArray = selectedSeatsArray.filter(item => item != null);
+
+                document.getElementById('scheduled_movie').value = selectedScheduledMovieID;
+                document.getElementById('selected_seats').value = JSON.stringify(selectedSeatsArray); 
+            }
+    
+            function prevStep() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            }
+
+            container.addEventListener('click', (e) => {
+                if (e.target.classList.contains('seat') && 
+                    !e.target.classList.contains('occupied')) {
+
+                    e.target.classList.toggle('selected');
+                    const selectedSeats = document.querySelectorAll('.row .seat.selected').length;
+                    count.textContent = selectedSeats;
+                    total.textContent = (selectedSeats * ticketPrice).toFixed(2);
+                    
+                    checkoutBtn.disabled = selectedSeats === 0;
+                    updateNavigationButtons();
+                    
+                }
+    
+            });
+    
+
+            function toPurchase(){
+                document.getElementById('paymentModal').style.display = 'flex';
+            }
+    
+            function closeModal(modalId) {
+                document.getElementById(modalId).style.display = 'none';
+            }
+    
+            
+            checkoutBtn.addEventListener('click', () => {
+                const selectedSeats = document.querySelectorAll('.row .seat.selected');
+                const seatNumbers = Array.from(selectedSeats).map(seat => seat.dataset.seat);
+                const totalAmount = parseFloat(total.textContent);
+            
+            });
+
         
-        });
-        document.querySelectorAll('.date-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelector('.date-btn.selected')?.classList.remove('selected');
-                btn.classList.add('selected');
-            });
-        });
+  
+            // Selection functions
 
-        document.querySelectorAll('.time-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelector('.time-btn.selected')?.classList.remove('selected');
-                btn.classList.add('selected');
-            });
-        });
+            const validCombinations = JSON.parse('{{ valid_combinations|safe }}');
+            const cinemaButtons = document.querySelectorAll('#cinemaGrid button');
+            const dateButtons = document.querySelectorAll('#dateGrid button');
+
+            let selectedCinema = null;
+            let selectedDate = null;
+            let selectedTime = null;
+            let selectedSeatsMatrix = null;
+
+            function selectCinema(cinema) {
+
+                if (selectedCinema == cinema) {
+                    event.target.classList.remove('selected');
+                    selectedCinema = null;
+                } else {
+                    selectedCinema = cinema;
+
+                    document.querySelectorAll('#cinemaGrid button').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    
+                    event.target.classList.add('selected');
+                }
+                
+                updateSelectionSummary();
+                updateNavigationButtons();
+      
+                dateButtons.forEach(btn => {
+                    let date = btn.getAttribute('data-date');
+                    btn.disabled = !isValidCombination(selectedCinema, date, selectedTime);
+                });
+
+                timeButtons.forEach(btn => {
+                    let time = btn.getAttribute('data-time');
+                    btn.disabled = !isValidCombination(selectedCinema, selectedDate, time);
+                });
+            }
+    
+            function selectDate(date) {
+
+                if (selectedDate == date) {
+                    event.target.classList.remove('selected');
+                    selectedDate = null;
+                } else {
+                    selectedDate = date;
+                    document.querySelectorAll('#dateGrid button').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    event.target.classList.add('selected');
+                }
+                
+                updateSelectionSummary();
+                updateNavigationButtons();
+
+                cinemaButtons.forEach(btn => {
+                    let cinema = btn.getAttribute('data-cinema');
+                    btn.disabled = !isValidCombination(cinema, selectedDate, selectedTime);
+                });
+
+                timeButtons.forEach(btn => {
+                    let time = btn.getAttribute('data-time');
+                    btn.disabled = !isValidCombination(selectedCinema, selectedDate, time);
+                });
+            }
+    
+            function selectTime(time) {
+
+                if (selectedTime == time) {
+                    event.target.classList.remove('selected');
+                    selectedTime = null;
+                } else {
+                    selectedTime = time;
+                    document.querySelectorAll('#timeGrid button').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    event.target.classList.add('selected');
+                }
+                
+                updateSelectionSummary();
+                updateNavigationButtons();
 
 
-    </script>
+                cinemaButtons.forEach(btn => {
+                    let cinema = btn.getAttribute('data-cinema');
+                    btn.disabled = !isValidCombination(cinema, selectedDate, selectedTime);
+                });
 
+                dateButtons.forEach(btn => {
+                    let date = btn.getAttribute('data-date');
+                    btn.disabled = !isValidCombination(selectedCinema, date, selectedTime);
+                });
+            
+            }
+    
+            function updateSelectionSummary() {
+                const summaryText = document.getElementById('summaryText');
+                if (selectedCinema && selectedDate && selectedTime) {
+                    summaryText.textContent = `Cinema ${selectedCinema} | ${selectedDate} | ${selectedTime}`;
+                } else {
+                    const missing = [];
+                    if (!selectedCinema) missing.push('cinema');
+                    if (!selectedDate) missing.push('date');
+                    if (!selectedTime) missing.push('time');
+                    summaryText.textContent = `Please select: ${missing.join(', ')}`;
+                }
+            }
 
+            function isValidCombination(cinema, date, time) {
+                return validCombinations.some(combination => {
+                   
+                    
+                    const cinemaMatch = (cinema === null || combination.cinema_name == cinema);
+                    const dateMatch = (date === null || combination.date == date);
+                    const timeMatch = (time === null || combination.time == time);
 
+                
+
+                    
+                    return cinemaMatch && dateMatch && timeMatch;
+                });
+            }
+            
+             
+            
+    
+            // Initialize the booking system
+            window.onload = function() {
+                updateNavigationButtons();
+                updateSelectionSummary();
+            };
+        </script>
 
 {% endblock %}
