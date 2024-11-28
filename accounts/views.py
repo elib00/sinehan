@@ -1,4 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
+
+from cinema.models import ScheduledMovie
 from .forms import CustomUserCreationForm, CustomUserUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout, get_user_model
@@ -58,8 +60,8 @@ def tickets_view(request):
     try:
         # user = CustomUser.objects.get(id = id)
         user = request.user
-        # tickets = user.user_tickets.all()
-        return render(request, 'tickets.html', {'user': user})
+        tickets = user.user_tickets.all()
+        return render(request, 'tickets.html', {'user': user, 'tickets': tickets})
     except CustomUser.DoesNotExist:
         raise HttpResponse("CustomUser table not found")
 

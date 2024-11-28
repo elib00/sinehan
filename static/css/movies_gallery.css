@@ -205,6 +205,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
+  margin-top: 0.4rem;
 }
 
 #filter-box-top div {
@@ -326,4 +327,34 @@
   font-size: 14px;
   cursor: pointer;
   margin-left: 5px;
+}
+
+#searchbar {
+  background-color: white;
+  border-radius: 10px;
+  padding: 0 0.5rem;
+  width: 20rem;
+}
+
+#search-icon ion-icon {
+  color: rgb(65, 65, 65);
+  --ionicon-stroke-width: 52px;
+  font-size: 1.2rem;
+}
+
+#searchbar input {
+  border: none;
+  background-color: transparent;
+  margin-left: 0.6rem;
+  font-size: 0.8rem;
+  height: 2.5rem;
+  width: 100%;
+  outline: none;
+  color: #000000;
+}
+
+#searchbar input:focus,
+#searchbar input:active {
+  outline: none;
+  box-shadow: none;
 }

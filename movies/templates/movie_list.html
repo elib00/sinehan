@@ -75,7 +75,6 @@
     
 
     let movies = (`{{ movies_json|safe }}`);
-    let filtered_movies = movies;
     let selectedFilters = [];
     let selectedFiltersJSON = {
     "genre" : [],
@@ -84,6 +83,7 @@
     };
 
     movies = JSON.parse(movies);
+    let filtered_movies = movies;
     
 
     //MODAL SETTIGNS
@@ -101,6 +101,7 @@
             modal.style.display = "block"; 
         }
     }
+
    
 
     function changeListener(selectElement){
@@ -113,7 +114,7 @@
         } else if (value == "az"){
           sortByAZ();
         } else if (value == "za"){
-          sortByAZ();
+          sortByZA();
         } 
    
         const cards_container = document.getElementById('list-cards-container');
@@ -154,7 +155,24 @@
                             <div id="filter-box">
 
                                 <div id="filter-box-top">
-                                    <ion-icon name="options-outline" onclick="showModal()"></ion-icon>
+
+                                    <div>
+                                        <ion-icon name="options-outline" onclick="showModal()"></ion-icon>
+
+                                        <div id="searchbar">
+                                        
+                                            <div id="search-icon">
+                                                <ion-icon name="search-outline"></ion-icon>
+                                            </div>
+                                            <input placeholder="Search Movie" id="search-movie" />
+                                        </div>
+
+                                        
+                                    </div>
+                                
+                                    
+                                    
+
                                     <div>
                                         <p>Sort by</p>
                                         <select id="sort-options" onchange="changeListener(this)">
@@ -259,6 +277,7 @@
                                 sliderContent.scrollLeft += cardWidth * 4; 
                             });
                         });
+
             }
 
             dynamic_container.innerHTML = content;
@@ -329,8 +348,9 @@
 
                 
                 console.log(selectedFiltersJSON);
-                
-                cards_container.innerHTML = displayGalleryViewCards(filtered_movies);
+                cards_container.innerHTML = displayListViewCards(filtered_movies);
+
+
             }
 
             function toggleSelection(event) {
@@ -367,12 +387,29 @@
 
 
 
+
                 displaySelectedFilters();
             }
 
         
             document.querySelectorAll('.filter-btn').forEach(button => {
                 button.addEventListener('click', toggleSelection);
+            });
+
+            //SEARCHBAR LOGIC here
+            const search_input = document.getElementById("search-movie");
+
+            search_input.addEventListener("input", event => {
+                const query = event.target.value.toLowerCase();
+
+
+                // Filter the data based on the query
+                filtered_movies = movies.filter((movie) =>
+                    movie.fields.movie_name.toLowerCase().includes(query)
+                );
+
+                const cards_container = document.getElementById("list-cards-container");
+                cards_container.innerHTML = displayListViewCards(filtered_movies);
             });
         }
     });
@@ -422,6 +459,8 @@
     }
 
     function sortByRuntime(){
+        console.log(typeof filtered_movies);
+        console.log(typeof movies);
         filtered_movies.sort((a,b) => a.fields.duration.localeCompare(b.fields.duration));
     }
 
@@ -429,8 +468,12 @@
         filtered_movies.sort((a,b) => a.fields.movie_name.localeCompare(b.fields.movie_name));
     }
 
+    function sortByZA() {
+        filtered_movies.sort((a, b) => b.fields.movie_name.localeCompare(a.fields.movie_name));
+    }
+
     function sortByPrice(){
-        filtered_movies.sort((a,b) => a.fields.price.localeCompare(b.fields.price));
+        filtered_movies.sort((a, b) => a.fields.price - b.fields.price);
     }
 
 
