@@ -1,5 +1,4 @@
-
-# 🎥 **SINEHAN**
+# 🎥 **SINEHAN** {#sinehan}
 
 *A simple and intuitive cinema ticketing system for seamless movie-watching.*
 
@@ -27,7 +26,7 @@ Sinehan is a cinema ticketing system designed to:
 🎟 Enable seat selection and secure payments without account creation.  
 📋 Provide admin tools for managing movies, users, and bookings.
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#sinehan">🔝 Back to Top</a></div>
 
 ---
 
@@ -50,7 +49,7 @@ Sinehan is a cinema ticketing system designed to:
 6. **Admin Tools**  
    Oversee bookings, manage users, and generate reports.
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#sinehan">🔝 Back to Top</a></div>
 
 ---
 
@@ -65,7 +64,7 @@ Sinehan is a cinema ticketing system designed to:
 ### **UI/UX Design**  
 ![Seat Selection Design](resources/ui-seat-selection.png)
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#sinehan">🔝 Back to Top</a></div>
 
 ---
 
@@ -79,7 +78,7 @@ Sinehan is a cinema ticketing system designed to:
 - [![JavaScript](https://img.shields.io/badge/JavaScript-ES6-FFD700?logo=javascript&logoColor=black&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-2.0-8A2BE2?logo=tailwind-css&logoColor=white&style=for-the-badge)](https://tailwindcss.com/)
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#sinehan">🔝 Back to Top</a></div>
 
 ---
 
@@ -91,7 +90,7 @@ Before you start, ensure you have the following installed:
 
 - [![Python](https://img.shields.io/badge/Python-3.9-306998?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#sinehan">🔝 Back to Top</a></div>
 
 ### 🛠️ **Installation**  
 
@@ -139,7 +138,7 @@ Before you start, ensure you have the following installed:
 6. **Access the application**  
    Open your browser and go to `http://127.0.0.1:8000/` to see the application running locally.
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#sinehan">🔝 Back to Top</a></div>
 
 ---
 
@@ -154,8 +153,7 @@ Before you start, ensure you have the following installed:
 
 </div>
 
-
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#sinehan">🔝 Back to Top</a></div>
 
 ---
 
@@ -172,4 +170,4 @@ For inquiries, feel free to contact us:
 - 📧 **Email**: [vallestedted@gmail.com](vallestedted@gmail.com)  
 - 📌 **GitHub**: [Rhixin](https://github.com/Rhixin)
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#sinehan">🔝 Back to Top</a></div>
