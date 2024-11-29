@@ -206,6 +206,8 @@ class AdminDashboardTicketsView(View):
                 'scheduled_movie_movie_name': ticket.scheduled_movie.movie.movie_name,
                 'scheduled_movie_cinema_id': ticket.scheduled_movie.cinema.id,
                 'scheduled_movie_cinema_name': ticket.scheduled_movie.cinema.cinema_name,
+                'scheduled_movie_date': ticket.scheduled_movie.schedule.strftime('%B %d, %Y'),
+                'scheduled_movie_time': ticket.scheduled_movie.schedule.strftime('%I:%M:%S %p'),  # Time only
                 'available_seats': ticket.available_seats,
                 'seat_identifier': ticket.seat_identifier
             }
@@ -218,9 +220,10 @@ class AdminDashboardTicketsView(View):
                 'scheduled_movie_id': scheduled_movie.id,
                 'scheduled_movie_is_active': scheduled_movie.is_active,
                 'scheduled_movie_movie_name': scheduled_movie.movie.movie_name,
-                'scheduled_movie_date': scheduled_movie.schedule.strftime('%Y-%m-%d'),  # Date only
-                'scheduled_movie_time': scheduled_movie.schedule.strftime('%H:%M:%S'),  # Time only
+                'scheduled_movie_date': scheduled_movie.schedule.strftime('%B %d, %Y'),  # Date only
+                'scheduled_movie_time': scheduled_movie.schedule.strftime('%I:%M:%S %p'),  # Time only
                 'scheduled_movie_cinema_name': scheduled_movie.cinema.cinema_name,
+                'scheduled_movie_available_seats': scheduled_movie.cinema.capacity - scheduled_movie.audience_number,
                 'scheduled_movie_tickets': [
                     {
                         'ticket_id': ticket.id,
@@ -232,6 +235,7 @@ class AdminDashboardTicketsView(View):
                 ]
             }
             for scheduled_movie in scheduled_movies
+            
         ]
     
         # Serialize the data to JSON

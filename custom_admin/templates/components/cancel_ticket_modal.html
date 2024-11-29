@@ -31,8 +31,6 @@
         cancelTicketButtons.forEach(button => {
             button.addEventListener("click", () => {
                 modalContainer.classList.remove("hidden");
-
-                const ticketIDToCancel = button.value;
                 //const url = "{% url 'admin_dashboard_update_user' 0 %}".replace('0', ticketIDToCancel);
                 //cancelTicketForm.action = url;
                 const url = button.getAttribute("data-cancel-url");

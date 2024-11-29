@@ -8,7 +8,6 @@
     <div class="flex justify-between items-center mb-6">
         <div class="flex flex-row items-center gap-4">
             <h1 id="ticketsPageTitle" class="text-3xl font-bold">Tickets</h1>
-            {% comment %} <img src="{% static 'icons/sort_icon.svg' %}" alt="Icon" class="w-6 h-6 cursor-pointer" title="Customize display"> {% endcomment %}
             <div class="inline-block relative">
                 <!-- Sort Icon (now relative) -->
                 <img id="ticketsDisplayOptionsButton" src="{% static 'icons/sort_icon.svg' %}" alt="Icon" class="w-6 h-6 cursor-pointer relative" title="Customize display">
@@ -22,7 +21,7 @@
                   <button id="activeChoice" href="#" class="block w-full text-left px-4 rounded py-2 text-sm text-white hover:bg-gray-700">By Active</button>
                 </div>
             </div>
-            <p class="font-normal text-sm">By All Tickets</p>
+            <p id="displayedByText" class="font-normal text-sm">By All Tickets</p>
         </div>
         <div class="flex space-x-3">
             <div class="flex items-center">
@@ -44,7 +43,7 @@
 
     {% if tickets %}
     <div id="ticketsContainer" class="flex-grow overflow-y-auto h-full p-3">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 box-border">
+        <div id="ticketsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 box-border">
             {% for ticket in tickets %}
                 <div 
                     class="bg-white shadow-md rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 cursor-pointer">
@@ -60,8 +59,9 @@
                         </div>
 
                         <!-- User Info -->
-                        <div class="mb-4 flex items-center space-x-4">
+                        <div class="mb-4 flex-col items-center">
                             <p class="text-base"><span class="font-medium">Holder:</span> {{ ticket.user.first_name}} {{ ticket.user.last_name }}</p>
+                            <p class="text-base"><span class="font-medium">Email:</span> {{ ticket.user.email}}</p>
                         </div>
 
                         <div class="mb-4 flex flex-row items-center gap-4">
@@ -125,7 +125,7 @@
                 </div>
             {% endfor %}
         </div>
-    <div>
+    </div>
     {% else %}
         <div class="bg-white shadow-md rounded-lg p-6 text-center">
             <p class="text-gray-600 text-xl">No tickets found.</p>
@@ -156,8 +156,5 @@
         "scheduledMovies": {{ scheduled_movie_json|safe }}
     }
 </script>
-
 <script src="{% static 'js/ticketsDisplay.js' %}"></script>
-
-
 {% endblock %}
