@@ -1,31 +1,39 @@
 # 🎥 **SINEHAN**
 
-*A simple and intuitive cinema ticketing system for seamless movie-watching.*
+*A simple and intuitive cinema ticketing system for steamlined movie-watching.*
 
 [![Contributors](https://img.shields.io/badge/Contributors-3-34D399?style=for-the-badge)](https://github.com/elib00/sinehan/graphs/contributors)  [![Forks](https://img.shields.io/badge/Forks-0-3182CE?style=for-the-badge)](https://github.com/elib00/sinehan/network)  [![Stars](https://img.shields.io/badge/Stars-2-FBBF24?style=for-the-badge)](https://github.com/elib00/sinehan/stargazers)  [![Issues](https://img.shields.io/badge/Issues-0-9CA3AF?style=for-the-badge)](https://github.com/elib00/sinehan/issues)  [![License](https://img.shields.io/badge/License-Not%20Specified-DC2626?style=for-the-badge)](https://opensource.org/licenses)
 
-## Table of Contents
-- [Overview](#-overview)
-- [Functional Requirements](#-functional-requirements)
-- [Resources](#-resources)
-  - [Gantt Chart](#-gantt-chart)
-  - [ERD](#-erd)
-  - [UI/UX Design](#-uiux-design)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-  - [Prerequisites](#-prerequisites)
-  - [Installation](#-installation)
-- [Contributors](#-contributors)
-- [Contact](#-contact)
+## Table of Contents  
 
+<details>  
+  <summary></summary>  
+
+- [Overview](#-overview)  
+- [Functional Requirements](#-functional-requirements)  
+- [Resources](#-resources)  
+  - [Gantt Chart](#-gantt-chart)  
+  - [ERD](#-erd)  
+  - [UI/UX Design](#-uiux-design)  
+- [Tech Stack](#-tech-stack)  
+- [Getting Started](#-getting-started)  
+  - [Prerequisites](#-prerequisites)  
+  - [Installation](#-installation)  
+- [Contributors](#-contributors)  
+- [Contact](#-contact)  
+
+</details>
 
 ---
 
 ## ✨ **Overview**  
-Sinehan is a cinema ticketing system designed to:  
-🎬 Allow users to browse films and select tickets.  
-🎟 Enable seat selection and secure payments without account creation.  
-📋 Provide admin tools for managing movies, users, and bookings.
+Sinehan is a modern cinema ticketing system crafted to deliver seamless ticket purchasing and management.  
+
+🎬 **Effortless Browsing**: Users can explore an updated catalog of films with details such as showtimes, genres, and ratings, ensuring informed decisions.
+
+🎟 **Quick & Secure Ticketing**: Streamlined ticket purchasing allows seat selection and payment completion without the hassle of mandatory account creation, maintaining user convenience.
+
+🍿 **Admin Efficiency**: Administrators gain access to robust tools for managing essential operations, including adding/editing movie schedules, monitoring user activity, and tracking bookings.  
 
 <div align="right"><a href="#-sinehan">🔝 Back to Top</a></div>
 
@@ -69,7 +77,7 @@ Sinehan is a cinema ticketing system designed to:
 
 ---
 
-## 🛠️ **Tech Stack**  
+## 🛠️**Tech Stack**  
 
 - [![Django](https://img.shields.io/badge/Django-3.2-006400?logo=django&logoColor=white&style=for-the-badge)](https://www.djangoproject.com/)
 - [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white&style=for-the-badge)](https://www.sqlite.org/)
@@ -83,7 +91,7 @@ Sinehan is a cinema ticketing system designed to:
 
 ---
 
-## 🏁 **Getting Started**  
+## 🍿 **Getting Started**  
 
 ### 📦 **Prerequisites**  
 
