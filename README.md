@@ -4,24 +4,21 @@
 
 [![Contributors](https://img.shields.io/badge/Contributors-3-34D399?style=for-the-badge)](https://github.com/elib00/sinehan/graphs/contributors)  [![Forks](https://img.shields.io/badge/Forks-0-3182CE?style=for-the-badge)](https://github.com/elib00/sinehan/network)  [![Stars](https://img.shields.io/badge/Stars-2-FBBF24?style=for-the-badge)](https://github.com/elib00/sinehan/stargazers)  [![Issues](https://img.shields.io/badge/Issues-0-9CA3AF?style=for-the-badge)](https://github.com/elib00/sinehan/issues)  [![License](https://img.shields.io/badge/License-Not%20Specified-DC2626?style=for-the-badge)](https://opensource.org/licenses)
 
----
-
 ## 📝 **Table of Contents**  
 
-
-- [Overview](#-overview)  
-- [Functional Requirements](#-functional-requirements)  
-- [Resources](#-resources)  
+- [Overview](#overview)  
+- [Functional Requirements](#functional-requirements)  
+- [Resources](#resources)  
   - [Gantt Chart](#gantt-chart)  
   - [ERD](#erd)  
   - [UI/UX Design](#uiux-design)  
-- [Tech Stack](#-tech-stack)  
-- [Getting Started](#-getting-started)  
-  - [Prerequisites](#-prerequisites)  
-  - [Installation](#-installation)  
-- [Contributors](#-contributors)  
-- [Contact](#-contact)
-- 
+- [Tech Stack](#tech-stack)  
+- [Getting Started](#getting-started)  
+  - [Prerequisites](#prerequisites)  
+  - [Installation](#installation)  
+- [Contributors](#contributors)  
+- [Contact](#contact)
+
 ---
 
 ## ✨ **Overview**  
@@ -30,7 +27,7 @@ Sinehan is a cinema ticketing system designed to:
 🎟 Enable seat selection and secure payments without account creation.  
 📋 Provide admin tools for managing movies, users, and bookings.  
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#📝-table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
@@ -53,7 +50,7 @@ Sinehan is a cinema ticketing system designed to:
 6. **Admin Tools**  
    Oversee bookings, manage users, and generate reports.
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#📝-table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
@@ -68,7 +65,7 @@ Sinehan is a cinema ticketing system designed to:
 ### **UI/UX Design**  
 ![Seat Selection Design](resources/ui-seat-selection.png)  
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#📝-table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
@@ -82,7 +79,7 @@ Sinehan is a cinema ticketing system designed to:
 - [![JavaScript](https://img.shields.io/badge/JavaScript-ES6-FFD700?logo=javascript&logoColor=black&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)  
 - [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-2.0-8A2BE2?logo=tailwind-css&logoColor=white&style=for-the-badge)](https://tailwindcss.com/)  
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#📝-table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
@@ -94,7 +91,7 @@ Before you start, ensure you have the following installed:
 
 - [![Python](https://img.shields.io/badge/Python-3.9-306998?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)  
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#📝-table-of-contents">🔝 Back to Top</a></div>
 
 ### 🛠️ **Installation**  
 
@@ -142,20 +139,22 @@ Before you start, ensure you have the following installed:
 6. **Access the application**  
    Open your browser and go to `http://127.0.0.1:8000/` to see the application running locally.
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#📝-table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
 ## 👨‍💻 **Contributors**  
 **Our Amazing Contributors! ✨**
 
+<div align="center">
 
-| ![Joshua Napiñas](https://avatars.githubusercontent.com/u/119659329?v=4) | ![Summer Ishi Rodrigo](https://avatars.githubusercontent.com/u/151008985?v=4) | ![Zhazted Rhixin Valles](https://avatars.githubusercontent.com/u/134621548?v=4) |
-|--------------------------------------------------------------------------|--------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| **Joshua Napiñas**                                                       | **Summer Ishi Rodrigo**                                                       | **Zhazted Rhixin Valles**                                                     |
+| <img src="https://avatars.githubusercontent.com/u/119659329?v=4" width="100" style="border-radius:50%;" alt="Joshua Napiñas"> | <img src="https://avatars.githubusercontent.com/u/151008985?v=4" width="100" style="border-radius:50%;" alt="Summer Ishi Rodrigo"> | <img src="https://avatars.githubusercontent.com/u/134621548?v=4" width="100" style="border-radius:50%;" alt="Zhazted Rhixin Valles"> |
+|---|---|---|
+| **Joshua Napiñas** | **Summer Ishi Rodrigo** | **Zhazted Rhixin Valles** |
 
+</div>
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#📝-table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
@@ -174,4 +173,4 @@ For inquiries, feel free to contact us:
 
 Feel free to connect with us for further information, collaborations, or questions.
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+<div align="right"><a href="#📝-table-of-contents">🔝 Back to Top</a></div>
