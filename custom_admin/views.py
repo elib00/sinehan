@@ -363,7 +363,6 @@ class AdminDashboardCancelTicketView(View):
         return redirect("admin_dashboard_tickets")
 
 class AdminDashboardCinema(View):
-    
     def get(self, request):
         add_cinema_form = AddCinemaForm()
         
@@ -387,17 +386,13 @@ class AdminDashboardAddCinema(View):
             
             new_cinema.save()
             messages.success(request, "A new cinema has been created!")
-            return redirect("admin_dashboard_cinema")
         else:
             messages.error(request, "Failed to create a new cinema")
-            print(add_cinema_form.errors)  # Print form errors for debugging
+            for field, errors in add_cinema_form.errors.items():
+                for error in errors:    
+                    messages.error(request, f"{field.capitalize()}: {error}")
         
-          
-        context = {
-            "add_cinema_form": add_cinema_form
-        }
-        
-        return render(request, "sections/cinema.html", context)
+        return redirect("admin_dashboard_cinema")
 
 class AdminDashboardAddScheduledMovieView(View):
     def get(self, request):
