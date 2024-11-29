@@ -3,14 +3,15 @@
 {% block content1 %}
 
 <link rel="stylesheet" href="{% static "css/movie_book.css" %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
 
-        <div class="flex flex-[7] h-[80vh] mt-[100px] py-[20px]">
+
+        <div class="flex flex-[7] h-[80vh] mt-[100px] py-[20px]" >
             <div class="flex-1 flex justify-center">
                 <img src="https://cringemdb.com/img/movie-poster-placeholder.png" alt="Image" >
             </div>
-    
-            <div class=" text-white flex-[1.80] pl-[10px] pr-[70px]">
 
+            <div class=" text-white flex-[1.80] pl-[10px] pr-[70px]">
                 <div class="booking-container">
                     <div class="progress-bar">
                         <div class="progress-line"></div>
@@ -368,6 +369,7 @@
 
             const dateGrid = document.getElementById('dateGrid');
             const today = new Date();
+            
 
 
             function initializeSeats() {
@@ -482,9 +484,16 @@
     
             function showStep(step) {
                 document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-                document.getElementById(`step${step}`).classList.add('active');
+
+                const active_step = document.getElementById(`step${step}`);
+                active_step.classList.add('active');
                 updateNavigationButtons();
                 updateProgressBar();
+
+                gsap.fromTo(active_step, 
+                    { opacity: 0, x: 300 },  
+                    { opacity: 1, duration:.5, x:0} 
+                );
             }
     
             function nextStep() {
@@ -492,6 +501,9 @@
             
                 if (canProceedToNextStep()) {
                     currentStep++;
+
+                    
+
                     showStep(currentStep);
                 }
             }

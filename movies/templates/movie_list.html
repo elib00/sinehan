@@ -4,6 +4,8 @@
 
 
 <link rel="stylesheet" href="{% static 'css/movies_gallery.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
+
 
 <section class="movies" id="movies">
 
@@ -96,17 +98,30 @@
         }
 
         if (modal.style.display === "block") {
+            
+            gsap.fromTo(modal, 
+                { opacity: 1, y: 0 },  
+                { opacity: 0, y: 100, duration: .4 } 
+            );
+
             modal.style.display = "none"; 
         } else {
             modal.style.display = "block"; 
+            gsap.fromTo(modal, 
+                { opacity: 0, y: 100 },  
+                { opacity: 1, y: 0, duration: .4 } 
+            );
         }
+
+        
+
     }
 
    
 
     function changeListener(selectElement){
         var value = selectElement.value;
-          
+
         if (value == "runtime"){
           sortByRuntime();
         }else if (value == "price"){
@@ -120,8 +135,12 @@
         const cards_container = document.getElementById('list-cards-container');
         const content = displayListViewCards(filtered_movies);
         cards_container.innerHTML = content;
+
+        gsap.fromTo(cards_container, 
+                { opacity: 0 },  
+                { opacity: 1, duration:2} 
+        );
     }
-   
 
     document.addEventListener('DOMContentLoaded' , function() {
         const sliderContent = document.querySelector('.slider-content');
@@ -280,18 +299,41 @@
 
             }
 
+           
             dynamic_container.innerHTML = content;
+            
+            gsap.fromTo(dynamic_container, 
+                { opacity: 0 },  
+                { opacity: 1, duration:2} 
+            );
+            
+
             modal = document.getElementById("filter-modal");
             
             var closeButton = document.getElementsByClassName("close-button")[0];
 
             closeButton.onclick = function() {
-                modal.style.display = "none";
+
+                gsap.fromTo(modal, 
+                    { opacity: 1, y: 0 },  
+                    { opacity: 0, y: 100, duration: .4 } 
+                );
+
+                setTimeout(function() {
+                    modal.style.display = "none";
+                }, 400);
             }
 
             window.onclick = function(event) {
                 if (event.target == modal) {
-                    modal.style.display = "none";
+                    gsap.fromTo(modal, 
+                        { opacity: 1, y: 0 },  
+                        { opacity: 0, y: 100, duration: .4 } 
+                    );
+
+                    setTimeout(function() {
+                        modal.style.display = "none";
+                    }, 400);
                 }
             }
 
@@ -349,6 +391,13 @@
                 
                 console.log(selectedFiltersJSON);
                 cards_container.innerHTML = displayListViewCards(filtered_movies);
+
+                
+                gsap.fromTo(cards_container, 
+                    { opacity: 0 },  
+                    { opacity: 1, duration: 1 } 
+                );
+               
 
 
             }
@@ -410,6 +459,11 @@
 
                 const cards_container = document.getElementById("list-cards-container");
                 cards_container.innerHTML = displayListViewCards(filtered_movies);
+
+                gsap.fromTo(cards_container, 
+                    { opacity: 0 },  
+                    { opacity: 1, duration:2} 
+                );
             });
         }
     });
@@ -442,19 +496,26 @@
 
     function displayListViewCards(movies){
         let content = '';
-        movies.forEach(item => {
-            content += `
-            <div class="movie-card">
-                <a href="${movieDetailsBaseUrl}/${item.pk}">
-                    <img src="https://cringemdb.com/img/movie-poster-placeholder.png" alt="${item.fields.movie_name}">
-                </a>  
-                <div class="movie-info">
-                    <h3>${item.fields.movie_name}</h3>
-                </div>
-            </div>
-            `;
-        });
 
+        if (movies.length == 0){
+            content = '<h3 class="text-white">No results</h3>'
+        } else {
+            movies.forEach(item => {
+                content += `
+                <div class="movie-card">
+                    <a href="${movieDetailsBaseUrl}/${item.pk}">
+                        <img src="https://cringemdb.com/img/movie-poster-placeholder.png" alt="${item.fields.movie_name}">
+                    </a>  
+                    <div class="movie-info">
+                        <h3>${item.fields.movie_name}</h3>
+                    </div>
+                </div>
+                `;
+            });
+        }
+        
+
+    
         return content;
     }
 
