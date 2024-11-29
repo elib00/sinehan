@@ -6,8 +6,8 @@
 <!-- Background Video Section -->
 <div class="relative w-full h-screen overflow-hidden" id="movie-details">
     <!-- Background Video -->
-    <video class="absolute top-0 left-0 w-full h-full object-cover mt-12" autoplay loop muted>
-        <source src="{% static 'videos/venom_trailer.mp4' %}" type="video/mp4">
+    <video class="absolute top-0 left-0 w-full h-full object-cover mt-12" id="trailer" autoplay loop muted>
+        <source src="{{movie.poster_trailer.url}}" type="video/mp4">
     </video>
 
 
@@ -16,7 +16,7 @@
         <div class="container m-auto px-4 flex">
            
             <div class="flex-1">
-                <img src="https://incakoala.github.io/top9movie/film-poster-placeholder.png" alt="Image">
+                <img src="{{movie.poster_portrait.url}}" alt="Image">
             </div>
         
           

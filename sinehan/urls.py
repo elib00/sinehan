@@ -19,13 +19,14 @@ from django.urls import path, include
 from .views import home_view
 from .views import movies_view
 from .views import coming_view
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
-    path('admin/', include("custom_admin.urls")),
+    path('admin/', admin.site.urls),
+    #path('admin/', include("custom_admin.urls")),
     path('accounts/', include('accounts.urls')),
     path('home/', home_view, name='home'),  
     path('movies/', include('movies.urls')),
-    path('coming/', coming_view, name='coming_view'),
-    
-]
+    path('coming/', coming_view, name='coming_view'),   
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

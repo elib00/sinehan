@@ -148,7 +148,7 @@ class AdminDashboardMovieListView(View):
 class AdminDashboardAddMovieView(View):
     def post(self, request):
         movies = Movie.objects.all()
-        add_movie_form = AddMovieForm(request.POST)
+        add_movie_form = AddMovieForm(request.POST, request.FILES)
         if add_movie_form.is_valid():
             add_movie_form.save()
             messages.success(request, "A new movie has been added!")

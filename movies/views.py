@@ -51,7 +51,7 @@ def movie_book(request, movie_id):
         'cinemas': cinemas,
         'dates': sorted(dates),  
         'times': sorted(time.strftime('%H:%M') for time in times),
-        
+        'actual_movie' : movie
         }
 
         return render(request, 'movie_book.html', context)

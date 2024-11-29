@@ -40,7 +40,7 @@
                     <div class="slider-content">
                         {% for movie in movies %}
                         <div class="movie-card-wrapper">
-                            {% include 'components/movie_card.html' with image_url="https://cringemdb.com/img/movie-poster-placeholder.png" movie_title=movie.movie_name duration=movie.duration genre=movie.genre movie_id=movie.id %}
+                            {% include 'components/movie_card.html' with image_url=movie.poster_portrait.url movie_title=movie.movie_name duration=movie.duration genre=movie.genre movie_id=movie.id %}
                         </div>
                         {% endfor %}
                     </div>
@@ -71,7 +71,6 @@
 
 <script>
     
-
     let movies = (`{{ movies_json|safe }}`);
     let selectedFilters = [];
     let selectedFiltersJSON = {
@@ -81,6 +80,9 @@
     };
 
     movies = JSON.parse(movies);
+
+
+    console.log(movies);
     let filtered_movies = movies;
 
 
@@ -484,7 +486,7 @@
 
                     <a href="${movieDetailsBaseUrl}/${item.pk}">
                         <div class="box-img">
-                            <img src="https://cringemdb.com/img/movie-poster-placeholder.png" alt="">
+                            <img src="/media/${item.fields.poster_portrait}" alt="">
                         </div>
                     </a>    
             
@@ -509,7 +511,7 @@
                 content += `
                 <div class="movie-card">
                     <a href="${movieDetailsBaseUrl}/${item.pk}">
-                        <img src="https://cringemdb.com/img/movie-poster-placeholder.png" alt="${item.fields.movie_name}">
+                        <img src="/media/${item.fields.poster_portrait}" alt="${item.fields.movie_name}">
                     </a>  
                     <div class="movie-info">
                         <h3>${item.fields.movie_name}</h3>
