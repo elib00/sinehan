@@ -79,13 +79,13 @@ Sinehan is a modern cinema ticketing system crafted to deliver seamless ticket p
 
 ## 🛠️**Tech Stack**  
 
-- [![Django](https://img.shields.io/badge/Django-3.2-006400?logo=django&logoColor=white&style=for-the-badge)](https://www.djangoproject.com/)
+- [![Django](https://img.shields.io/badge/Django-5.1.1-006400?logo=django&logoColor=white&style=for-the-badge)](https://www.djangoproject.com/)
 - [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white&style=for-the-badge)](https://www.sqlite.org/)
-- [![Python](https://img.shields.io/badge/Python-3.9-FF6347?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)
+- [![Python](https://img.shields.io/badge/Python-3.12.5-FF6347?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)
 - [![HTML5](https://img.shields.io/badge/HTML5-5-F4A300?logo=html5&logoColor=white&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 - [![CSS3](https://img.shields.io/badge/CSS3-3-1E90FF?logo=css3&logoColor=white&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 - [![JavaScript](https://img.shields.io/badge/JavaScript-ES6-FFD700?logo=javascript&logoColor=black&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-- [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-2.0-8A2BE2?logo=tailwind-css&logoColor=white&style=for-the-badge)](https://tailwindcss.com/)
+- [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.13-8A2BE2?logo=tailwind-css&logoColor=white&style=for-the-badge)](https://tailwindcss.com/)
 
 <div align="right"><a href="#-sinehan">🔝 Back to Top</a></div>
 
@@ -97,7 +97,7 @@ Sinehan is a modern cinema ticketing system crafted to deliver seamless ticket p
 
 Before you start, ensure you have the following installed:
 
-- [![Python](https://img.shields.io/badge/Python-3.9-306998?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)
+- [![Python](https://img.shields.io/badge/Python-3.12.5-306998?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)
 
 <div align="right"><a href="#-sinehan">🔝 Back to Top</a></div>
 
@@ -135,6 +135,7 @@ Before you start, ensure you have the following installed:
 4. **Apply database migrations**  
    Run the database migrations to set up the database schema:
    ```bash
+   python manage.py make migrations
    python manage.py migrate
    ```
 
