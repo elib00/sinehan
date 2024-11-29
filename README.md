@@ -1,22 +1,23 @@
-# 🎥 **SINEHAN**  
+
+# 🎥 **SINEHAN**
+
 *A simple and intuitive cinema ticketing system for seamless movie-watching.*
 
 [![Contributors](https://img.shields.io/badge/Contributors-3-34D399?style=for-the-badge)](https://github.com/elib00/sinehan/graphs/contributors)  [![Forks](https://img.shields.io/badge/Forks-0-3182CE?style=for-the-badge)](https://github.com/elib00/sinehan/network)  [![Stars](https://img.shields.io/badge/Stars-2-FBBF24?style=for-the-badge)](https://github.com/elib00/sinehan/stargazers)  [![Issues](https://img.shields.io/badge/Issues-0-9CA3AF?style=for-the-badge)](https://github.com/elib00/sinehan/issues)  [![License](https://img.shields.io/badge/License-Not%20Specified-DC2626?style=for-the-badge)](https://opensource.org/licenses)
 
-## 📝 **Table of Contents**
-
-- [Overview](#-overview)
-- [Functional Requirements](#-functional-requirements)  
-- [Resources](#-resources)  
-  - [Gantt Chart](#gantt-chart)  
-  - [ERD](#erd)  
-  - [UI/UX Design](#uiux-design)  
+## Table of Contents
+- [Overview](#overview)
+- [Functional Requirements](#functional-requirements)
+- [Resources](#resources)
+  - [Gantt Chart](#gantt-chart)
+  - [ERD](#erd)
+  - [UI/UX Design](#uiux-design)
 - [Tech Stack](#tech-stack)
-- [Getting Started](#-getting-started)  
-  - [Prerequisites](#-prerequisites)  
-  - [Installation](#-installation)  
-- [Contributors](#-contributors)  
-- [Contact](#-contact)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Contributors](#contributors)
+- [Contact](#contact)
 
 ---
 
@@ -24,9 +25,9 @@
 Sinehan is a cinema ticketing system designed to:  
 🎬 Allow users to browse films and select tickets.  
 🎟 Enable seat selection and secure payments without account creation.  
-📋 Provide admin tools for managing movies, users, and bookings.  
+📋 Provide admin tools for managing movies, users, and bookings.
 
-<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div> 
+<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
@@ -49,7 +50,7 @@ Sinehan is a cinema ticketing system designed to:
 6. **Admin Tools**  
    Oversee bookings, manage users, and generate reports.
 
-[🔝 Back to Top](#table-of-contents)
+<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
@@ -64,21 +65,21 @@ Sinehan is a cinema ticketing system designed to:
 ### **UI/UX Design**  
 ![Seat Selection Design](resources/ui-seat-selection.png)
 
-[🔝 Back to Top](#table-of-contents)
+<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ **Tech Stack**  
 
-- [![Django](https://img.shields.io/badge/Django-3.2-006400?logo=django&logoColor=white&style=for-the-badge)](https://www.djangoproject.com/)  
-- [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white&style=for-the-badge)](https://www.sqlite.org/)  
-- [![Python](https://img.shields.io/badge/Python-3.9-FF6347?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)  
-- [![HTML5](https://img.shields.io/badge/HTML5-5-F4A300?logo=html5&logoColor=white&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/HTML)  
-- [![CSS3](https://img.shields.io/badge/CSS3-3-1E90FF?logo=css3&logoColor=white&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/CSS)  
-- [![JavaScript](https://img.shields.io/badge/JavaScript-ES6-FFD700?logo=javascript&logoColor=black&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)  
-- [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-2.0-8A2BE2?logo=tailwind-css&logoColor=white&style=for-the-badge)](https://tailwindcss.com/)  
+- [![Django](https://img.shields.io/badge/Django-3.2-006400?logo=django&logoColor=white&style=for-the-badge)](https://www.djangoproject.com/)
+- [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white&style=for-the-badge)](https://www.sqlite.org/)
+- [![Python](https://img.shields.io/badge/Python-3.9-FF6347?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)
+- [![HTML5](https://img.shields.io/badge/HTML5-5-F4A300?logo=html5&logoColor=white&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [![CSS3](https://img.shields.io/badge/CSS3-3-1E90FF?logo=css3&logoColor=white&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [![JavaScript](https://img.shields.io/badge/JavaScript-ES6-FFD700?logo=javascript&logoColor=black&style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-2.0-8A2BE2?logo=tailwind-css&logoColor=white&style=for-the-badge)](https://tailwindcss.com/)
 
-[🔝 Back to Top](#table-of-contents)
+<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
@@ -88,9 +89,9 @@ Sinehan is a cinema ticketing system designed to:
 
 Before you start, ensure you have the following installed:
 
-- [![Python](https://img.shields.io/badge/Python-3.9-306998?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)  
+- [![Python](https://img.shields.io/badge/Python-3.9-306998?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)
 
-[🔝 Back to Top](#table-of-contents)
+<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
 ### 🛠️ **Installation**  
 
@@ -138,7 +139,7 @@ Before you start, ensure you have the following installed:
 6. **Access the application**  
    Open your browser and go to `http://127.0.0.1:8000/` to see the application running locally.
 
-[🔝 Back to Top](#table-of-contents)
+<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
@@ -154,7 +155,7 @@ Before you start, ensure you have the following installed:
 </div>
 
 
-[🔝 Back to Top](#table-of-contents)
+<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
@@ -171,6 +172,4 @@ For inquiries, feel free to contact us:
 - 📧 **Email**: [vallestedted@gmail.com](vallestedted@gmail.com)  
 - 📌 **GitHub**: [Rhixin](https://github.com/Rhixin)
 
-Feel free to connect with us for further information, collaborations, or questions.
-
-[🔝 Back to Top](#table-of-contents)
+<div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
