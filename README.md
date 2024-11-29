@@ -11,7 +11,7 @@
   - [Gantt Chart](#gantt-chart)  
   - [ERD](#erd)  
   - [UI/UX Design](#uiux-design)  
-- [Tech Stack](#-tech-stack)  
+- [Tech Stack](#tech-stack)
 - [Getting Started](#-getting-started)  
   - [Prerequisites](#-prerequisites)  
   - [Installation](#-installation)  
