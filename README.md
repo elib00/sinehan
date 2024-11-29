@@ -8,19 +8,20 @@
 
 ## 📝 **Table of Contents**  
 
-- [Overview](#overview)  
-- [Functional Requirements](#functional-requirements)  
-- [Resources](#resources)  
+
+- [Overview](#-overview)  
+- [Functional Requirements](#-functional-requirements)  
+- [Resources](#-resources)  
   - [Gantt Chart](#gantt-chart)  
   - [ERD](#erd)  
   - [UI/UX Design](#uiux-design)  
-- [Tech Stack](#tech-stack)  
-- [Getting Started](#getting-started)  
-  - [Prerequisites](#prerequisites)  
-  - [Installation](#installation)  
-- [Contributors](#contributors)  
-- [Contact](#contact)
-
+- [Tech Stack](#-tech-stack)  
+- [Getting Started](#-getting-started)  
+  - [Prerequisites](#-prerequisites)  
+  - [Installation](#-installation)  
+- [Contributors](#-contributors)  
+- [Contact](#-contact)
+- 
 ---
 
 ## ✨ **Overview**  
