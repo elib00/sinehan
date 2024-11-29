@@ -33,7 +33,6 @@ const initializeTicketsDisplayOptionsDropdown = (data) => {
     const allTicketsChoice = document.getElementById("allTicketsChoice");
     const scheduledMovieChoice = document.getElementById("scheduledMovieChoice");
     const usersChoice = document.getElementById("usersChoice");
-    const activeChoice = document.getElementById("activeChoice");
 
     allTicketsChoice.addEventListener("click", () => {
         displayByAllTickets(data.tickets);
@@ -353,7 +352,7 @@ function createTicketDetailCard(ticket) {
                 </svg>
                 <h3 class="text-lg font-semibold text-gray-800">Ticket #${ticket.ticket_id}</h3>
             </div>
-            <span class="text-sm text-gray-500 font-medium">Ticket</span>
+            <!-- <span class="text-sm text-gray-500 font-medium">Ticket</span> -->
         </div>
     `;
 
@@ -366,7 +365,7 @@ function createTicketDetailCard(ticket) {
             </div>
             <div class="space-y-2">
                 <p class="text-xs text-gray-600 font-medium">Username</p>
-                <p class="text-sm text-gray-800">${ticket.ticket_holder_username}</p>
+                <p class="text-sm text-gray-800 font-semibold">${ticket.ticket_holder_username}</p>
             </div>
             <div class="space-y-2">
                 <p class="text-xs text-gray-600 font-medium">Seat</p>
@@ -374,7 +373,7 @@ function createTicketDetailCard(ticket) {
             </div>
             <div class="space-y-2">
                 <p class="text-xs text-gray-600 font-medium">Ticket ID</p>
-                <p class="text-sm text-gray-800">${ticket.ticket_id}</p>
+                <p class="text-sm text-gray-800 font-semibold">${ticket.ticket_id}</p>
             </div>
         </div>
     `;
