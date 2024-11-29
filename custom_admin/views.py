@@ -229,7 +229,8 @@ class AdminDashboardTicketsView(View):
                         'ticket_id': ticket.id,
                         'ticket_seat_identifier': ticket.seat_identifier,
                         'ticket_holder': f"{ticket.user.first_name} {ticket.user.last_name}",
-                        'ticket_holder_username': f"{ticket.user.username}",
+                        'ticket_holder_username': ticket.user.username,
+                        'ticket_is_active': "Active" if ticket.is_active else "Inactive"
                     }
                     for ticket in scheduled_movie.movie_tickets.all()  # Iterate over related tickets
                 ]
