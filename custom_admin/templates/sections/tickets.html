@@ -47,7 +47,7 @@
         <div id="ticketsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 box-border">
             {% for ticket in tickets %}
                 <div 
-                    class="bg-white shadow-md rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 cursor-pointer">
+                    class="bg-white shadow-md rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105">
                     <div class="p-6">
                         <!-- Ticket Info -->
                         <div class="mb-4 flex items-center space-x-4">
@@ -105,13 +105,10 @@
 
                             <!-- Action Buttons -->
                             <div class="flex space-x-3 mt-4 justify-between">
-                                {% comment %} <form method="POST" class="flex-1">
-                                    {% csrf_token %}
-                                    <button 
-                                        class="flex-1 block w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300">
-                                        View Details
-                                    </button>
-                                </form> {% endcomment %}
+                                <button 
+                                    class="flex-1 block w-full text-center bg-black text-white py-2 rounded-md transition duration-300">
+                                    View Details
+                                </button>
                                 {% if ticket.is_active %}
                                     <button
                                         data-cancel-ticket-button

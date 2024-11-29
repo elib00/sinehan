@@ -304,6 +304,8 @@ class AdminDashboardAddTicketView(View):
                 # context = self.init_context()
                 # context["add_ticket_form"] = add_ticket_form
                 # return render(request, "sections/tickets.html", context)
+                return redirect("admin_dashboard_tickets")
+
             
             new_ticket = Ticket(
                 user=user_instance,
