@@ -4,7 +4,6 @@
 
 
 <link rel="stylesheet" href="{% static 'css/movies_gallery.css' %}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
 
 
 <section class="movies" id="movies">
@@ -19,9 +18,6 @@
         </div>
 
         <div id="dynamic-container">
-
-
-
 
             <div class="hero-image-container">
                 <img 
@@ -86,6 +82,15 @@
 
     movies = JSON.parse(movies);
     let filtered_movies = movies;
+
+
+    //ANIMATION LOAD page
+    const movie_page = document.getElementById("movies");
+
+    gsap.fromTo(movie_page, 
+        { opacity: 0},  
+        { opacity: 1, duration: 2} 
+    );
     
 
     //MODAL SETTIGNS

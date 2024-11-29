@@ -4,7 +4,7 @@
 {% block content1 %}
 
 <!-- Background Video Section -->
-<div class="relative w-full h-screen overflow-hidden">
+<div class="relative w-full h-screen overflow-hidden" id="movie-details">
     <!-- Background Video -->
     <video class="absolute top-0 left-0 w-full h-full object-cover mt-12" autoplay loop muted>
         <source src="{% static 'videos/venom_trailer.mp4' %}" type="video/mp4">
@@ -64,5 +64,16 @@
         </div>
     </section>
 </div>
+
+<script>
+
+    const movie_details = document.getElementById("movie-details");
+
+    gsap.fromTo(movie_details, 
+        { opacity: 0},  
+        { opacity: 1, duration:2} 
+    );
+
+</script>
 
 {% endblock %}

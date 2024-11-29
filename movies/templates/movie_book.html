@@ -3,10 +3,9 @@
 {% block content1 %}
 
 <link rel="stylesheet" href="{% static "css/movie_book.css" %}">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
 
 
-        <div class="flex flex-[7] h-[80vh] mt-[100px] py-[20px]" >
+        <div class="flex flex-[7] h-[80vh] mt-[100px] py-[20px]" id="movie-book">
             <div class="flex-1 flex justify-center">
                 <img src="https://cringemdb.com/img/movie-poster-placeholder.png" alt="Image" >
             </div>
@@ -369,6 +368,17 @@
 
             const dateGrid = document.getElementById('dateGrid');
             const today = new Date();
+
+
+            //Animation 
+            const movie_book_box = document.getElementById('movie-book');
+
+            gsap.fromTo(movie_book_box, 
+                { opacity: 0},  
+                { opacity: 1, duration:.5} 
+            );
+
+
             
 
 
