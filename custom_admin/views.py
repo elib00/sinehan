@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import HttpResponseForbidden
-from .forms import AdminLoginForm, AddMovieForm, AddNowShowingMovieForm, AddCinemaForm, AddScheduledMovieForm, AddTicketForm
+from .forms import AdminLoginForm, AddMovieForm, AddCinemaForm, AddScheduledMovieForm, AddTicketForm
 from cinema.models import Cinema, Ticket, ScheduledMovie
 from movies.models import Movie
 from accounts.forms import CustomUserCreationForm, CustomUserUpdateForm
@@ -365,65 +365,12 @@ class AdminDashboardCancelTicketView(View):
 class AdminDashboardCinema(View):
     
     def get(self, request):
-        now_showing_form = AddNowShowingMovieForm()
         add_cinema_form = AddCinemaForm()
-        cinema_with_showings = self.process_cinema_with_showings()
         
         context = {
-            "now_showing_form": now_showing_form, 
             "add_cinema_form": add_cinema_form,
-            "cinema_with_showings": cinema_with_showings
         }
-        
-        return render(request, "sections/cinema.html", context)
 
-    def process_cinema_with_showings(self):
-        # Only get cinemas with active movies
-        cinemas = Cinema.objects.prefetch_related(
-            Prefetch(
-                'cinema_showing_movies',
-                queryset=NowShowingMovie.objects.filter(is_active=True),
-                to_attr='active_showings'
-            ),
-            'cinema_showing_movies__movie'
-        ).all()
-
-        for cinema in cinemas:
-            print(f"Cinema: {cinema.cinema_name}")
-            for showing in cinema.active_showings:  # uses the prefetched data
-                print(f"- Movie: {showing.movie.movie_name}")
-        
-        return cinemas
-                
-class AdminDashboardAddNowShowing(View):
-    def post(self, request):    
-        now_showing_form = AddNowShowingMovieForm(request.POST)
-        if now_showing_form.is_valid(): 
-            cinema_id = now_showing_form.cleaned_data['cinema']
-            cinema_instance = get_object_or_404(Cinema, id=cinema_id)
-            movie_id = now_showing_form.cleaned_data['movie']
-            movie_instance = get_object_or_404(Movie, id=movie_id)
-            end_date = now_showing_form.cleaned_data['end_date'] 
-            
-            now_showing_movie = NowShowingMovie(
-                cinema=cinema_instance,  # Set the foreign key using ID
-                movie=movie_instance,    # Set the foreign key using ID
-                end_date=end_date    # Use the provided end date
-            )
-            
-            now_showing_movie.save() 
-            
-            messages.success(request, "A new movie is now showing!")
-            return redirect("admin_dashboard_cinema")
-        else:
-            messages.error(request, "Failed to add a new movie in Now Showing")
-            print(now_showing_form.errors)  # Print form errors for debugging
-        
-        context = {
-            "now_showing_form": now_showing_form,
-            "add_cinema_form": AddCinemaForm()
-        }
-        
         return render(request, "sections/cinema.html", context)
         
 class AdminDashboardAddCinema(View):
@@ -447,8 +394,7 @@ class AdminDashboardAddCinema(View):
         
           
         context = {
-            "add_cinema_form": add_cinema_form, 
-            "now_showing_form": AddNowShowingMovieForm()
+            "add_cinema_form": add_cinema_form
         }
         
         return render(request, "sections/cinema.html", context)
@@ -456,26 +402,29 @@ class AdminDashboardAddCinema(View):
 class AdminDashboardAddScheduledMovieView(View):
     def get(self, request):
         scheduled_movie_form = AddScheduledMovieForm()
-        scheduled_movies = self.process_scheduled_movies()
+        movies = self.get_movies()
         
         context = {
             "scheduled_movie_form": scheduled_movie_form,
-            "scheduled_movies": scheduled_movies
+            "movies": movies
         }
         
         return render(request, "sections/scheduled_movies.html", context)
 
     def post(self, request):
-        scheduled_movies = self.process_scheduled_movies()
+        scheduled_movies = self.get_movies()
         scheduled_movie_form = AddScheduledMovieForm(request.POST)
         if scheduled_movie_form.is_valid():
-            now_showing_movie_id = scheduled_movie_form.cleaned_data.get("now_showing_movie")
-            now_showing_movie_instance = get_object_or_404(NowShowingMovie, id=now_showing_movie_id)
+            movie_id = scheduled_movie_form.cleaned_data.get("movie")
+            movie_instance = get_object_or_404(Movie, id=movie_id)
+            cinema_id = scheduled_movie_form.cleaned_data.get("cinema")
+            cinema_instance = get_object_or_404(Cinema, id=cinema_id)
             schedule = scheduled_movie_form.cleaned_data.get("schedule")
             audience_number = scheduled_movie_form.cleaned_data.get("audience_number")
             
             scheduled_movie = ScheduledMovie(
-                now_showing_movie=now_showing_movie_instance,
+                movie=movie_instance,
+                cinema=cinema_instance,
                 schedule=schedule,
                 audience_number=audience_number
             )
@@ -496,10 +445,6 @@ class AdminDashboardAddScheduledMovieView(View):
         return render(request, "sections/scheduled_movies.html", context)
         
 
-    def process_scheduled_movies(self):
-        scheduled_movies = ScheduledMovie.objects.select_related(
-            'now_showing_movie__cinema',  # Cinema related to NowShowingMovie
-            'now_showing_movie__movie'    # Movie related to NowShowingMovie
-        ).all()
-        
-        return scheduled_movies
+    def get_movies(self):
+        movies = Movie.objects.all()
+        return movies

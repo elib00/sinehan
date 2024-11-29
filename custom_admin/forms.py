@@ -202,10 +202,18 @@ class AddCinemaForm(forms.ModelForm):
         return cleaned_data
 
 class AddScheduledMovieForm(forms.Form):
-    now_showing_movie = forms.ChoiceField(
-        label="Select a Showing Movie",
+    movie = forms.ChoiceField(
+        label="Select a Movie",
         widget=forms.Select(attrs={
-            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 max-h-48 overflow-y-auto',
+            'autocomplete': 'off'
+        })
+    )
+    
+    cinema = forms.ChoiceField(
+        label="Select a Cinema",
+        widget=forms.Select(attrs={
+            'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 max-h-48 overflow-y-auto',
             'autocomplete': 'off'
         })
     )
@@ -233,16 +241,26 @@ class AddScheduledMovieForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Query the Movie model to get the movies
-        self.set_now_showing_choices()
+        self.set_movie_to_show()
+        self.set_cinema_choices()
     
-    def set_now_showing_choices(self):
-        now_showing_movies = NowShowingMovie.objects.select_related('cinema', 'movie').filter(is_active=True)
+    def set_movie_to_show(self):
+        movies = Movie.objects.all()
         
         choices = [
-            (ns.id, f"{ns.cinema.cinema_name} - {ns.movie.movie_name}") for ns in now_showing_movies
+            (movie.id, movie.movie_name) for movie in movies
         ]
         
-        self.fields["now_showing_movie"].choices = choices
+        self.fields["movie"].choices = choices
+    
+    def set_cinema_choices(self):
+        cinema_list = Cinema.objects.all()
+        
+        choices = [
+            (cinema.id, cinema.cinema_name) for cinema in cinema_list
+        ]
+        
+        self.fields["cinema"].choices = choices
         
 class AddTicketForm(forms.Form):
     user = forms.ChoiceField(
