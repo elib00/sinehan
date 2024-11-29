@@ -29,6 +29,7 @@ Sinehan is a cinema ticketing system designed to:
 
 <div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
+
 ---
 
 ## 🚀 **Functional Requirements**  
@@ -174,4 +175,3 @@ For inquiries, feel free to contact us:
 Feel free to connect with us for further information, collaborations, or questions.
 
 <div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
-```
