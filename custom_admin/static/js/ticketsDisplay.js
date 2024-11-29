@@ -71,6 +71,18 @@ const addListenersToCancelTicketButtons = () => {
     });
 }
 
+const addListenersToViewTicketButtons = (ticketsArray) => {
+    const viewTicketButtons = document.querySelectorAll("[data-view-tickets-button]");
+    console.log(viewTicketButtons);
+    viewTicketButtons.forEach(button => {
+        console.log("hi")
+        button.addEventListener("click", () => {
+            buttonIndex = button.getAttribute("data-ticket-index");
+            openTicketDetailsModal(ticketsArray[buttonIndex]);
+        });
+    });
+};
+
 const displayByAllTickets = (tickets) => {
     const displayedByText = document.getElementById("displayedByText");
     const container = document.getElementById("ticketsContainer");
@@ -170,6 +182,9 @@ const displayByAllTickets = (tickets) => {
 
 };
 
+const showTicketsFromScheduledMovie = () => {
+
+}
 
 const displayByScheduledMovie = (scheduledMovies) => {
     const displayedByText = document.getElementById("displayedByText");
@@ -180,6 +195,8 @@ const displayByScheduledMovie = (scheduledMovies) => {
     newTicketGrid.id = "ticketsGrid";
     let html = ``;
 
+    let index = 0;
+    let ticketsArray = [];
     for(let movie of scheduledMovies) {
         html += `
                 <div 
@@ -223,6 +240,8 @@ const displayByScheduledMovie = (scheduledMovies) => {
                             <!-- Action Buttons -->
                             <div class="flex space-x-3 mt-4 justify-between">
                                 <button 
+                                    data-view-tickets-button
+                                    data-ticket-index=${index}
                                     class="flex-1 block w-full text-center bg-black text-white py-2 rounded-md">
                                     View Tickets
                                 </button>
@@ -231,10 +250,13 @@ const displayByScheduledMovie = (scheduledMovies) => {
                     </div>
                 </div>
         `;
+
+        index++;
+        ticketsArray.push(movie.scheduled_movie_tickets);
     }
 
     newTicketGrid.innerHTML = html;
-    replaceWithGSAP(container, newTicketGrid);
+    replaceWithGSAP(container, newTicketGrid, () => addListenersToViewTicketButtons(ticketsArray));
     displayedByText.textContent = "By Scheduled Movie";
 }
 
@@ -316,3 +338,76 @@ const replaceWithGSAP = (container, newContent, callback) => {
         }
     });
 }
+
+function createTicketDetailCard(ticket) {
+    // Create a container for each ticket
+    const ticketCard = document.createElement('div');
+    ticketCard.className = 'bg-gray-50 rounded-lg p-5 shadow-sm border border-gray-200 space-y-3 relative';
+    
+    // Ticket Header with a subtle animation
+    const ticketHeader = `
+        <div class="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
+            <div class="flex items-center space-x-3">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-800">Ticket #${ticket.ticket_id}</h3>
+            </div>
+            <span class="text-sm text-gray-500 font-medium">Ticket</span>
+        </div>
+    `;
+
+    // Ticket Details Section
+    const ticketDetails = `
+        <div class="grid grid-cols-2 gap-3">
+            <div class="space-y-2">
+                <p class="text-xs text-gray-600 font-medium">Ticket Holder</p>
+                <p class="text-sm text-gray-800 font-semibold">${ticket.ticket_holder}</p>
+            </div>
+            <div class="space-y-2">
+                <p class="text-xs text-gray-600 font-medium">Username</p>
+                <p class="text-sm text-gray-800">${ticket.ticket_holder_username}</p>
+            </div>
+            <div class="space-y-2">
+                <p class="text-xs text-gray-600 font-medium">Seat</p>
+                <p class="text-sm text-gray-800 font-semibold">${ticket.ticket_seat_identifier}</p>
+            </div>
+            <div class="space-y-2">
+                <p class="text-xs text-gray-600 font-medium">Ticket ID</p>
+                <p class="text-sm text-gray-800">${ticket.ticket_id}</p>
+            </div>
+        </div>
+    `;
+
+    // Combine the sections
+    ticketCard.innerHTML = `
+        ${ticketHeader}
+        ${ticketDetails}
+    `;
+
+    return ticketCard;
+}
+
+function openTicketDetailsModal(tickets) {
+    const modalContainer = document.getElementById('ticketDetailsContainer');
+    
+    // Clear previous contents
+    modalContainer.innerHTML = '';
+
+    // Create and append ticket cards
+    tickets.forEach(ticket => {
+        const ticketCard = createTicketDetailCard(ticket);
+        modalContainer.appendChild(ticketCard);
+    });
+
+    // Show modal
+    const modal = document.getElementById('ticketDetailsModal');
+    modal.classList.remove('hidden');
+}
+
+//Close modal functionality
+const closeViewTicketDetailsModalButton = document.getElementById('closeTicketDetailsModalButton');
+closeViewTicketDetailsModalButton.addEventListener('click', () => {
+    const modal = document.getElementById('ticketDetailsModal');
+    modal.classList.add('hidden');
+});
