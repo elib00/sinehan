@@ -82,7 +82,6 @@ def update_seat_matrix_on_ticket_creation(sender, instance, created, **kwargs):
     if created:
         instance.scheduled_movie.update_seat_matrix()
 
-
 @receiver(post_delete, sender=Ticket)
 def update_seat_matrix_on_ticket_deletion(sender, instance, **kwargs):
     instance.scheduled_movie.update_seat_matrix()

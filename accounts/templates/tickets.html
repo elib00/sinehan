@@ -5,11 +5,9 @@
 {% block content1 %}
 
 <div class="p-10">
-{% include 'components/ticket.html' %}
-
-{% include 'components/ticket.html' %}
-
-{% include 'components/ticket.html' %}
+    {% for ticket in tickets %}
+        {% include 'components/ticket.html' with ticket=ticket %}
+    {% endfor %}
 </div>
 
 
