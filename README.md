@@ -4,11 +4,9 @@
 
 [![Contributors](https://img.shields.io/badge/Contributors-3-34D399?style=for-the-badge)](https://github.com/elib00/sinehan/graphs/contributors)  [![Forks](https://img.shields.io/badge/Forks-0-3182CE?style=for-the-badge)](https://github.com/elib00/sinehan/network)  [![Stars](https://img.shields.io/badge/Stars-2-FBBF24?style=for-the-badge)](https://github.com/elib00/sinehan/stargazers)  [![Issues](https://img.shields.io/badge/Issues-0-9CA3AF?style=for-the-badge)](https://github.com/elib00/sinehan/issues)  [![License](https://img.shields.io/badge/License-Not%20Specified-DC2626?style=for-the-badge)](https://opensource.org/licenses)
 
-
 ---
 
 ## 📝 **Table of Contents**  
-<div id="table-of-contents"></div>
 
 - [Overview](#overview)  
 - [Functional Requirements](#functional-requirements)  
@@ -25,7 +23,7 @@
 
 ---
 
-## ✨ **Overview**
+## ✨ **Overview**  
 Sinehan is a cinema ticketing system designed to:  
 🎬 Allow users to browse films and select tickets.  
 🎟 Enable seat selection and secure payments without account creation.  
@@ -35,7 +33,7 @@ Sinehan is a cinema ticketing system designed to:
 
 ---
 
-## 🚀 **Functional Requirements**
+## 🚀 **Functional Requirements**  
 1. **User Management**  
    Manage user authentication, registration, and settings.
 
@@ -58,27 +56,22 @@ Sinehan is a cinema ticketing system designed to:
 
 ---
 
-## 📂 **Resources**
+## 📂 **Resources**  
 
-### 1️⃣ **Gantt Chart**
+###  **Gantt Chart**  
 ![Gantt Chart](resources/gantt-chart.png)  
 
-
-### 2️⃣ **ERD**
+###  **ERD**  
 ![ERD](resources/erd.png)  
 
-
-### 3️⃣ **UI/UX Design**
-
-
-#### **Seat Selection**
+### **UI/UX Design**  
 ![Seat Selection Design](resources/ui-seat-selection.png)  
 
 <div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
-## 🛠️ **Tech Stack**
+## 🛠️ **Tech Stack**  
 
 - [![Django](https://img.shields.io/badge/Django-3.2-006400?logo=django&logoColor=white&style=for-the-badge)](https://www.djangoproject.com/)  
 - [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white&style=for-the-badge)](https://www.sqlite.org/)  
@@ -92,19 +85,17 @@ Sinehan is a cinema ticketing system designed to:
 
 ---
 
-## 🏁 **Getting Started**
+## 🏁 **Getting Started**  
 
-### 📦 **Prerequisites**
+### 📦 **Prerequisites**  
 
 Before you start, ensure you have the following installed:
-Here’s your list in the same format as above:
 
 - [![Python](https://img.shields.io/badge/Python-3.9-306998?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)  
 
-
 <div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
-### 🛠️ **Installation**
+### 🛠️ **Installation**  
 
 1. **Clone the repository**  
    Open your terminal and run the following command:
@@ -154,21 +145,20 @@ Here’s your list in the same format as above:
 
 ---
 
-
 ## 👨‍💻 **Contributors**  
 **Our Amazing Contributors! ✨**
 
 
-| ![Joshua Napiñas](https://avatars.githubusercontent.com/u/elib00?v=4) | ![Summer Ishi Rodrigo](https://avatars.githubusercontent.com/u/SummerIshi?v=4) | ![Zhazted Rhixin Valles](https://avatars.githubusercontent.com/u/Rhixin?v=4) |
-|--------------------------------------------------------------------|------------------------------------------------------------------------|------------------------------------------------------------------------|
-| **Joshua Napiñas**                                                 | **Summer Ishi Rodrigo**                                               | **Zhazted Rhixin Valles**                                              |
+| ![Joshua Napiñas](https://avatars.githubusercontent.com/u/119659329?v=4) | ![Summer Ishi Rodrigo](https://avatars.githubusercontent.com/u/151008985?v=4) | ![Zhazted Rhixin Valles](https://avatars.githubusercontent.com/u/134621548?v=4) |
+|--------------------------------------------------------------------------|--------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| **Joshua Napiñas**                                                       | **Summer Ishi Rodrigo**                                                       | **Zhazted Rhixin Valles**                                                     |
 
 
 <div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
 ---
 
-## 📬 **Contact**
+## 📬 **Contact**  
 
 For inquiries, feel free to contact us:
 
@@ -181,8 +171,6 @@ For inquiries, feel free to contact us:
 - 📧 **Email**: [vallestedted@gmail.com](vallestedted@gmail.com)  
 - 📌 **GitHub**: [Rhixin](https://github.com/Rhixin)
 
-
 Feel free to connect with us for further information, collaborations, or questions.
 
 <div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
-
