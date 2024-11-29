@@ -4,19 +4,19 @@
 
 [![Contributors](https://img.shields.io/badge/Contributors-3-34D399?style=for-the-badge)](https://github.com/elib00/sinehan/graphs/contributors)  [![Forks](https://img.shields.io/badge/Forks-0-3182CE?style=for-the-badge)](https://github.com/elib00/sinehan/network)  [![Stars](https://img.shields.io/badge/Stars-2-FBBF24?style=for-the-badge)](https://github.com/elib00/sinehan/stargazers)  [![Issues](https://img.shields.io/badge/Issues-0-9CA3AF?style=for-the-badge)](https://github.com/elib00/sinehan/issues)  [![License](https://img.shields.io/badge/License-Not%20Specified-DC2626?style=for-the-badge)](https://opensource.org/licenses)
 
-## 📝 **Table of Contents**  
+## 📝 **Table of Contents**
 
-- [Overview](#overview)  
-- [Functional Requirements](#functional-requirements)  
-- [Resources](#resources)  
-  - [Gantt Chart](#gantt-chart)  
-  - [ERD](#erd)  
-  - [UI/UX Design](#uiux-design)  
-- [Tech Stack](#tech-stack)  
-- [Getting Started](#getting-started)  
-  - [Prerequisites](#prerequisites)  
-  - [Installation](#installation)  
-- [Contributors](#contributors)  
+- [Overview](#overview)
+- [Functional Requirements](#functional-requirements)
+- [Resources](#resources)
+  - [Gantt Chart](#gantt-chart)
+  - [ERD](#erd)
+  - [UI/UX Design](#uiux-design)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Contributors](#contributors)
 - [Contact](#contact)
 
 ---
@@ -56,14 +56,14 @@ Sinehan is a cinema ticketing system designed to:
 
 ## 📂 **Resources**  
 
-###  **Gantt Chart**  
-![Gantt Chart](resources/gantt-chart.png)  
+### **Gantt Chart**  
+![Gantt Chart](resources/gantt-chart.png)
 
-###  **ERD**  
-![ERD](resources/erd.png)  
+### **ERD**  
+![ERD](resources/erd.png)
 
 ### **UI/UX Design**  
-![Seat Selection Design](resources/ui-seat-selection.png)  
+![Seat Selection Design](resources/ui-seat-selection.png)
 
 <div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
 
@@ -174,3 +174,4 @@ For inquiries, feel free to contact us:
 Feel free to connect with us for further information, collaborations, or questions.
 
 <div align="right"><a href="#table-of-contents">🔝 Back to Top</a></div>
+```
