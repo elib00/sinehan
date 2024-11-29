@@ -4,7 +4,7 @@
 {% block title %} Dashboard - Tickets {% endblock %}
 {% block content%}
 
-<div class="container mx-auto p-6 h-full">
+<div class="container mx-auto p-6 h-full flex flex-col">
     <div class="flex justify-between items-center mb-6">
         <div class="flex flex-row items-center gap-4">
             <h1 id="ticketsPageTitle" class="text-3xl font-bold">Tickets</h1>
@@ -23,6 +23,7 @@
             </div>
             <p id="displayedByText" class="font-normal text-sm">By All Tickets</p>
         </div>
+        <div class="border-t-2 border-gray-300"></div>
         <div class="flex space-x-3">
             <div class="flex items-center">
                 <input type="text" name="search" placeholder="Search ticket..." 
@@ -104,13 +105,13 @@
 
                             <!-- Action Buttons -->
                             <div class="flex space-x-3 mt-4 justify-between">
-                                <form method="POST" class="flex-1">
+                                {% comment %} <form method="POST" class="flex-1">
                                     {% csrf_token %}
                                     <button 
                                         class="flex-1 block w-full text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300">
                                         View Details
                                     </button>
-                                </form>
+                                </form> {% endcomment %}
                                 {% if ticket.is_active %}
                                     <button
                                         data-cancel-ticket-button
@@ -153,7 +154,8 @@
 <script id="displayData" type="application/json">
     {
         "tickets": {{ tickets_json|safe }},
-        "scheduledMovies": {{ scheduled_movie_json|safe }}
+        "scheduledMovies": {{ scheduled_movie_json|safe }},
+        "users": {{ users_json|safe }}
     }
 </script>
 <script src="{% static 'js/ticketsDisplay.js' %}"></script>

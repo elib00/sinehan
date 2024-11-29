@@ -191,7 +191,7 @@ class AdminDashboardTicketsView(View):
             ticket.available_seats = ticket.scheduled_movie.cinema.capacity - ticket.scheduled_movie.audience_number
         
         #for displaying by users
-        users = CustomUser.objects.prefetch_related("user_tickets").all()
+        users = CustomUser.objects.prefetch_related("user_tickets__scheduled_movie__movie", "user_tickets__scheduled_movie__cinema").all()
         
         #json for dynamic content with js
         tickets_data = [
@@ -237,10 +237,37 @@ class AdminDashboardTicketsView(View):
             for scheduled_movie in scheduled_movies
             
         ]
+        
+        # users = CustomUser.objects.prefetch_related("user_tickets__scheduled_movie__movie", "user_tickets__scheduled_movie__cinema").all()
+        users_data = [
+            {
+                'user_id': user.id,
+                'user_first_name': user.first_name,
+                'user_last_name': user.last_name,
+                'user_username': user.username,
+                'user_email': user.email,
+                'user_tickets': [
+                    {
+                        'ticket_id': ticket.id,
+                        'ticket_seat_identifier': ticket.seat_identifier,
+                        'ticket_is_active': ticket.is_active,
+                        'ticket_scheduled_movie_movie_name': ticket.scheduled_movie.movie.movie_name,
+                        'ticket_scheduled_movie_date': ticket.scheduled_movie.schedule.strftime('%B %d, %Y'),
+                        'ticket_scheduled_movie_time': ticket.scheduled_movie.schedule.strftime('%I:%M:%S %p'),
+                        'ticket_cinema_cinema_name': ticket.scheduled_movie.cinema.cinema_name
+                    }
+
+                    for ticket in user.user_tickets.all() # Iterate over related tickets
+                ] 
+                   
+            }
+            for user in users
+        ]
     
         # Serialize the data to JSON
         tickets_json = json.dumps(tickets_data)
         scheduled_movie_json = json.dumps(scheduled_movie_data)
+        users_json = json.dumps(users_data)
 
         # print(tickets_json)
 
@@ -250,7 +277,8 @@ class AdminDashboardTicketsView(View):
             "tickets": tickets,
             "users": users,
             "tickets_json": tickets_json,
-            "scheduled_movie_json": scheduled_movie_json
+            "scheduled_movie_json": scheduled_movie_json,
+            "users_json": users_json
         }
         
         return context
@@ -273,9 +301,9 @@ class AdminDashboardAddTicketView(View):
             
             if Ticket.objects.filter(scheduled_movie=scheduled_movie_instance, seat_identifier=seat_identifier, is_active=True).exists():
                 messages.error(request, "This seat is already taken. Please choose another seat.")
-                context = self.init_context()
-                context["add_ticket_form"] = add_ticket_form
-                return render(request, "sections/tickets.html", context)
+                # context = self.init_context()
+                # context["add_ticket_form"] = add_ticket_form
+                # return render(request, "sections/tickets.html", context)
             
             new_ticket = Ticket(
                 user=user_instance,
@@ -285,7 +313,6 @@ class AdminDashboardAddTicketView(View):
             
             new_ticket.save()
             messages.success(request, "Ticket successfully booked!")
-            return redirect("admin_dashboard_tickets")
         else:
             messages.error(request, "Failed to book a ticket. Please try again.")
             print(add_ticket_form.errors)  # Print form errors for debugging
@@ -296,9 +323,10 @@ class AdminDashboardAddTicketView(View):
         
         # return redirect("admin_dashboard_tickets")
         
-        context = self.init_context()
-        context["add_ticket_form"] = add_ticket_form
-        return render(request, "sections/tickets.html", context)
+        # context = self.init_context()
+        # context["add_ticket_form"] = add_ticket_form
+        # return render(request, "sections/tickets.html", context)
+        return redirect("admin_dashboard_tickets")
 
     def init_context(self):
         #for displaying by scheduled_movie
