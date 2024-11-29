@@ -11,7 +11,7 @@
   - [Gantt Chart](#gantt-chart)  
   - [ERD](#erd)  
   - [UI/UX Design](#uiux-design)  
-- [Tech Stack](#tech-stack)
+- - [Tech Stack](#-tech-stack)
 - [Getting Started](#-getting-started)  
   - [Prerequisites](#-prerequisites)  
   - [Installation](#-installation)  
@@ -68,8 +68,8 @@ Sinehan is a cinema ticketing system designed to:
 
 ---
 
-## 🛠️ **Tech Stack**  
-
+## 🛠️ Tech Stack
+ 
 - [![Django](https://img.shields.io/badge/Django-3.2-006400?logo=django&logoColor=white&style=for-the-badge)](https://www.djangoproject.com/)  
 - [![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white&style=for-the-badge)](https://www.sqlite.org/)  
 - [![Python](https://img.shields.io/badge/Python-3.9-FF6347?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)  
