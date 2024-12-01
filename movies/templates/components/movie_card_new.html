@@ -1,7 +1,10 @@
 <div class="movie-card">
     <a href="{% url 'movie_details' movie_id %}">
-        <img src="{{ image_url }}" alt="The Shawshank Redemption">
+        <img src="{{ image_url }}" alt="The Shawshank Redemption" class="gallery-card" data-landscape="{{data_landscape_url}}">
     </a>  
+
+    <p>{{data_landscape_url}}</p>
+
     <div class="movie-info">
       <h3>{{movie_title}}</h3>
     </div>

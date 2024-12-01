@@ -24,6 +24,7 @@
                     src="/static/images/joker-banner.jpg"
                     alt="Background Image"
                     class="hero-image"
+                    id="bg-hover"
                 />
                 <div class="gradient-overlay"></div>
             </div>
@@ -40,7 +41,7 @@
                     <div class="slider-content">
                         {% for movie in movies %}
                         <div class="movie-card-wrapper">
-                            {% include 'components/movie_card.html' with image_url=movie.poster_portrait.url movie_title=movie.movie_name duration=movie.duration genre=movie.genre movie_id=movie.id %}
+                            {% include 'components/movie_card.html' with image_url=movie.poster_portrait.url movie_title=movie.movie_name duration=movie.duration genre=movie.genre movie_id=movie.id data_landscape_url=movie.poster_landscape.url %}
                         </div>
                         {% endfor %}
                     </div>
@@ -70,7 +71,27 @@
 
 
 <script>
+
+    //Initialize hover effects
     
+    let galleryImages = document.querySelectorAll('.gallery-card');
+    const bgDiv = document.getElementById("bg-hover"); 
+    galleryImages.forEach(img => {
+        img.addEventListener('mouseenter', (e) => {
+            const landscapeImage = e.target.getAttribute('data-landscape'); 
+            bgDiv.src = landscapeImage; 
+
+            gsap.fromTo(bgDiv, 
+                { opacity: 0},  
+                { opacity: 1, duration: 2} 
+            );
+        });
+    });
+
+
+    
+
+
     let movies = (`{{ movies_json|safe }}`);
     let selectedFilters = [];
     let selectedFiltersJSON = {
@@ -81,8 +102,6 @@
 
     movies = JSON.parse(movies);
 
-
-    console.log(movies);
     let filtered_movies = movies;
 
 
@@ -262,6 +281,7 @@
                                 src="/static/images/joker-banner.jpg"
                                 alt="Background Image"
                                 class="hero-image"
+                                id="bg-hover"
                             />
                             <div class="gradient-overlay"></div>
                         </div>
@@ -313,7 +333,24 @@
                 { opacity: 0 },  
                 { opacity: 1, duration:2} 
             );
-            
+
+
+            let galleryImages = document.querySelectorAll('.gallery-card');
+            const bgDiv = document.getElementById("bg-hover");  // Target the <img> element
+
+            galleryImages.forEach(img => {
+                img.addEventListener('mouseenter', (e) => {
+                    const landscapeImage = e.target.getAttribute('data-landscape'); // Get the URL from data-landscape
+                    bgDiv.src = landscapeImage; // Update the src attribute of the <img> tag
+
+                    gsap.fromTo(bgDiv, 
+                        { opacity: 0},  
+                        { opacity: 1, duration: 2} 
+                    );
+                    
+                });
+            });
+
 
             modal = document.getElementById("filter-modal");
             
@@ -472,7 +509,12 @@
                     { opacity: 1, duration:2} 
                 );
             });
+
         }
+
+
+
+
     });
 
     const movieDetailsBaseUrl = "{% url 'movie_details' 0 %}".replace('/0', '').replace(/\/$/, '');
@@ -486,7 +528,7 @@
 
                     <a href="${movieDetailsBaseUrl}/${item.pk}">
                         <div class="box-img">
-                            <img src="/media/${item.fields.poster_portrait}" alt="">
+                            <img src="/media/${item.fields.poster_portrait}" alt="" data-landscape="/media/${item.fields.poster_landscape}" class="gallery-card">
                         </div>
                     </a>    
             
@@ -495,7 +537,7 @@
                 </div></div>`;
         });
 
-       
+        
         
 
         return content;
@@ -511,7 +553,7 @@
                 content += `
                 <div class="movie-card">
                     <a href="${movieDetailsBaseUrl}/${item.pk}">
-                        <img src="/media/${item.fields.poster_portrait}" alt="${item.fields.movie_name}">
+                        <img src="/media/${item.fields.poster_portrait}" alt="${item.fields.movie_name}" >
                     </a>  
                     <div class="movie-info">
                         <h3>${item.fields.movie_name}</h3>

@@ -34,7 +34,6 @@ def movie_book(request, movie_id):
         times = {sm.schedule.time() for sm in scheduled_movies}
         
         
-
         valid_combinations = []
         for sm in scheduled_movies:
             valid_combinations.append({

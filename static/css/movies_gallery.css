@@ -358,3 +358,14 @@
   outline: none;
   box-shadow: none;
 }
+
+#image-holder {
+  width: 200px;
+  overflow: hidden;
+  height: 400px;
+}
+
+.box-img img {
+  width: 250px;
+  height: 280px;
+}
