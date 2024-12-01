@@ -365,10 +365,11 @@ class AdminDashboardCancelTicketView(View):
 class AdminDashboardCinema(View):
     def get(self, request):
         add_cinema_form = AddCinemaForm()
-        
+    
         context = {
-            "add_cinema_form": add_cinema_form,
-        }
+            "add_cinema_form": add_cinema_form
+        }      
+    
 
         return render(request, "sections/cinema.html", context)
         
@@ -397,16 +398,28 @@ class AdminDashboardAddCinema(View):
 class AdminDashboardAddScheduledMovieView(View):
     def get(self, request):
         scheduled_movie_form = AddScheduledMovieForm()
-        movies = self.get_movies()
+        add_cinema_form = AddCinemaForm()
+        cinema_list = Cinema.objects.prefetch_related("cinema_scheduled_movies__movie").all()
         
         context = {
             "scheduled_movie_form": scheduled_movie_form,
-            "movies": movies
+            "cinema_list": cinema_list,
+            "add_cinema_form": add_cinema_form
         }
         
         return render(request, "sections/scheduled_movies.html", context)
 
     def post(self, request):
+        if "cinema_submit" in request.POST:
+            self.process_cinema_submit(request)
+        elif "scheduled_movie_submit" in request.POST:
+            self.process_scheduled_movie_submit(request)
+
+    def get_movies(self):
+        movies = Movie.objects.all()
+        return movies
+    
+    def process_scheduled_movie_submit(self, request):
         scheduled_movies = self.get_movies()
         scheduled_movie_form = AddScheduledMovieForm(request.POST)
         if scheduled_movie_form.is_valid():
@@ -439,7 +452,23 @@ class AdminDashboardAddScheduledMovieView(View):
                
         return render(request, "sections/scheduled_movies.html", context)
         
-
-    def get_movies(self):
-        movies = Movie.objects.all()
-        return movies
+    def process_scheduled_movie_submit(self, request):
+        add_cinema_form = AddCinemaForm(request.POST)
+        if add_cinema_form.is_valid():
+            capacity = add_cinema_form.cleaned_data.get("capacity")
+            cinema_name = add_cinema_form.cleaned_data.get("cinema_name")
+             
+            new_cinema = Cinema(
+                capacity=capacity,
+                cinema_name=cinema_name
+            )
+            
+            new_cinema.save()
+            messages.success(request, "A new cinema has been created!")
+        else:
+            messages.error(request, "Failed to create a new cinema")
+            for field, errors in add_cinema_form.errors.items():
+                for error in errors:    
+                    messages.error(request, f"{field.capitalize()}: {error}")
+        
+        return redirect("admin_dashboard_cinema")

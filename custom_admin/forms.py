@@ -231,10 +231,11 @@ class AddScheduledMovieForm(forms.Form):
     
     audience_number = forms.CharField(
         label="Audience Number",
+        initial=0,
         widget=forms.NumberInput(attrs={
             'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-base',   
             'min': '0',
-            'step': '1' 
+            'step': '1',
         })
     )
     
