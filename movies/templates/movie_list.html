@@ -72,6 +72,11 @@
 
 <script>
 
+
+    animationGalleryCards();
+
+    
+
     //Initialize hover effects
     
     let galleryImages = document.querySelectorAll('.gallery-card');
@@ -112,6 +117,7 @@
         { opacity: 0},  
         { opacity: 1, duration: 2} 
     );
+
     
 
     //MODAL SETTIGNS
@@ -162,10 +168,8 @@
         const content = displayListViewCards(filtered_movies);
         cards_container.innerHTML = content;
 
-        gsap.fromTo(cards_container, 
-                { opacity: 0 },  
-                { opacity: 1, duration:2} 
-        );
+
+        animationStackCards();
     }
 
     document.addEventListener('DOMContentLoaded' , function() {
@@ -254,11 +258,11 @@
                                     </div>
                                     <h2>Rating</h2>
                                     <div class="movie-ratings filter-type">
-                                        <button class="rating-btn filter-btn">General Audience</button>
-                                        <button class="rating-btn filter-btn">Parental Guidance</button>
-                                        <button class="rating-btn filter-btn">Restricted-13</button>
-                                        <button class="rating-btn filter-btn">Restricted-16</button>
-                                        <button class="rating-btn filter-btn">Restricted-18</button>
+                                        <button class="rating-btn filter-btn">G</button>
+                                        <button class="rating-btn filter-btn">PG</button>
+                                        <button class="rating-btn filter-btn">R-13</button>
+                                        <button class="rating-btn filter-btn">R-16</button>
+                                        <button class="rating-btn filter-btn">R-18</button>
                                     </div>
 
                                     <h2>Format</h2>
@@ -335,6 +339,11 @@
             );
 
 
+
+            animationGalleryCards();
+            animationStackCards();
+
+
             let galleryImages = document.querySelectorAll('.gallery-card');
             const bgDiv = document.getElementById("bg-hover");  // Target the <img> element
 
@@ -404,13 +413,14 @@
 
                         let text = button.textContent;
                         let genre = ["Drama", "Adventure", "Thriller", "Action", "Crime", "Comedy", "Mystery", "War", "Fantasy", "Sci-Fi"];
-                        let rating = ["General Audience", "Parental Guidance", "Restricted-13", "Restricted-16","Restricted-18"];
+                        let rating = ["G", "PG", "R-13", "R-16","R-18"];
                         let format = ["2D", "3D"];
 
 
                         if (genre.includes(text)) {
                             selectedFiltersJSON.genre = selectedFiltersJSON.genre.filter(item => item !== text);
                         } else if (rating.includes(text)) {
+                            
                             selectedFiltersJSON.movie_rating = selectedFiltersJSON.movie_rating.filter(item => item !== text);
                         } else if (format.includes(text)) {
                             selectedFiltersJSON.movie_format = selectedFiltersJSON.movie_format.filter(item => item !== text);
@@ -437,10 +447,8 @@
                 cards_container.innerHTML = displayListViewCards(filtered_movies);
 
                 
-                gsap.fromTo(cards_container, 
-                    { opacity: 0 },  
-                    { opacity: 1, duration: 1 } 
-                );
+                animationStackCards();
+                
                
 
 
@@ -450,7 +458,7 @@
                 const button = event.target;
                 let text = button.textContent;
                 let genre = ["Drama", "Adventure", "Thriller", "Action", "Crime", "Comedy", "Mystery", "War", "Fantasy", "Sci-Fi"];
-                let rating = ["General Audience", "Parental Guidance", "Restricted-13", "Restricted-16","Restricted-18"];
+                let rating = ["G", "PG", "R-13", "R-16","R-18"];
                 let format = ["2D", "3D"];
 
                 if (button.classList.contains('selected')) {
@@ -504,10 +512,7 @@
                 const cards_container = document.getElementById("list-cards-container");
                 cards_container.innerHTML = displayListViewCards(filtered_movies);
 
-                gsap.fromTo(cards_container, 
-                    { opacity: 0 },  
-                    { opacity: 1, duration:2} 
-                );
+                animationStackCards();
             });
 
         }
@@ -587,6 +592,28 @@
     }
 
 
+    function animationStackCards(){
+        let movie_cards = document.querySelectorAll('.movie-card');
+
+        movie_cards.forEach((movie, index) => {
+            gsap.fromTo(movie, 
+                { opacity: 0, y:100},  
+                { opacity: 1, duration: .2, y:0, delay: index * 0.1 } 
+            );
+        });
+    }
+
+    function animationGalleryCards(){
+        let movie_cards = document.querySelectorAll('.gallery-card');
+
+        movie_cards.forEach((movie, index) => {
+            gsap.fromTo(movie, 
+                { opacity: 0, y:100},  
+                { opacity: 1, duration: .2, y:0, delay: index * 0.07 } 
+            );
+        });
+    }
+        
     
 
 
