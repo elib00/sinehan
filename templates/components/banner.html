@@ -12,42 +12,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 
-    <div class="banner active">
-        <div class="content">
-            <img 
-                src="{% static 'images/Deadpool-Wolverine-Movie-Title.jpg' %}" 
-                alt="Deadpool Wolverine Movie Title" 
-                class="movie-title" 
-            />
+    <div class="banner active" id="banner-container">
+        <div class="content" id="content-container">
+
             <h4>
-                <span>2024 |</span>
-                <span> 2h 7min |</span>
-                <span> Action</span>
+                Mas Sayon ang pag Sine!
             </h4>
             <p>
-                Deadpool's peaceful existence comes crashing down when the Time 
-                Variance Authority recruits him to help safeguard the multiverse. 
-                He soon unites with his would-be pal, Wolverine, to complete the 
-                mission and save his world from an existential threat.
+                Sinehan makes booking movie tickets effortless. Explore showtimes, select your favorite seats, and secure tickets instantly from the comfort of your home. Experience hassle-free ticketing with a sleek, user-friendly platform designed for movie lovers.
             </p>
             <div class="button">
-                <a href="#"><i class="fa fa-play" aria-hidden="true"></i>  Book Now</a>
+                <a href="#">  Book Now</a>
             </div>
+            
         </div>
 
       <div class="carousel-box">
-        <div class="carousel">
-          <a class="carousel-item" 
-          onClick="changeBg('deadpoolbanner.jpg', 'Deadpool-Wolverine-Movie-Title.jpg');" 
-          href="#one!">
-          <img src="{% static 'images/carousel-poster-deadpool.jpg' %}" alt="Deadpool Carousel Poster">
-       </a>         
-          <a class="carousel-item" href="#two!"><img src="{% static 'images/carousel-poster-openheimer.jpg' %}" alt=""></a>
-          <a class="carousel-item" href="#three!"><img src="{% static 'images/carousel-poster-batman.jpg' %}" alt=""></a>
-          <a class="carousel-item" href="#four!"><img src="{% static 'images/carousel-poster-joker.jpg' %}" alt=""></a>
-          <a class="carousel-item" href="#five!"><img src="{% static 'images/carousel-poster-wicked.jpg' %}" alt=""></a>
-          <a class="carousel-item" href="#six!"><img src="{% static 'images/carousel-poster-us.jpg' %}" alt=""></a>
-          <a class="carousel-item" href="#seven!"><img src="{% static 'images/carousel-poster-abigail.jpg' %}" alt=""></a>
+        <div class="carousel" id="caraousel-container">
+          
       </div>
     </div>
     
@@ -55,6 +37,97 @@
    
      <script src="{% static 'js/script.js' %}"></script>
      <script>
+        const carousel = document.getElementById("caraousel-container");
+        let movies = (`{{ movies_json|safe }}`);
+        movies = JSON.parse(movies);
+
+        let content = "";
+
+        movies.forEach(item => {
+            content += `<a class="carousel-item" ><img src="/media/${item.fields.poster_portrait}" alt=""></a>`;
+        });
+
+        carousel.innerHTML = content;
+
+
+
+
+
+        let home_descriptions = [
+            `<h4>
+                Sinehan: Ang Pinakasayon nga Ticketing Platform!
+            </h4>
+            <p>
+                Enjoy the easiest way to book your movie tickets online. Check showtimes, reserve seats, and get ready for a cinematic experience with just a few clicks. No lines, no hassle—just pure convenience!
+            </p>
+            <div class="button">
+                <a href="#">Book Your Tickets</a>
+            </div>`,
+            `<h4>
+                Transform Your Movie Night!
+            </h4>
+            <p>
+                Sinehan makes every movie night memorable. From browsing showtimes to securing the best seats, everything is designed to be simple and fast. Start your adventure today!
+            </p>
+            <div class="button">
+                <a href="#">Reserve Now</a>
+            </div>`,
+            `<h4>
+                Masayon, Malingaw, Ug Paspas!
+            </h4>
+            <p>
+                Sinehan ensures a seamless way to book your movie tickets. Check show schedules, pick your favorite seats, and confirm your tickets effortlessly. Simple. Convenient. Fun.
+            </p>
+            <div class="button">
+                <a href="#">Get Tickets</a>
+            </div>`,
+            `<h4>
+                Watch Movies Made Easy!
+            </h4>
+            <p>
+                Discover showtimes, reserve your seat, and book tickets—all in one place. Sinehan is your go-to platform for a seamless ticketing experience.
+            </p>
+            <div class="button">
+                <a href="#">Buy Tickets</a>
+            </div>`
+        ];
+
+        let home_pics = ['jaws.jpg','predator.webp','openheimer-banner.jpg', 'joker-banner.jpg', 'black_adam_home.jpg' , 'wicked-banner.jpg'];
+
+        let banner_container = document.getElementById('banner-container');
+        let content_container = document.getElementById('content-container');
+
+        let index = 0; // Initial index
+
+        function changeContent() {
+            setInterval(() => {
+                description_index = Math.floor(Math.random() * home_descriptions.length);
+                pics_index = Math.floor(Math.random() * home_pics.length);
+
+                content_container.innerHTML = home_descriptions[description_index];
+                banner_container.style.backgroundImage = `url("../static/images/${home_pics[pics_index]}")`;
+
+
+                gsap.fromTo(banner_container, 
+                    { opacity: 0},  
+                    { opacity: 1, duration: 2} 
+                );
+                
+                gsap.fromTo(content_container, 
+                    { opacity: 0},  
+                    { opacity: 1, duration: 4} 
+                );
+            }, 6000);
+        }
+
+        // Call the function to start the content rotation
+        changeContent();
+
+        
+
+
+
+
        $(document).ready(function(){
       $('.carousel').carousel();
        });

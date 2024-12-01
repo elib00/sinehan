@@ -13,7 +13,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: url("../images/bgimageflipped.png") no-repeat center center;
+  background-image: url("../images/black_adam_home.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: cover;
 }
 
@@ -34,29 +36,26 @@ body {
 .banner .content h4 {
   padding: 0;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 3rem;
   margin-bottom: 15px;
   margin-top: 0;
-  padding-left: 50px;
 }
 .banner .content p {
   font-weight: 300;
   font-size: 15px;
   margin-bottom: 15px;
   line-height: 1.5em;
-  padding-left: 50px;
 }
 .banner .content .button {
   display: inline-block;
   margin-right: 10px;
   background: rgb(201, 174, 2);
   color: rgb(0, 0, 0);
-  padding: 6px 20px;
+  padding: 15px 20px;
   text-shadow: 40px;
+  border-radius: 10px;
 }
-.button {
-  margin-left: 50px;
-}
+
 .button a {
   color: black;
 }

@@ -16,16 +16,17 @@
         <div class="container m-auto px-4 flex">
            
             <div class="flex-1">
-                <img src="{{movie.poster_portrait.url}}" alt="Image">
+                <img src="{{ movie.poster_portrait.url }}" alt="Image" class="w-full h-full object-cover">
             </div>
+            
         
           
             <div class="flex-[3.5] flex flex-col mx-20">
                 <div class="mb-4"> 
                     <div class="flex mb-2">
                         <h1 class="text-5xl">{{movie.movie_name}}</h1>
-                        <span>
-                            <img src="https://www.smcinema.com/CDN/media/entity/get/RatingIconGraphic/PG?referenceScheme=Global&allowPlaceHolder=true" width="30px">
+                        <span class="ml-2">
+                            <img src="{% static 'icons/' %}{{ movie.movie_rating }}.png" width="50px">
                         </span>
                     </div>
                     <p class="text-gray-400">{{movie.duration}}</p>
