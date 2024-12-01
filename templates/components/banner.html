@@ -44,7 +44,7 @@
         let content = "";
 
         movies.forEach(item => {
-            content += `<a class="carousel-item" ><img src="/media/${item.fields.poster_portrait}" alt=""></a>`;
+            content += `<a class="carousel-item" data-landscape="${item.fields.poster_landscape}" onclick="changeBG('${item.fields.poster_landscape}')"><img src="/media/${item.fields.poster_portrait}" alt=""></a>`;
         });
 
         carousel.innerHTML = content;
@@ -92,31 +92,44 @@
             </div>`
         ];
 
-        let home_pics = ['jaws.jpg','predator.webp','openheimer-banner.jpg', 'joker-banner.jpg', 'black_adam_home.jpg' , 'wicked-banner.jpg'];
+       
+
 
         let banner_container = document.getElementById('banner-container');
-        let content_container = document.getElementById('content-container');
 
-        let index = 0; // Initial index
+        // Select all carousel items
+        const carouselItems = document.querySelectorAll('.carousel-item');
+
+        console.log(carouselItems);
+        // Listen for click or other events that toggle the 'active' class
+        carouselItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (item.classList.contains('active')) {
+                    //banner_container.style.backgroundImage = `url("${item['data-landscape']}")`; 
+                    console.log(item['data-landscape']);
+                }
+            });
+        });
+
+        function changeBG(path){
+            banner_container.style.backgroundImage = `url("/media/${path}")`; 
+        }
+
+        let content_container = document.getElementById('content-container');
+        let index = 0; 
 
         function changeContent() {
             setInterval(() => {
                 description_index = Math.floor(Math.random() * home_descriptions.length);
-                pics_index = Math.floor(Math.random() * home_pics.length);
-
+                
                 content_container.innerHTML = home_descriptions[description_index];
-                banner_container.style.backgroundImage = `url("../static/images/${home_pics[pics_index]}")`;
-
-
-                gsap.fromTo(banner_container, 
-                    { opacity: 0},  
-                    { opacity: 1, duration: 2} 
-                );
                 
                 gsap.fromTo(content_container, 
-                    { opacity: 0},  
-                    { opacity: 1, duration: 4} 
+                    { scale: 0.5, opacity: 0 },  
+                    { scale: 1, opacity: 1, duration: 2 }
                 );
+
+
             }, 6000);
         }
 
