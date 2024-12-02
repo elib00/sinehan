@@ -10,7 +10,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
-from django.db.models import Prefetch
 import json
 
 CustomUser = get_user_model()
@@ -368,7 +367,7 @@ class AdminDashboardCinema(View):
         scheduled_movie_form = AddScheduledMovieForm()
         add_cinema_form = AddCinemaForm()
         cinema_list = Cinema.objects.prefetch_related("cinema_scheduled_movies__movie").all()
-        
+         
         context = {
             "scheduled_movie_form": scheduled_movie_form,
             "cinema_list": cinema_list,
@@ -398,6 +397,10 @@ class AdminDashboardCinema(View):
             schedule = scheduled_movie_form.cleaned_data.get("schedule")
             audience_number = scheduled_movie_form.cleaned_data.get("audience_number")
             
+            if int(audience_number) > int(cinema_instance.capacity):
+                messages.error(request, "The number of audience exceeds the maximum capacity of the cinema")
+                return redirect("admin_dashboard_cinema") 
+            
             scheduled_movie = ScheduledMovie(
                 movie=movie_instance,
                 cinema=cinema_instance,
@@ -407,7 +410,7 @@ class AdminDashboardCinema(View):
             
             scheduled_movie.save()
             messages.success(request, "A new scheduled movie has been successfully added!")
-            return redirect("admin_dashboard_add_scheduled_movie")
+            return redirect("admin_dashboard_cinema")
         else:
             messages.error(request, "Failed to add a new scheduled movie")
             print(scheduled_movies_form.errors)  # Print form errors for debugging
@@ -464,4 +467,22 @@ class AdminDashboardEditTicketSeatView(View):
             messages.error(request, "Seat identifier for inactive tickets cannot be changed")
         
         return redirect("admin_dashboard_tickets")
+
+class AdminDashboardEditScheduledMovieDateTimeView(View):
+    def get(self, request, scheduled_movie_id):
+        return HttpResponseForbidden("GET requests are forbidden")
+
+    def post(self, request, scheduled_movie_id):
+        scheduled_movie_instance = get_object_or_404(ScheduledMovie, id=scheduled_movie_id)
+        new_datetime = request.POST.get("new_datetime")
         
+        #check if ang sm kay wala shay ka conflict ana nga time ana nga date sa ana nga cinema
+        cinema = scheduled_movie_instance.cinema
+        is_conflicting = ScheduledMovie.objects.filter(cinema=cinema, schedule=new_datetime, is_active=True).exclude(id=scheduled_movie_id).exists()
+        if is_conflicting:
+            messages.error(request, "Another movie has already booked this schedule. Please choose another date and time")
+        else:
+            scheduled_movie_instance.schedule = new_datetime
+            scheduled_movie_instance.save()
+            messages.success(request, "Movie has been rescheduled")
+        return redirect("admin_dashboard_cinema")

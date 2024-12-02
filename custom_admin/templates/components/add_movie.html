@@ -4,7 +4,7 @@
     <div class="fixed inset-0 bg-black opacity-50" id="modalOverlay"></div>
     <div class="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md m-4">
         <h2 class="text-xl font-bold text-gray-900 mb-4">Add Movie</h2>
-        <form id="addMovieForm" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_add_movie' 0 %}" class="space-y-4">
+        <form id="addMovieForm" method="POST" enctype="multipart/form-data" action="{% url 'admin_dashboard_add_movie'%}" class="space-y-4">
             {% csrf_token %}
 
             {% comment %} hidden input field para mabaw-an unsa na field gisubmit {% endcomment %}

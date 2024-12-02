@@ -89,8 +89,9 @@ const addListenersToEditTicketButtons = () => {
             changeSeatModal.classList.add('flex');
             
             const currentSeat = changeSeatModal.querySelector("#currentSeat");
-            const ticketID = button.getAttribute("data-ticket-id")
             currentSeat.value = button.getAttribute("data-seat-identifier"); 
+            const url = button.getAttribute("data-edit-ticket-url");    
+            seatMappingForm.action = url;
         }); 
     });
 
@@ -138,10 +139,11 @@ const displayByAllTickets = (tickets) => {
                                 <button 
                                     class="text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-50"
                                     data-ticket-id="${ticket.ticket_id}"
-                                    data-edit-ticket-url="/admin/dashboard/edit_ticket_seat/${ticket.ticket_id}/
                                     data-seat-identifier="${ticket.seat_identifier}"
                                     title="Edit seat identifier"
-                                    data-edit-ticket-button>
+                                    data-edit-ticket-button
+                                    data-edit-ticket-url="/admin/dashboard/edit_ticket_seat/${ticket.ticket_id}/"
+                                    >
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
@@ -203,9 +205,9 @@ const displayByAllTickets = (tickets) => {
             html += `
                     <button 
                         data-cancel-ticket-button
-                            data-cancel-url="{% url 'admin_dashboard_cancel_ticket' ticket.id %}"
-                            class="flex-1 bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition-colors duration-300 text-sm font-semibold">
-                            Cancel Ticket
+                        data-cancel-url="/admin/dashboard/cancel_ticket/${ticket.ticket_id}/"
+                        class="flex-1 bg-red-500 w-full text-white py-3 rounded-lg hover:bg-red-600 transition-colors duration-300 text-sm font-semibold">
+                        Cancel Ticket
                     </button>
             `;
         }              
@@ -300,7 +302,6 @@ const displayByAllTickets = (tickets) => {
     newTicketGrid.innerHTML = html;
     replaceWithGSAP(container, newTicketGrid, [addListenersToCancelTicketButtons, addListenersToEditTicketButtons]);
     displayedByText.textContent = "By All Tickets";
-
 };
 
 const displayByScheduledMovie = (scheduledMovies) => {
