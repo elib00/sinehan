@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.http import JsonResponse
 # from .models import CustomUser
+from django.contrib import messages
 
 CustomUser = get_user_model()
 
@@ -32,15 +33,23 @@ def login_view(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('home')  
-        else:
-            #TODO create 404 not found page
-            return render(request, 'hello.html', {'error': 'Invalid credentials'})
         
-    #TODO: Fix login required in movies_view
+        # Authenticate the user
+        user = authenticate(request, email=email, password=password)
+        
+        if user is not None:
+            # User exists and credentials are correct
+            login(request, user)
+            return redirect('home')
+        else:
+            # Check if a user with the provided email exists
+            if not CustomUser.objects.filter(email=email).exists():
+                messages.error(request, 'Account with this email does not exist.')
+            else:
+                messages.error(request, 'Incorrect password.')
+
+            return redirect('home')
+        
     return render(request, 'home.html')
 
 def logout_view(request):

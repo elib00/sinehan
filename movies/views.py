@@ -8,6 +8,7 @@ from django.db.models import Count
 from accounts.models import CustomUser
 from .models import Movie
 from cinema.models import ScheduledMovie, Ticket
+from django.contrib import messages
 
 
 def movie_list(request):
@@ -76,7 +77,9 @@ def movie_book_purchase(request, movie_id):
             Ticket.objects.bulk_create(tickets)
             scheduled_movie.update_seat_matrix()
             
-            return render(request, 'home.html')
+            messages.success(request, 'Successfully purchased tickets')
+            
+            return redirect('home')
         except ScheduledMovie.DoesNotExist:
             return HttpResponse("Scheduled Movie not found", status=404)
     return HttpResponse("Invalid request method", status=405)
