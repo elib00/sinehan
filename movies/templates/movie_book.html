@@ -35,9 +35,9 @@
                         <h3>Select Date</h3>
                         <div class="selection-grid" id="dateGrid">
                             <!-- Dates will be populated by Django -->
-                            {% comment %} <button onclick="selectDate(${date})">${date}</button> {% endcomment %}
+                           
                             {% for date in dates %}
-                                <button data-date="{{ date }}" onclick="selectDate(`{{ date }}`)">{{ date }}</button>
+                                <button data-date="{{ date }}" onclick="selectDate('{{ date }}')">{{ date }}</button>
                             {% endfor %}
                         </div>
             
@@ -629,7 +629,9 @@
                 
                 updateSelectionSummary();
                 updateNavigationButtons();
-      
+
+               
+                
                 dateButtons.forEach(btn => {
                     let date = btn.getAttribute('data-date');
                     btn.disabled = !isValidCombination(selectedCinema, date, selectedTime);
@@ -643,11 +645,19 @@
     
             function selectDate(date) {
 
+               
+
+                if (typeof date == Object ){
+                    date = date.textContent;
+                    console.log("Type: " + typeof date + " Date: " + date);
+                }
+               
                 if (selectedDate == date) {
                     event.target.classList.remove('selected');
                     selectedDate = null;
                 } else {
                     selectedDate = date;
+                   
                     document.querySelectorAll('#dateGrid button').forEach(btn => {
                         btn.classList.remove('selected');
                     });
@@ -656,6 +666,8 @@
                 
                 updateSelectionSummary();
                 updateNavigationButtons();
+                
+
 
                 cinemaButtons.forEach(btn => {
                     let cinema = btn.getAttribute('data-cinema');
@@ -711,15 +723,23 @@
             }
 
             function isValidCombination(cinema, date, time) {
+
+                
+                if (date != null){
+                    date = date.replace(/(\b\w+\.\s)(\d\b)/, (match, month, day) => {
+                        return `${month}0${day}`;
+                    });
+                }
+                
+
+                
+                
                 return validCombinations.some(combination => {
                    
                     
-                    const cinemaMatch = (cinema === null || combination.cinema_name == cinema);
-                    const dateMatch = (date === null || combination.date == date);
-                    const timeMatch = (time === null || combination.time == time);
-
-                
-
+                    const cinemaMatch = (cinema == null || combination.cinema_name == cinema);
+                    const dateMatch = (date == null || combination.date == date);
+                    const timeMatch = (time == null || combination.time == time);
                     
                     return cinemaMatch && dateMatch && timeMatch;
                 });
