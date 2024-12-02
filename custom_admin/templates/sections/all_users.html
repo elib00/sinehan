@@ -4,25 +4,37 @@
 {% block title %} Dashboard - All Users {% endblock %}
 {% block content %}
 
-<div class="container mx-auto p-6 h-full flex flex-col">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold">All Users</h1>
-        <div class="flex space-x-3">
-            <div class="flex items-center">
-                <input type="text" name="search" placeholder="Search user..." 
-                       class="border rounded-l-md px-3 py-2 w-64">
-                <button type="submit" class="bg-black text-white px-4 py-2 rounded-r-md">
+<div class="relative container mx-auto px-6 py-8 h-full flex flex-col bg-[#0a0a1a] text-gray-100">
+    <button data-back-to-top-button class="hidden fixed bottom-4 left-1/2 transform translate-x-1/2 z-50 bg-black text-white px-6 py-3 rounded-full shadow-lg hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2 mx-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+        </svg>
+        <span>Back to Top</span>
+    </button>
+    <div class="flex justify-between items-center mb-8 border-b border-opacity-20 border-gray-600 pb-4">
+        {% comment %} <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-sky-600"> {% endcomment %}
+        <h1 class="text-4xl font-extrabold text-white">
+            All Users
+        </h1>
+        <div class="flex space-x-4">
+            <div class="relative flex items-center">
+                <input type="text" name="search" placeholder="Search users..." 
+                       class="pl-10 pr-4 py-2 w-72 bg-[#1a1a2e] text-gray-200 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <button type="submit" class="ml-2 px-4 py-2 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-lg hover:from-sky-700 hover:to-blue-700 transition duration-300">
                     Search
                 </button>
             </div>
         </div>
     </div>
-    <div class="flex-grow overflow-y-auto h-full p-3">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="usersContainer" class="flex-grow overflow-y-auto custom-scrollbar pr-8 scroll-smooth">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for user in users %}
                 {% include "components/user_card.html" with user=user %}
             {% empty %}
-                <p class="text-center text-gray-500 col-span-full">No users found.</p>
+                <p class="text-center text-gray-500 col-span-full text-xl">No users found.</p>
             {% endfor %}
         </div>
     </div>
@@ -34,4 +46,39 @@
 <!-- Edit User Modal -->
 {% include "components/edit_user_modal.html" with user=user %}
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const usersContainer = document.getElementById("usersContainer");
+        const backToTopButton = document.querySelector("[data-back-to-top-button]");
+        usersContainer.addEventListener("scroll", () => {
+            if(usersContainer.scrollTop > 500){
+                backToTopButton.classList.remove("hidden");
+            }else{
+                backToTopButton.classList.add("hidden");
+            }
+        });
+
+        backToTopButton.addEventListener("click", () => {
+            usersContainer.scrollTop = 0;
+        });
+
+
+    });
+</script>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #1a1a2e;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: linear-gradient(to bottom, #38bdf8 0%, #0ea5e9 100%);
+        border-radius: 4px;
+    }
+</style>
 {% endblock %}

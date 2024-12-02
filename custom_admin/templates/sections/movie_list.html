@@ -2,30 +2,94 @@
 
 {% load static %}
 {% block title %} Dashboard - Movie List {% endblock %}
-{% block content%}
+{% block content %}
 
-<div class="bg-gray-100 h-full flex items-center justify-center">
-    <!-- Container for scrolling cards -->
-    <div class="w-full max-w-5xl overflow-y-auto h-full rounded-lg shadow-lg p-4 bg-gray-800 space-y-4">
-        <!-- Movie Card Template -->
-        {% for movie in movies %}
-            {% include "components/admin_movie_card.html" with movie=movie%}
-        {% empty %}
-            <p class="text-center text-gray-500 col-span-full">No movies found.</p>
-        {% endfor %}
+<div class="relative bg-gradient-to-br from-gray-900 to-gray-700 h-full w-full">
+    <button data-back-to-top-button class="hidden fixed bottom-4 left-1/2 transform translate-x-1/2 z-50 bg-black text-white px-6 py-3 rounded-full shadow-lg hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2 mx-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+        </svg>
+        <span>Back to Top</span>
+    </button>
+
+    <div id="moviesContainer" class="h-full max-w-6xl mx-auto overflow-y-auto pr-16 scroll-smooth">
+        <h1 class="text-3xl font-bold text-white mb-8 text-center">Movie Management</h1>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for movie in movies %}
+                <div class="group">
+                    <div 
+                        class="movie-card bg-white/10 backdrop-blur-xs rounded-2xl border border-white/20 shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-105 p-6 will-change-transform"
+                        title="Click to Edit"
+                    >
+                        <div class="relative">
+                            <div class="absolute -top-10 right-0 bg-blue-500/20 rounded-full p-3 group-hover:rotate-6 transition-transform duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-3">{{ movie.movie_name }}</h3>
+                            
+                            <div class="flex space-x-2 mb-4">
+                                <span class="px-3 py-1 bg-blue-500/30 text-blue-200 rounded-full text-xs">{{ movie.genre }}</span>
+                                <span class="px-3 py-1 bg-green-500/30 text-green-200 rounded-full text-xs">{{ movie.movie_rating }}</span>
+                                <span class="px-3 py-1 bg-purple-500/30 text-purple-200 rounded-full text-xs">{{ movie.movie_format }}</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 text-gray-300">
+                            <div class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                                <p class="text-sm">{{ movie.director }}</p>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <p class="text-sm">{{ movie.duration }}</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 border-t border-white/20 pt-4">
+                            <p class="text-gray-400 text-sm line-clamp-3">{{ movie.synopsis }}</p>
+                        </div>
+
+                        <div class="mt-4 flex justify-between items-center">
+                            <a href="#" class="text-blue-300 hover:text-blue-100 transition-colors text-sm font-medium">
+                                View Details
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-span-full text-center text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    No movies found. Start adding some!
+                </div>
+            {% endfor %}
+        </div>
     </div>
-    <div class="fixed bottom-3 right-3">
-        <button id="addMovieButton" class="bg-black text-white font-bold py-3 px-4 rounded-full shadow-lg flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+    <!-- Floating Add Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="addMovieButton" class="bg-blue-600 text-white rounded-full p-4 shadow-2xl hover:bg-blue-700 transition-all duration-300 transform hover:scale-110 hover:rotate-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
-            Create
         </button>
     </div>
 </div>
+
 {% include "components/add_movie.html" %}
 
-<!-- TailwindCSS for the truncate effect and responsive styles -->
 <style>
     .line-clamp-3 {
         display: -webkit-box;
@@ -35,5 +99,34 @@
         text-overflow: ellipsis;
     }
 </style>
+
+<style>
+    .movie-card {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const moviesContainer = document.getElementById("moviesContainer");
+        const backToTopButton = document.querySelector("[data-back-to-top-button]");
+        moviesContainer.addEventListener("scroll", () => {
+            if(moviesContainer.scrollTop > 500){
+                backToTopButton.classList.remove("hidden");
+            }else{
+                backToTopButton.classList.add("hidden");
+            }
+        });
+
+        backToTopButton.addEventListener("click", () => {
+            moviesContainer.scrollTop = 0;
+        });
+
+
+    });
+</script>
 
 {% endblock %}
