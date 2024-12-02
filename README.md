@@ -106,7 +106,7 @@ Sinehan is a modern cinema ticketing system crafted to deliver seamless ticket p
 
 ### **Gantt Chart**
 
-![Gantt Chart](static/SINEHAN%20Gantt%20Chart.pdf)
+- [Gantt Chart](static/SINEHAN%20Gantt%20Chart.pdf)
 
 ### **ERD**
 
