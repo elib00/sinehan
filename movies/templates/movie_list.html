@@ -438,7 +438,10 @@
                 //filter movies here
                 filtered_movies = movies.filter(movie =>
                     Object.entries(selectedFiltersJSON).every(([key, filters]) =>
-                        filters.length === 0 || filters.includes(movie.fields[key]) 
+                        filters.length === 0 || 
+                        filters.some(filter => 
+                            String(movie.fields[key]).includes(filter)
+                        )
                     )
                 );
 
@@ -485,9 +488,6 @@
                         selectedFiltersJSON.movie_format.push(text);
                     }
                 }
-
-
-
 
                 displaySelectedFilters();
             }
@@ -613,7 +613,7 @@
             );
         });
     }
-        
+
     
 
 

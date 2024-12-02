@@ -4,14 +4,15 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core.serializers import serialize
-
+from django.db.models import Count
 from accounts.models import CustomUser
 from .models import Movie
 from cinema.models import ScheduledMovie, Ticket
+from django.contrib import messages
 
 
 def movie_list(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.annotate(scheduled_count=Count('scheduled_movies')).filter(scheduled_count__gt=0)
     movies_json = serialize('json', movies)
 
     return render(request, 'movie_list.html', {'movies': movies, 'movies_json': movies_json})
@@ -45,7 +46,7 @@ def movie_book(request, movie_id):
             })
         
         context = {
-        'movie': json.dumps(movie_data),
+        'movie': json.dumps(movie_data),    
         'valid_combinations': json.dumps(valid_combinations),
         'cinemas': cinemas,
         'dates': sorted(dates),  
@@ -58,13 +59,11 @@ def movie_book(request, movie_id):
         return HttpResponse("Movie not found")
     
 
-        
 def movie_book_purchase(request, movie_id):
     if request.method == 'POST':
         user = request.user
         scheduled_movie_id = request.POST.get('scheduled_movie')
         seatsCodes = json.loads(request.POST.get('seats')) 
-        
         
         try:
             scheduled_movie = ScheduledMovie.objects.get(id=scheduled_movie_id)
@@ -78,7 +77,9 @@ def movie_book_purchase(request, movie_id):
             Ticket.objects.bulk_create(tickets)
             scheduled_movie.update_seat_matrix()
             
-            return render(request, 'home.html')
+            messages.success(request, 'Successfully purchased tickets')
+            
+            return redirect('home')
         except ScheduledMovie.DoesNotExist:
             return HttpResponse("Scheduled Movie not found", status=404)
     return HttpResponse("Invalid request method", status=405)
