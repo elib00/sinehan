@@ -41,24 +41,62 @@ Sinehan is a modern cinema ticketing system crafted to deliver seamless ticket p
 ---
 
 ## 🚀 **Functional Requirements**
+1. **User Management**
+   <details>
+     <summary> </summary>
 
-1. **User Management**  
-   Manage user authentication, registration, and settings.
+     - User can browse movies
+     - User can search movies
+     - User can filter movies by Genre, Rating, and Format
+     - User can sort movies by runtime, price, and alphabetically
+     - User can choose different views (tiled/grid)
+     - User can view upcoming movies
+     - User Registration
+     - User Login
+     - User Logout
+     - Edit User Profile (Edit name, Email, Address, Birthdate)
+     - Can view My Tickets
+     - Convert Tickets to PDF (for printing)
 
-2. **Booking Management**  
-   Book tickets, select films and showtimes, and confirm seats.
+   </details>
 
-3. **Movie Management**  
-   Admins can manage movie information.
+2. **Booking Management**
+   <details>
+     <summary> </summary>
 
-4. **Payment Processing**  
-   Integrate secure payments for transactions.
+     - Display Available Seats
+     - User can select Cinema Number, Date, Time (Scheduled Movie)
+     - User must select at least one seat to proceed to checkout
 
-5. **Seat Selection**  
-   Users can choose seats during ticket booking.
+   </details>
 
-6. **Admin Tools**  
-   Oversee bookings, manage users, and generate reports.
+3. **Movie Management**
+   <details>
+     <summary> </summary>
+
+     - Create New Movie
+     - Create Scheduled Movie
+     - Soft Delete Existing Scheduled Movie
+     - Update Date and Time of Scheduled Movie
+     - Create Cinema
+     - Create Ticket
+     - Update Seat Identifier
+     - Cancel a Ticket
+     - Filter by All Tickets, Scheduled Movie, Users
+     - Read Available Movies
+
+   </details>
+
+4. **Admin Tools**
+   <details>
+     <summary> </summary>
+
+     - Create User Account
+     - Read User Accounts
+     - Update User Account
+
+   </details>
+
 
 <div align="right"><a href="#-sinehan">🔝 Back to Top</a></div>
 
