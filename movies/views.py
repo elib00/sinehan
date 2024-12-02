@@ -65,7 +65,6 @@ def movie_book_purchase(request, movie_id):
         scheduled_movie_id = request.POST.get('scheduled_movie')
         seatsCodes = json.loads(request.POST.get('seats')) 
         
-        
         try:
             scheduled_movie = ScheduledMovie.objects.get(id=scheduled_movie_id)
             

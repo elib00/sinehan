@@ -41,7 +41,7 @@ class ScheduledMovie(models.Model):
             raise ValidationError(f"The movie '{self.movie}' is not marked as now showing.")
 
     def update_seat_matrix(self):
-        tickets = Ticket.objects.filter(scheduled_movie=self)
+        tickets = Ticket.objects.filter(scheduled_movie=self, is_active=True)
         seat_matrix = default_seat_matrix()
         seat_map = {
             f"{chr(row + 65)}{col + 1}": (row, col)
@@ -54,7 +54,8 @@ class ScheduledMovie(models.Model):
             if seat_id in seat_map:
                 row, col = seat_map[seat_id]
                 seat_matrix[row][col] = True
-
+                
+        self.audience_number = tickets.count()
         self.seats = seat_matrix
         self.save()
     

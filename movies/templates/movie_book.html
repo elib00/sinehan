@@ -632,10 +632,8 @@
                 dateButtons.forEach(btn => {
                     let date = btn.getAttribute('data-date');
 
-                    date = date.replace(/(\b\w+\.\s)(\d\b)/, (match, month, day) => {
-                        return `${month}0${day}`;
-                    });
-                    
+           
+
                     btn.disabled = !isValidCombination(selectedCinema, date, selectedTime);
                 });
 
@@ -697,9 +695,6 @@
                 dateButtons.forEach(btn => {
                     let date = btn.getAttribute('data-date');
 
-                    date = date.replace(/(\b\w+\.\s)(\d\b)/, (match, month, day) => {
-                        return `${month}0${day}`;
-                    });
 
                     btn.disabled = !isValidCombination(selectedCinema, date, selectedTime);
                 });
@@ -721,6 +716,12 @@
             }
 
             function isValidCombination(cinema, date, time) {
+                if (date != null){
+                    date = date.replace(/(\b\w+\.\s)(\d\b)/, (match, month, day) => {
+                        return `${month}0${day}`;
+                    });
+                }
+                
                 return validCombinations.some(combination => {
                    
                     
