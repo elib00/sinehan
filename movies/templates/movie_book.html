@@ -280,7 +280,6 @@
 
         </div>
     
-     
      <div class="modal text-white" id="paymentModal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('paymentModal')">×</button>
@@ -602,10 +601,10 @@
         
   
             // Selection functions
-
             const validCombinations = JSON.parse('{{ valid_combinations|safe }}');
             const cinemaButtons = document.querySelectorAll('#cinemaGrid button');
             const dateButtons = document.querySelectorAll('#dateGrid button');
+
 
             let selectedCinema = null;
             let selectedDate = null;
@@ -632,6 +631,11 @@
       
                 dateButtons.forEach(btn => {
                     let date = btn.getAttribute('data-date');
+
+                    date = date.replace(/(\b\w+\.\s)(\d\b)/, (match, month, day) => {
+                        return `${month}0${day}`;
+                    });
+                    
                     btn.disabled = !isValidCombination(selectedCinema, date, selectedTime);
                 });
 
@@ -692,12 +696,18 @@
 
                 dateButtons.forEach(btn => {
                     let date = btn.getAttribute('data-date');
+
+                    date = date.replace(/(\b\w+\.\s)(\d\b)/, (match, month, day) => {
+                        return `${month}0${day}`;
+                    });
+
                     btn.disabled = !isValidCombination(selectedCinema, date, selectedTime);
                 });
             
             }
     
             function updateSelectionSummary() {
+
                 const summaryText = document.getElementById('summaryText');
                 if (selectedCinema && selectedDate && selectedTime) {
                     summaryText.textContent = `Cinema ${selectedCinema} | ${selectedDate} | ${selectedTime}`;
@@ -714,12 +724,11 @@
                 return validCombinations.some(combination => {
                    
                     
-                    const cinemaMatch = (cinema === null || combination.cinema_name == cinema);
-                    const dateMatch = (date === null || combination.date == date);
-                    const timeMatch = (time === null || combination.time == time);
+                    const cinemaMatch = (cinema == null || combination.cinema_name == cinema);
+                    const dateMatch = (date == null || combination.date == date);
+                    const timeMatch = (time == null || combination.time == time);
 
-                
-
+            
                     
                     return cinemaMatch && dateMatch && timeMatch;
                 });
