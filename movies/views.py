@@ -10,7 +10,6 @@ from .models import Movie
 from cinema.models import ScheduledMovie, Ticket
 from django.contrib import messages
 
-
 def movie_list(request):
     movies = Movie.objects.annotate(scheduled_count=Count('scheduled_movies')).filter(scheduled_count__gt=0)
     movies_json = serialize('json', movies)
@@ -33,7 +32,6 @@ def movie_book(request, movie_id):
         cinemas = {sm.cinema for sm in scheduled_movies}
         dates = {sm.schedule.date() for sm in scheduled_movies}
         times = {sm.schedule.time() for sm in scheduled_movies}
-        
         
         valid_combinations = []
         for sm in scheduled_movies:
@@ -58,13 +56,12 @@ def movie_book(request, movie_id):
     except Movie.DoesNotExist:
         return HttpResponse("Movie not found")
     
-
 def movie_book_purchase(request, movie_id):
     if request.method == 'POST':
         user = request.user
         scheduled_movie_id = request.POST.get('scheduled_movie')
         seatsCodes = json.loads(request.POST.get('seats')) 
-        
+
         try:
             scheduled_movie = ScheduledMovie.objects.get(id=scheduled_movie_id)
             
