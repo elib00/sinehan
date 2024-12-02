@@ -315,6 +315,7 @@ class AdminDashboardAddTicketView(View):
             )
             
             new_ticket.save()
+            scheduled_movie_instance.update_seat_matrix()
             messages.success(request, "Ticket successfully booked!")
         else:
             messages.error(request, "Failed to book a ticket. Please try again.")
@@ -361,41 +362,8 @@ class AdminDashboardCancelTicketView(View):
         ticket_instance.save()
         messages.success(request, "Ticket successfully cancelled. Seat can now be booked.")
         return redirect("admin_dashboard_tickets")
-
+    
 class AdminDashboardCinema(View):
-    def get(self, request):
-        add_cinema_form = AddCinemaForm()
-    
-        context = {
-            "add_cinema_form": add_cinema_form
-        }      
-    
-
-        return render(request, "sections/cinema.html", context)
-        
-class AdminDashboardAddCinema(View):
-    def post(self, request):
-        add_cinema_form = AddCinemaForm(request.POST)
-        if add_cinema_form.is_valid():
-            capacity = add_cinema_form.cleaned_data.get("capacity")
-            cinema_name = add_cinema_form.cleaned_data.get("cinema_name")
-             
-            new_cinema = Cinema(
-                capacity=capacity,
-                cinema_name=cinema_name
-            )
-            
-            new_cinema.save()
-            messages.success(request, "A new cinema has been created!")
-        else:
-            messages.error(request, "Failed to create a new cinema")
-            for field, errors in add_cinema_form.errors.items():
-                for error in errors:    
-                    messages.error(request, f"{field.capitalize()}: {error}")
-        
-        return redirect("admin_dashboard_cinema")
-
-class AdminDashboardAddScheduledMovieView(View):
     def get(self, request):
         scheduled_movie_form = AddScheduledMovieForm()
         add_cinema_form = AddCinemaForm()
@@ -407,13 +375,13 @@ class AdminDashboardAddScheduledMovieView(View):
             "add_cinema_form": add_cinema_form
         }
         
-        return render(request, "sections/scheduled_movies.html", context)
+        return render(request, "sections/cinema.html", context)
 
     def post(self, request):
         if "cinema_submit" in request.POST:
-            self.process_cinema_submit(request)
+            return self.process_cinema_submit(request)
         elif "scheduled_movie_submit" in request.POST:
-            self.process_scheduled_movie_submit(request)
+            return self.process_scheduled_movie_submit(request)
 
     def get_movies(self):
         movies = Movie.objects.all()
@@ -452,7 +420,7 @@ class AdminDashboardAddScheduledMovieView(View):
                
         return render(request, "sections/scheduled_movies.html", context)
         
-    def process_scheduled_movie_submit(self, request):
+    def process_cinema_submit(self, request):
         add_cinema_form = AddCinemaForm(request.POST)
         if add_cinema_form.is_valid():
             capacity = add_cinema_form.cleaned_data.get("capacity")
@@ -471,4 +439,29 @@ class AdminDashboardAddScheduledMovieView(View):
                 for error in errors:    
                     messages.error(request, f"{field.capitalize()}: {error}")
         
-        return redirect("admin_dashboard_cinema")
+        return redirect("admin_dashboard_cinema")   
+
+class AdminDashboardEditTicketSeatView(View):
+    def get(self, request, ticket_id):
+        return HttpResponseForbidden("GET requests are forbidden")
+    
+    def post(self, request, ticket_id):
+        ticket_instance = get_object_or_404(Ticket, id=ticket_id)
+        
+        if ticket_instance.is_active:
+            new_seat = request.POST.get("new_seat")  
+            scheduled_movie = ticket_instance.scheduled_movie
+            
+            is_existing_ticket = Ticket.objects.filter(scheduled_movie=scheduled_movie, seat_identifier=new_seat).exists()
+            
+            if is_existing_ticket:
+                messages.error(request, "This seat is already taken. Please choose another")
+            else:
+                ticket_instance.seat_identifier = new_seat
+                ticket_instance.save()
+                messages.success(request, f"The seat identifier for Ticket #{ticket_id} is now {new_seat}")
+        else:
+            messages.error(request, "Seat identifier for inactive tickets cannot be changed")
+        
+        return redirect("admin_dashboard_tickets")
+        

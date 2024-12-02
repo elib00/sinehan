@@ -70,6 +70,35 @@ const addListenersToCancelTicketButtons = () => {
     });
 }
 
+const addListenersToEditTicketButtons = () => {
+    const changeSeatModal = document.getElementById('seatMappingModal');
+    const openEditTicketButtons = document.querySelectorAll("[data-edit-ticket-button]");
+    const closeModalBtn = document.getElementById('closeSeatMappingModal');
+    const cancelBtn = document.getElementById('cancelSeatMapping');
+    const seatMappingForm = document.getElementById('seatMappingForm');
+    const modalOverlay = document.querySelector("[data-modal-overlay]");
+
+    const closeEditTicketModal = () => {
+        changeSeatModal.classList.remove('flex');
+        changeSeatModal.classList.add('hidden');
+    };
+
+    openEditTicketButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            changeSeatModal.classList.remove('hidden');
+            changeSeatModal.classList.add('flex');
+            
+            const currentSeat = changeSeatModal.querySelector("#currentSeat");
+            const ticketID = button.getAttribute("data-ticket-id")
+            currentSeat.value = button.getAttribute("data-seat-identifier"); 
+        }); 
+    });
+
+    closeModalBtn.addEventListener('click', closeEditTicketModal);
+    cancelBtn.addEventListener('click', closeEditTicketModal);
+    modalOverlay.addEventListener("click", closeEditTicketModal);
+}
+
 const addListenersToViewTicketButtons = (ticketsArray, typeOfDisplay) => {
     const viewTicketButtons = document.querySelectorAll("[data-view-tickets-button]");
     console.log(viewTicketButtons);
@@ -105,9 +134,22 @@ const displayByAllTickets = (tickets) => {
                                     <h3 class="text-xl font-bold text-gray-800">Ticket #${ ticket.ticket_id }</h3>
                                 </div>
                             </div>
-                            <span class="${ticket.ticket_is_active ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"} px-3 py-1 rounded-full text-sm font-medium">
-                                ${ticket.ticket_is_active ? "Active" : "Inactive"}
-                            </span>
+                            <div class="flex items-center sm:flex-col md:flex-col lg:flex-row">
+                                <button 
+                                    class="text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-50"
+                                    data-ticket-id="${ticket.ticket_id}"
+                                    data-edit-ticket-url="/admin/dashboard/edit_ticket_seat/${ticket.ticket_id}/
+                                    data-seat-identifier="${ticket.seat_identifier}"
+                                    title="Edit seat identifier"
+                                    data-edit-ticket-button>
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </button>
+                                <span class="${ticket.ticket_is_active ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"} px-3 py-1 rounded-full text-sm font-medium">
+                                    ${ticket.ticket_is_active ? "Active" : "Inactive"}
+                                </span>
+                            </div>
                         </div>
                 
                         <!-- User Details Row -->
@@ -256,7 +298,7 @@ const displayByAllTickets = (tickets) => {
 
 
     newTicketGrid.innerHTML = html;
-    replaceWithGSAP(container, newTicketGrid, addListenersToCancelTicketButtons);
+    replaceWithGSAP(container, newTicketGrid, [addListenersToCancelTicketButtons, addListenersToEditTicketButtons]);
     displayedByText.textContent = "By All Tickets";
 
 };
@@ -333,7 +375,7 @@ const displayByScheduledMovie = (scheduledMovies) => {
     }
 
     newTicketGrid.innerHTML = html;
-    replaceWithGSAP(container, newTicketGrid, () => addListenersToViewTicketButtons(ticketsArray, "scheduledMovie"));
+    replaceWithGSAP(container, newTicketGrid, [() => addListenersToViewTicketButtons(ticketsArray, "scheduledMovie")]);
     displayedByText.textContent = "By Scheduled Movie";
 }
 
@@ -387,7 +429,7 @@ const displayByUsers = (users) => {
                                     <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7v5h-1m-3 3h.01M10 20h4a2 2 0 002-2v-5a2 2 0 00-2-2h-4a2 2 0 00-2 2v5a2 2 0 002 2z"></path>
                                     </svg>
-                                    <span><span class="font-medium">Email:</span> ${user.user_email}</span>
+                                    <span class="truncate"><span class="font-medium">Email:</span> ${user.user_email}</span>
                                 </li>
                             </ul>
                         </div>
@@ -411,11 +453,11 @@ const displayByUsers = (users) => {
     }
 
     newTicketGrid.innerHTML = html;
-    replaceWithGSAP(container, newTicketGrid, () => addListenersToViewTicketButtons(ticketsArray, "user"));
+    replaceWithGSAP(container, newTicketGrid, [() => addListenersToViewTicketButtons(ticketsArray, "user")]);
     displayedByText.textContent = "By Users";
 };
 
-const replaceWithGSAP = (container, newContent, callback) => {
+const replaceWithGSAP = (container, newContent, callbacksArray) => {
     // Animate out current content
     gsap.to(container.children, {
         opacity: 0,
@@ -426,8 +468,12 @@ const replaceWithGSAP = (container, newContent, callback) => {
             container.innerHTML = '';
             container.appendChild(newContent);
 
-            if (typeof callback === 'function') {
-                callback(); 
+            if (Array.isArray(callbacksArray) && callbacksArray.length > 0) {
+                callbacksArray.forEach(callback => {
+                    if (typeof callback === "function") {
+                        callback();
+                    }
+                });
             }
 
             // Animate in new content

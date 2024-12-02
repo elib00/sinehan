@@ -3,6 +3,7 @@ from movies.models import Movie
 from cinema.models import Cinema, ScheduledMovie
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from datetime import datetime
 
 CustomUser = get_user_model()
 
@@ -183,6 +184,7 @@ class AddCinemaForm(forms.ModelForm):
         widget=forms.NumberInput(attrs={
             'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-gray-300 p-2 text-base',   
             'placeholder': 'Enter cinema capacity',
+            'min': '0'
         })
     )
     
@@ -225,7 +227,8 @@ class AddScheduledMovieForm(forms.Form):
             'placeholder': 'Enter Username',
             'autocomplete': 'off',
             'type': 'datetime-local',
-            'title': "Choose date and time for movie schedule"
+            'title': "Choose date and time for movie schedule",
+            'min': datetime.now().strftime("%Y-%m-%dT%H:%M")
         })
     )
     

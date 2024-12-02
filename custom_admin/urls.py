@@ -1,8 +1,8 @@
 from django.urls import path, reverse_lazy
 from .views import (
     AdminLoginView, AdminDashboardView, AdminDashboardAddUserView, 
-    AdminDashboardAllUsersView, AdminLogoutView, AdminDashboardUpdateUserView, AdminDashboardTicketsView, AdminDashboardAddTicketView, AdminDashboardCancelTicketView, AdminDashboardCinema, AdminDashboardAddCinema, AdminDashboardMovieListView,
-    AdminDashboardAddMovieView, AdminDashboardAddScheduledMovieView)
+    AdminDashboardAllUsersView, AdminLogoutView, AdminDashboardUpdateUserView, AdminDashboardTicketsView, AdminDashboardAddTicketView, AdminDashboardCancelTicketView, AdminDashboardCinema, AdminDashboardMovieListView,
+    AdminDashboardAddMovieView, AdminDashboardEditTicketSeatView)
 from django.views.generic import RedirectView
 
 urlpatterns = [
@@ -15,10 +15,9 @@ urlpatterns = [
     path("dashboard/update_user/<int:user_id>/", AdminDashboardUpdateUserView.as_view(), name="admin_dashboard_update_user"),
     path("dashboard/movie_list/", AdminDashboardMovieListView.as_view(), name="admin_dashboard_movie_list"),
     path("dashboard/add_movie/", AdminDashboardAddMovieView.as_view(), name="admin_dashboard_add_movie"),
-    path("dashboard/add_scheduled_movie/", AdminDashboardAddScheduledMovieView.as_view(), name="admin_dashboard_add_scheduled_movie"),
     path("dashboard/tickets/", AdminDashboardTicketsView.as_view(), name="admin_dashboard_tickets"),
     path("dashboard/add_ticket/", AdminDashboardAddTicketView.as_view(), name="admin_dashboard_add_ticket"),
     path("dashboard/cancel_ticket/<int:ticket_id>/", AdminDashboardCancelTicketView.as_view(), name="admin_dashboard_cancel_ticket"), 
+    path("dashboard/edit_ticket_seat/<int:ticket_id>/", AdminDashboardEditTicketSeatView.as_view(), name="admin_dashboard_edit_ticket_seat"),
     path("dashboard/cinema/", AdminDashboardCinema.as_view(), name="admin_dashboard_cinema"),
-    path("dashboard/cinema/add_cinema", AdminDashboardAddCinema.as_view(), name="admin_dashboard_add_cinema")
 ]
