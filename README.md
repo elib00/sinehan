@@ -68,10 +68,17 @@ Sinehan is a modern cinema ticketing system crafted to deliver seamless ticket p
 ![Gantt Chart](resources/gantt-chart.png)
 
 ### **ERD**  
-![ERD](resources/erd.png)
+![ERD](static/images/erdfinal.png)
 
 ### **UI/UX Design**  
-![Seat Selection Design](resources/ui-seat-selection.png)
+<div style="display: flex; gap: 10px;">
+
+<img src="static/images/figma1.png" alt="Figma Design 1" width="200"/>
+<img src="static/images/figma2.png" alt="Figma Design 2" width="200"/>
+<img src="static/images/figma3.png" alt="Figma Design 3" width="200"/>
+
+</div>
+
 
 <div align="right"><a href="#-sinehan">🔝 Back to Top</a></div>
 
