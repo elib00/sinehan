@@ -30,10 +30,12 @@
                             </div>
                             <h3 class="text-2xl font-bold text-white mb-3">{{ movie.movie_name }}</h3>
                             
-                            <div class="flex space-x-2 mb-4">
+                            <div class="flex-col flex space-x-2 mb-4 gap-2">
                                 <span class="px-3 py-1 bg-blue-500/30 text-blue-200 rounded-full text-xs">{{ movie.genre }}</span>
-                                <span class="px-3 py-1 bg-green-500/30 text-green-200 rounded-full text-xs">{{ movie.movie_rating }}</span>
-                                <span class="px-3 py-1 bg-purple-500/30 text-purple-200 rounded-full text-xs">{{ movie.movie_format }}</span>
+                                <div class="flex flex-row gap-2">
+                                    <span class="px-3 py-1 bg-green-500/30 text-green-200 rounded-full text-xs">{{ movie.movie_rating }}</span>
+                                    <span class="px-3 py-1 bg-purple-500/30 text-purple-200 rounded-full text-xs">{{ movie.movie_format }}</span>
+                                </div>
                             </div>
                         </div>
 

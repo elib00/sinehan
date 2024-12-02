@@ -486,3 +486,22 @@ class AdminDashboardEditScheduledMovieDateTimeView(View):
             scheduled_movie_instance.save()
             messages.success(request, "Movie has been rescheduled")
         return redirect("admin_dashboard_cinema")
+
+class AdminDashboardCancelScheduledMovieView(View):
+    def get(self, request, scheduled_movie_id):
+        return HttpResponseForbidden("GET requests are forbidden")
+    
+    def post(self, request, scheduled_movie_id):
+        sm_instance = get_object_or_404(ScheduledMovie, id=scheduled_movie_id)
+        tickets_under_sm = Ticket.objects.filter(scheduled_movie=sm_instance, is_active=True)
+
+        for ticket in tickets_under_sm:
+            ticket.is_active = False
+            ticket.scheduled_movie.update_seat_matrix()
+            ticket.save()
+        
+        sm_instance.is_active = False
+        sm_instance.save()
+        messages.success(request, "Scheduled movie cancelled successfully")
+        
+        return redirect("admin_dashboard_cinema")
