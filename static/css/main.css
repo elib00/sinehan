@@ -141,10 +141,10 @@ body {
 }
 
 #notification-container {
-  position: fixed;
+  position: absolute;
   top: 130px;
   right: 20px;
-  z-index: 9999;
+  z-index: 999999;
   width: 300px;
 }
 

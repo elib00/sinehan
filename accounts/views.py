@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 
 from cinema.models import ScheduledMovie
+from sinehan.views import home_view
 from .forms import CustomUserCreationForm, CustomUserUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout, get_user_model
@@ -18,15 +19,21 @@ CustomUser = get_user_model()
 def signup_view(request):
     if request.method == 'POST':
         user_form = CustomUserCreationForm(request.POST)
-    
         if user_form.is_valid():
-            user = user_form.save() 
-            login(request, user)
+            user = user_form.save()  # Save the user object
+            login(request, user)  # Log in the user
+            return redirect('home')  # Redirect to home page
+        else:
+            # If the form is invalid, loop through the errors
+            for field, error_list in user_form.errors.items():
+                for error in error_list:
+                    messages.error(request, f"{field.capitalize()}: {error}")
+                    
+            # Redirect back with error messages
             return redirect('home')
     
-    else:
-        user_form = CustomUserCreationForm()
-
+    # For GET requests, redirect to the home page
+    return redirect('home')
 
 #Override
 def login_view(request):
@@ -39,6 +46,7 @@ def login_view(request):
         
         if user is not None:
             # User exists and credentials are correct
+            messages.success(request, 'Successfully logged in')
             login(request, user)
             return redirect('home')
         else:
@@ -88,6 +96,10 @@ def update_profile(request):
         if form.is_valid():
             form.save()
             # return redirect('profile', id=id)
+            messages.success(request, "Profile updated successfully")
+            return redirect('profile')
+        else:
+            messages.error(request, "Erorr updating Profile Information")
             return redirect('profile')
     else:
         form = CustomUserUpdateForm(instance=request.user)

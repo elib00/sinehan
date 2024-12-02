@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core.serializers import serialize
 from django.db.models import Count
+from accounts.forms import CustomUserCreationForm
 from accounts.models import CustomUser
 from .models import Movie
 from cinema.models import ScheduledMovie, Ticket
@@ -14,13 +15,15 @@ from django.contrib import messages
 def movie_list(request):
     movies = Movie.objects.annotate(scheduled_count=Count('scheduled_movies')).filter(scheduled_count__gt=0)
     movies_json = serialize('json', movies)
+    form = CustomUserCreationForm()
 
-    return render(request, 'movie_list.html', {'movies': movies, 'movies_json': movies_json})
+    return render(request, 'movie_list.html', {'movies': movies, 'movies_json': movies_json, 'form': form})
 
 def movie_details(request, movie_id):
     try:
         movie = Movie.objects.get(id=movie_id)
-        return render(request, 'movie_details.html', {'movie': movie})
+        form = CustomUserCreationForm()
+        return render(request, 'movie_details.html', {'movie': movie, 'form': form})
     except Movie.DoesNotExist:
         return HttpResponse("Movie not found")
     
@@ -29,6 +32,7 @@ def movie_book(request, movie_id):
         movie = Movie.objects.get(id=movie_id)
         movie_data = model_to_dict(movie, fields=['id', 'movie_name', 'price'])
         scheduled_movies = ScheduledMovie.objects.filter(movie_id=movie_id, is_active=True)
+        form = CustomUserCreationForm()
         
         cinemas = {sm.cinema for sm in scheduled_movies}
         dates = {sm.schedule.date() for sm in scheduled_movies}
@@ -51,7 +55,8 @@ def movie_book(request, movie_id):
         'cinemas': cinemas,
         'dates': sorted(dates),  
         'times': sorted(time.strftime('%H:%M') for time in times),
-        'actual_movie' : movie
+        'actual_movie' : movie,
+        'form' : form,
         }
 
         return render(request, 'movie_book.html', context)
