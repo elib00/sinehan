@@ -45,7 +45,7 @@ def movie_book(request, movie_id):
             })
         
         context = {
-        'movie': json.dumps(movie_data),
+        'movie': json.dumps(movie_data),    
         'valid_combinations': json.dumps(valid_combinations),
         'cinemas': cinemas,
         'dates': sorted(dates),  
@@ -58,7 +58,6 @@ def movie_book(request, movie_id):
         return HttpResponse("Movie not found")
     
 
-        
 def movie_book_purchase(request, movie_id):
     if request.method == 'POST':
         user = request.user

@@ -126,11 +126,28 @@
   // JavaScript to handle modal functionality
   document.getElementById("login-btn").addEventListener("click", function (e) {
     e.preventDefault();
-    document.getElementById("login-modal").classList.remove("hidden");
+    const loginModal = document.getElementById("login-modal");
+
+    loginModal.classList.remove("hidden");
+
+    gsap.fromTo(loginModal, 
+        { opacity: 0}, 
+        { opacity: 1, duration: 0.2}
+    );
   });
 
   document.getElementById("close-modal").addEventListener("click", function () {
-    document.getElementById("login-modal").classList.add("hidden");
+    const loginModal = document.getElementById("login-modal");
+
+    gsap.fromTo(loginModal, 
+        { opacity: 1}, 
+        { opacity: 0, duration: 0.2}
+    );
+
+    setTimeout(() => {
+      document.getElementById("login-modal").classList.add("hidden");
+    },400);
+    
   });
 
   document.getElementById("signup-link").addEventListener("click", function () {
