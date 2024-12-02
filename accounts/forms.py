@@ -58,12 +58,12 @@ class CustomUserCreationForm(UserCreationForm):
             'autocomplete': 'off'
         })
     )
-
+    
     password1 = forms.CharField(
         label="Password",
         widget=forms.PasswordInput(attrs={
             'class': 'mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
-            'placeholder': 'Enter your password',
+            'placeholder': 'Enter password',
             'autocomplete': 'off'
         })
     )
@@ -72,11 +72,11 @@ class CustomUserCreationForm(UserCreationForm):
         label="Confirm Password",
         widget=forms.PasswordInput(attrs={
             'class': 'mt-1 p-2 block w-full border border-gray-300 xrounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500',
-            'placeholder': 'Enter your password again',
+            'placeholder': 'Enter password again',
             'autocomplete': 'off'
         })
     )
-
+    
     #TODO clean_password2 na method, need sha i override aron maka non-field error ta
     class Meta:
         model = CustomUser
