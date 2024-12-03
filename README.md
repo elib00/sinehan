@@ -32,9 +32,9 @@ Sinehan is a modern cinema ticketing system crafted to deliver seamless ticket p
 
 🎬 **Effortless Browsing**: Users can explore an updated catalog of films with details such as showtimes, genres, and ratings, ensuring informed decisions.
 
-🎟 **Quick & Secure Ticketing**: Streamlined ticket purchasing allows seat selection and payment completion without the hassle of mandatory account creation, maintaining user convenience.
+🎟 **Quick & Secure Ticketing**: Streamlined ticket purchasing allows seat selection and easy payment completion maintaining user convenience.
 
-🍿 **Admin Efficiency**: Administrators gain access to robust tools for managing essential operations, including adding/editing movie schedules, monitoring user activity, and tracking bookings.
+🍿 **Admin Efficiency**: Administrators managing essential operations, including adding/editing movie schedules, monitoring user activity, and tracking bookings.
 
 <div align="right"><a href="#-sinehan">🔝 Back to Top</a></div>
 
